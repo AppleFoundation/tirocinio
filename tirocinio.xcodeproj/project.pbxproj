@@ -1,0 +1,588 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
+		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
+		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
+		F29EF2E228154A6C0013D6F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2E128154A6C0013D6F5 /* Preview Assets.xcassets */; };
+		F29EF2EC28154A6C0013D6F5 /* tirocinioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */; };
+		F29EF2F628154A6C0013D6F5 /* tirocinioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */; };
+		F29EF2F828154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F29EF2E828154A6C0013D6F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F29EF2CF28154A690013D6F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F29EF2D628154A690013D6F5;
+			remoteInfo = tirocinio;
+		};
+		F29EF2F228154A6C0013D6F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F29EF2CF28154A690013D6F5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F29EF2D628154A690013D6F5;
+			remoteInfo = tirocinio;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
+		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F29EF2E128154A6C0013D6F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tirocinioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioTests.swift; sourceTree = "<group>"; };
+		F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tirocinioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITests.swift; sourceTree = "<group>"; };
+		F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F29EF2D428154A690013D6F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2E428154A6C0013D6F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2EE28154A6C0013D6F5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F29EF2CE28154A690013D6F5 = {
+			isa = PBXGroup;
+			children = (
+				F29EF2D928154A690013D6F5 /* tirocinio */,
+				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
+				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
+				F29EF2D828154A690013D6F5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F29EF2D828154A690013D6F5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F29EF2D728154A690013D6F5 /* tirocinio.app */,
+				F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */,
+				F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F29EF2D928154A690013D6F5 /* tirocinio */ = {
+			isa = PBXGroup;
+			children = (
+				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
+				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
+				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
+				F29EF2E028154A6C0013D6F5 /* Preview Content */,
+			);
+			path = tirocinio;
+			sourceTree = "<group>";
+		};
+		F29EF2E028154A6C0013D6F5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F29EF2E128154A6C0013D6F5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F29EF2EA28154A6C0013D6F5 /* tirocinioTests */ = {
+			isa = PBXGroup;
+			children = (
+				F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */,
+			);
+			path = tirocinioTests;
+			sourceTree = "<group>";
+		};
+		F29EF2F428154A6C0013D6F5 /* tirocinioUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */,
+				F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */,
+			);
+			path = tirocinioUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F29EF2D628154A690013D6F5 /* tirocinio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinio" */;
+			buildPhases = (
+				F29EF2D328154A690013D6F5 /* Sources */,
+				F29EF2D428154A690013D6F5 /* Frameworks */,
+				F29EF2D528154A690013D6F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = tirocinio;
+			productName = tirocinio;
+			productReference = F29EF2D728154A690013D6F5 /* tirocinio.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F29EF2E628154A6C0013D6F5 /* tirocinioTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioTests" */;
+			buildPhases = (
+				F29EF2E328154A6C0013D6F5 /* Sources */,
+				F29EF2E428154A6C0013D6F5 /* Frameworks */,
+				F29EF2E528154A6C0013D6F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F29EF2E928154A6C0013D6F5 /* PBXTargetDependency */,
+			);
+			name = tirocinioTests;
+			productName = tirocinioTests;
+			productReference = F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F29EF2F028154A6C0013D6F5 /* tirocinioUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioUITests" */;
+			buildPhases = (
+				F29EF2ED28154A6C0013D6F5 /* Sources */,
+				F29EF2EE28154A6C0013D6F5 /* Frameworks */,
+				F29EF2EF28154A6C0013D6F5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F29EF2F328154A6C0013D6F5 /* PBXTargetDependency */,
+			);
+			name = tirocinioUITests;
+			productName = tirocinioUITests;
+			productReference = F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F29EF2CF28154A690013D6F5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1330;
+				LastUpgradeCheck = 1330;
+				TargetAttributes = {
+					F29EF2D628154A690013D6F5 = {
+						CreatedOnToolsVersion = 13.3.1;
+					};
+					F29EF2E628154A6C0013D6F5 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = F29EF2D628154A690013D6F5;
+					};
+					F29EF2F028154A6C0013D6F5 = {
+						CreatedOnToolsVersion = 13.3.1;
+						TestTargetID = F29EF2D628154A690013D6F5;
+					};
+				};
+			};
+			buildConfigurationList = F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "tirocinio" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F29EF2CE28154A690013D6F5;
+			productRefGroup = F29EF2D828154A690013D6F5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F29EF2D628154A690013D6F5 /* tirocinio */,
+				F29EF2E628154A6C0013D6F5 /* tirocinioTests */,
+				F29EF2F028154A6C0013D6F5 /* tirocinioUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F29EF2D528154A690013D6F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F29EF2E228154A6C0013D6F5 /* Preview Assets.xcassets in Resources */,
+				F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2E528154A6C0013D6F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2EF28154A6C0013D6F5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F29EF2D328154A690013D6F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
+				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2E328154A6C0013D6F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F29EF2EC28154A6C0013D6F5 /* tirocinioTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F29EF2ED28154A6C0013D6F5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F29EF2F628154A6C0013D6F5 /* tirocinioUITests.swift in Sources */,
+				F29EF2F828154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F29EF2E928154A6C0013D6F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F29EF2D628154A690013D6F5 /* tirocinio */;
+			targetProxy = F29EF2E828154A6C0013D6F5 /* PBXContainerItemProxy */;
+		};
+		F29EF2F328154A6C0013D6F5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F29EF2D628154A690013D6F5 /* tirocinio */;
+			targetProxy = F29EF2F228154A6C0013D6F5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		F29EF2F928154A6C0013D6F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F29EF2FA28154A6C0013D6F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F29EF2FC28154A6C0013D6F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tirocinio/Preview Content\"";
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F29EF2FD28154A6C0013D6F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"tirocinio/Preview Content\"";
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F29EF2FF28154A6C0013D6F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tirocinio.app/tirocinio";
+			};
+			name = Debug;
+		};
+		F29EF30028154A6C0013D6F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tirocinio.app/tirocinio";
+			};
+			name = Release;
+		};
+		F29EF30228154A6C0013D6F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = tirocinio;
+			};
+			name = Debug;
+		};
+		F29EF30328154A6C0013D6F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8WJKQA676;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = tirocinio;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "tirocinio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F29EF2F928154A6C0013D6F5 /* Debug */,
+				F29EF2FA28154A6C0013D6F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F29EF2FC28154A6C0013D6F5 /* Debug */,
+				F29EF2FD28154A6C0013D6F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F29EF2FF28154A6C0013D6F5 /* Debug */,
+				F29EF30028154A6C0013D6F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F29EF30228154A6C0013D6F5 /* Debug */,
+				F29EF30328154A6C0013D6F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F29EF2CF28154A690013D6F5 /* Project object */;
+}
