@@ -14,6 +14,7 @@
 		F29EF2EC28154A6C0013D6F5 /* tirocinioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */; };
 		F29EF2F628154A6C0013D6F5 /* tirocinioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */; };
 		F29EF2F828154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */; };
+		F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2CE1A81281942B400479BFB /* model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tirocinioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITests.swift; sourceTree = "<group>"; };
 		F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F2CE1A82281942B400479BFB /* model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
+				F2CE1A81281942B400479BFB /* model.xcdatamodeld */,
 				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
 				F29EF2E028154A6C0013D6F5 /* Preview Content */,
 			);
@@ -259,6 +262,7 @@
 			files = (
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
+				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +587,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F2CE1A81281942B400479BFB /* model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F2CE1A82281942B400479BFB /* model.xcdatamodel */,
+			);
+			currentVersion = F2CE1A82281942B400479BFB /* model.xcdatamodel */;
+			path = model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F29EF2CF28154A690013D6F5 /* Project object */;
 }
