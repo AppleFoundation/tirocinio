@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var body: some View {
+        Text("Hello, Grazia!")
         
 //        NavigationView{
 //            GeometryReader { geo in
@@ -25,23 +29,23 @@ struct ContentView: View {
 //        }
 //        .navigationViewStyle(.stack)
         
-        TabView {
-            ObjectView()
-                .tabItem{
-                    Label("Oggetti", systemImage: "archivebox.fill")
-                    Text("Oggetti")
-                }
-            BagView()
-                .tabItem{
-                    Label("Valigie", systemImage: "suitcase.fill")
-                    Text("Valigie")
-                }
-            TripView()
-                .tabItem{
-                    Label("Viaggi", systemImage: "globe.europe.africa.fill")
-                    Text("Viaggi")
-                }
-        }
+//        TabView {
+//            ObjectView()
+//                .tabItem{
+//                    Label("Oggetti", systemImage: "archivebox.fill")
+//                    Text("Oggetti")
+//                }
+//            BagView()
+//                .tabItem{
+//                    Label("Valigie", systemImage: "suitcase.fill")
+//                    Text("Valigie")
+//                }
+//            TripView()
+//                .tabItem{
+//                    Label("Viaggi", systemImage: "globe.europe.africa.fill")
+//                    Text("Viaggi")
+//                }
+//        }
     }
 }
 

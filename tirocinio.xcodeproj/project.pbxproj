@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40925D6B281C79F800F2F223 /* Valigia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */; };
+		40925D6C281C79F800F2F223 /* Valigia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */; };
+		40925D6D281C79F800F2F223 /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */; };
+		40925D6E281C79F800F2F223 /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */; };
+		40925D6F281C79F800F2F223 /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */; };
+		40925D70281C79F800F2F223 /* Viaggio+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */; };
+		40925D72281C7ED200F2F223 /* PersistenteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D71281C7ED200F2F223 /* PersistenteManager.swift */; };
 		9D73B6C82816962D00944631 /* ObjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73B6C72816962D00944631 /* ObjectView.swift */; };
 		9D73B6CA2816964300944631 /* BagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73B6C92816964300944631 /* BagView.swift */; };
 		9D73B6CC2816965000944631 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D73B6CB2816965000944631 /* TripView.swift */; };
@@ -38,6 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
+		40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40925D71281C7ED200F2F223 /* PersistenteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenteManager.swift; sourceTree = "<group>"; };
 		9D73B6C72816962D00944631 /* ObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectView.swift; sourceTree = "<group>"; };
 		9D73B6C92816964300944631 /* BagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagView.swift; sourceTree = "<group>"; };
 		9D73B6CB2816965000944631 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
@@ -79,13 +93,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		40925D64281C62F800F2F223 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				9D73B6C92816964300944631 /* BagView.swift */,
+				9D73B6C72816962D00944631 /* ObjectView.swift */,
+				9D73B6CB2816965000944631 /* TripView.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
+				40925D71281C7ED200F2F223 /* PersistenteManager.swift */,
+				40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */,
+				40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */,
+				40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */,
+				40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */,
+				40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */,
+				40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */,
 				F29EF2D928154A690013D6F5 /* tirocinio */,
 				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
 				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
 				F29EF2D828154A690013D6F5 /* Products */,
+				40925D64281C62F800F2F223 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -266,11 +298,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40925D70281C79F800F2F223 /* Viaggio+CoreDataProperties.swift in Sources */,
+				40925D6D281C79F800F2F223 /* Oggetto+CoreDataClass.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
+				40925D72281C7ED200F2F223 /* PersistenteManager.swift in Sources */,
 				9D73B6CA2816964300944631 /* BagView.swift in Sources */,
+				40925D6B281C79F800F2F223 /* Valigia+CoreDataClass.swift in Sources */,
 				9D73B6C82816962D00944631 /* ObjectView.swift in Sources */,
 				9D73B6CC2816965000944631 /* TripView.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
+				40925D6C281C79F800F2F223 /* Valigia+CoreDataProperties.swift in Sources */,
+				40925D6E281C79F800F2F223 /* Oggetto+CoreDataProperties.swift in Sources */,
+				40925D6F281C79F800F2F223 /* Viaggio+CoreDataClass.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Oggetto" representedClassName="Oggetto" syncable="YES">
+        <attribute name="categoria" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="larghezza" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lunghezza" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="peso" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="profondita" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="valigiacontenitore" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Valigia" inverseName="oggetticontenuti" inverseEntity="Valigia"/>
+    </entity>
+    <entity name="Valigia" representedClassName="Valigia" syncable="YES">
+        <attribute name="categoria" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="larghezza" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lunghezza" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="profondita" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tara" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="utilizzato" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="volume" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="oggetticontenuti" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Oggetto" inverseName="valigiacontenitore" inverseEntity="Oggetto"/>
+        <relationship name="utilizzoviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Viaggio" inverseName="utilizzovaligia" inverseEntity="Viaggio"/>
+    </entity>
+    <entity name="Viaggio" representedClassName="Viaggio" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nome" optional="YES" attributeType="String"/>
+        <relationship name="utilizzovaligia" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Valigia" inverseName="utilizzoviaggio" inverseEntity="Valigia"/>
+    </entity>
+    <elements>
+        <element name="Valigia" positionX="-689.11328125" positionY="-527.51171875" width="128" height="208"/>
+        <element name="Oggetto" positionX="-319.1484375" positionY="-544.4921875" width="128" height="178"/>
+        <element name="Viaggio" positionX="-771.71484375" positionY="-54.53125" width="128" height="103"/>
+    </elements>
 </model>
