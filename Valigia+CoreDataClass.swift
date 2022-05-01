@@ -11,5 +11,10 @@ import CoreData
 
 @objc(Valigia)
 public class Valigia: NSManagedObject {
-
+    
+    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+            super.init(entity: entity, insertInto: context)
+        }
+    
+    
 }

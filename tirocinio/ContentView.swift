@@ -13,7 +13,11 @@ struct ContentView: View {
     
     var body: some View {
         Text("Hello, Grazia!")
-        
+        Button(action: {
+            PersistenceManager.shared.addValigia(categoria: "bagaglio a mano", lunghezza: 50, larghezza: 23, profondita: 15, nome: "myValigia", tara: 3, utilizzato: false)
+        }, label: {
+            Text("Add")
+        })
 //        NavigationView{
 //            GeometryReader { geo in
 //                let screenHeight = geo.frame(in: .global).height
