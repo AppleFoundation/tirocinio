@@ -12,12 +12,25 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        Text("Hello, Grazia!")
-        Button(action: {
-            PersistenceManager.shared.addValigia(categoria: "bagaglio a mano", lunghezza: 50, larghezza: 23, profondita: 15, nome: "myValigia", tara: 3, utilizzato: false)
-        }, label: {
-            Text("Add")
-        })
+        VStack{
+            Text("Hello, Grazia!")
+            Button(action: {
+                PersistenceManager.shared.addValigia(categoria: "bagaglio a mano", lunghezza: 50, larghezza: 23, profondita: 15, nome: "myValigia", tara: 3, utilizzato: false)
+            }, label: {
+                Text("Add")
+            })
+            Button(action: {
+                PersistenceManager.shared.loadAllValigie()
+            }, label: {
+                Text("Print")
+            })
+            Button(action: {
+                PersistenceManager.shared.deleteValigia(nome: "myValigia", categoria: "bagaglio a mano")
+            }, label: {
+                Text("Delete")
+            })
+        }
+        
 //        NavigationView{
 //            GeometryReader { geo in
 //                let screenHeight = geo.frame(in: .global).height

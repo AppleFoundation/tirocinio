@@ -67,18 +67,85 @@ class PersistenceManager: ObservableObject {
     }
     
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome:String, tara: Int, utilizzato:Bool){
-        let entity = NSEntityDescription.entity(forEntityName: "Libro", in: self.context)
-        let newValigia = Valigia(entity: entity!, insertInto: self.context)
-        newValigia.nome = nome
-        newValigia.categoria = categoria
-        newValigia.lunghezza = Int32(lunghezza)
-        newValigia.larghezza = Int32(larghezza)
-        newValigia.profondita = Int32(profondita)
-        newValigia.tara = Int32(tara)
-        newValigia.utilizzato = utilizzato
-        newValigia.volume = newValigia.profondita * newValigia.lunghezza * newValigia.larghezza
+        let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
+        if(!loadFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
+            let newValigia = Valigia(entity: entity!, insertInto: self.context)
+            newValigia.nome = nome
+            newValigia.categoria = categoria
+            newValigia.lunghezza = Int32(lunghezza)
+            newValigia.larghezza = Int32(larghezza)
+            newValigia.profondita = Int32(profondita)
+            newValigia.tara = Int32(tara)
+            newValigia.utilizzato = utilizzato
+            newValigia.volume = newValigia.profondita * newValigia.lunghezza * newValigia.larghezza
+            newValigia.id = UUID()
+            self.saveContext()
+            print("Valigia salvata!")
+        }else{
+            print("Questa valigia è già presente!")
+        }
+    }
+    
+    func loadAllValigie(){
+        print("Recupero tutte le valigie dal context...")
+        
+        let request: NSFetchRequest<Valigia> = NSFetchRequest(entityName: "Valigia")
+        // Questa proprietà, che di default è true, permette di recuperare gli oggetti in maniera non completa. Questo ti permette di ottimizzare i tempi di recupero degli oggetti nel caso in cui il context sia composto da più di 1k managed object.
+                
+        //  In pratica, con la proprietà uguale a true, vengono recuperati gli oggetti ma i valori delle loro proprietà vengono mantenuti in cache e recuperati solo quando d’effettivo bisogno (cioè quando ci accedi).
+                
+        //  Nel nostro caso, dato che stiamo leggendo i valori degli oggetti, questa proprietà risulterebbe inutile dato che vogliamo leggere immediatamente i valori. Quindi, a valore = false, significa che gli oggetti vengono recuperati per interi.
+        request.returnsObjectsAsFaults = false
+        
+        let valigie = self.loadValigieFromFetchRequest(request: request)
+    }
+    
+    func loadFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
+        
+        print("Controllo se esiste...")
+        let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate1 = NSPredicate(format: "nome = %@", nome)
+        let predicate2 = NSPredicate(format: "categoria = %@", categoria)
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+        
+        let valigie = self.loadValigieFromFetchRequest(request:request)
+        
+        for x in valigie {
+            let valigia = x
+            print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
+        }
+        
+        return valigie
+    }
+    
+    func loadValigieFromFetchRequest(request: NSFetchRequest<Valigia>) -> [Valigia] {
+        let array = [Valigia] ()
+        do{
+            let array = try self.context.fetch(request)
+            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            
+//            for x in array {
+//                let valigia = x
+//                print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
+//            }
+            
+        }catch let errore{
+            print("Problema nella esecuzione della FetchRequest")
+            print("\(errore)")
+        }
+        return array
+    }
+    
+    func deleteValigia(nome: String, categoria: String) {
+        let valigia = self.loadFromNomeCategoria(nome: nome, categoria: categoria)
+        // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
+        print("Valigie:")
+        for i in valigia {
+            print("\(i.nome)")
+        }
         self.saveContext()
-        print("Valigia salvata!")
     }
 
 }
