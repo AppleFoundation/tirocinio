@@ -68,6 +68,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome:String, tara: Int, utilizzato:Bool){
+        print("Provo ad aggiungere la valigia...")
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
         if(loadFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
             let newValigia = Valigia(entity: entity!, insertInto: self.context)
@@ -108,7 +109,7 @@ class PersistenceManager: ObservableObject {
     
     func loadFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
         
-        print("Controllo se esiste...")
+        print("Controllo se la Valigia esiste...")
         let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
         request.returnsObjectsAsFaults = false
         
@@ -147,7 +148,6 @@ class PersistenceManager: ObservableObject {
             print("Valigie: \(String(describing: valigia[0].nome))")
             self.saveContext()
         }
-        
     }
 
 }

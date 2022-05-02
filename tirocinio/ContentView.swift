@@ -16,6 +16,7 @@ struct ContentView: View {
             Text("Hello, Grazia!")
             Button(action: {
                 PersistenceManager.shared.addValigia(categoria: "bagaglio a mano", lunghezza: 50, larghezza: 23, profondita: 15, nome: "myValigia", tara: 3, utilizzato: false)
+                PersistenceManager.shared.addValigia(categoria: "bagaglio da stiva", lunghezza: 50, larghezza: 23, profondita: 15, nome: "myValigia2", tara: 3, utilizzato: false)
             }, label: {
                 Text("Add")
             })
