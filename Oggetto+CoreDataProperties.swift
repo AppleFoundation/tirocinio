@@ -2,7 +2,7 @@
 //  Oggetto+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 29/04/22.
+//  Created by Cristian Cerasuolo on 04/05/22.
 //
 //
 
@@ -16,32 +16,32 @@ extension Oggetto {
         return NSFetchRequest<Oggetto>(entityName: "Oggetto")
     }
 
+    @NSManaged public var categoria: String?
     @NSManaged public var id: UUID?
-    @NSManaged public var nome: String?
     @NSManaged public var larghezza: Int32
     @NSManaged public var lunghezza: Int32
+    @NSManaged public var nome: String?
+    @NSManaged public var peso: Int32
     @NSManaged public var profondita: Int32
     @NSManaged public var volume: Int32
-    @NSManaged public var peso: Int32
-    @NSManaged public var categoria: String?
-    @NSManaged public var valigiacontenitore: NSSet?
+    @NSManaged public var oggettivaligiaviaggio: NSSet?
 
 }
 
-// MARK: Generated accessors for valigiacontenitore
+// MARK: Generated accessors for oggettivaligiaviaggio
 extension Oggetto {
 
-    @objc(addValigiacontenitoreObject:)
-    @NSManaged public func addToValigiacontenitore(_ value: Valigia)
+    @objc(addOggettivaligiaviaggioObject:)
+    @NSManaged public func addToOggettivaligiaviaggio(_ value: ValigiaViaggiante)
 
-    @objc(removeValigiacontenitoreObject:)
-    @NSManaged public func removeFromValigiacontenitore(_ value: Valigia)
+    @objc(removeOggettivaligiaviaggioObject:)
+    @NSManaged public func removeFromOggettivaligiaviaggio(_ value: ValigiaViaggiante)
 
-    @objc(addValigiacontenitore:)
-    @NSManaged public func addToValigiacontenitore(_ values: NSSet)
+    @objc(addOggettivaligiaviaggio:)
+    @NSManaged public func addToOggettivaligiaviaggio(_ values: NSSet)
 
-    @objc(removeValigiacontenitore:)
-    @NSManaged public func removeFromValigiacontenitore(_ values: NSSet)
+    @objc(removeOggettivaligiaviaggio:)
+    @NSManaged public func removeFromOggettivaligiaviaggio(_ values: NSSet)
 
 }
 

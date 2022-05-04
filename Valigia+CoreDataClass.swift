@@ -2,7 +2,7 @@
 //  Valigia+CoreDataClass.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 29/04/22.
+//  Created by Cristian Cerasuolo on 04/05/22.
 //
 //
 
@@ -11,10 +11,5 @@ import CoreData
 
 @objc(Valigia)
 public class Valigia: NSManagedObject {
-    
-    override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
-            super.init(entity: entity, insertInto: context)
-        }
-    
-    
+
 }

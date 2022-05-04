@@ -2,7 +2,7 @@
 //  Viaggio+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 29/04/22.
+//  Created by Cristian Cerasuolo on 04/05/22.
 //
 //
 
@@ -16,27 +16,27 @@ extension Viaggio {
         return NSFetchRequest<Viaggio>(entityName: "Viaggio")
     }
 
+    @NSManaged public var data: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var nome: String?
-    @NSManaged public var data: Date?
-    @NSManaged public var utilizzovaligia: NSSet?
+    @NSManaged public var valigieinviaggio: NSSet?
 
 }
 
-// MARK: Generated accessors for utilizzovaligia
+// MARK: Generated accessors for valigieinviaggio
 extension Viaggio {
 
-    @objc(addUtilizzovaligiaObject:)
-    @NSManaged public func addToUtilizzovaligia(_ value: Valigia)
+    @objc(addValigieinviaggioObject:)
+    @NSManaged public func addToValigieinviaggio(_ value: ValigiaViaggiante)
 
-    @objc(removeUtilizzovaligiaObject:)
-    @NSManaged public func removeFromUtilizzovaligia(_ value: Valigia)
+    @objc(removeValigieinviaggioObject:)
+    @NSManaged public func removeFromValigieinviaggio(_ value: ValigiaViaggiante)
 
-    @objc(addUtilizzovaligia:)
-    @NSManaged public func addToUtilizzovaligia(_ values: NSSet)
+    @objc(addValigieinviaggio:)
+    @NSManaged public func addToValigieinviaggio(_ values: NSSet)
 
-    @objc(removeUtilizzovaligia:)
-    @NSManaged public func removeFromUtilizzovaligia(_ values: NSSet)
+    @objc(removeValigieinviaggio:)
+    @NSManaged public func removeFromValigieinviaggio(_ values: NSSet)
 
 }
 

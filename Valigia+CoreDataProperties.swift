@@ -2,7 +2,7 @@
 //  Valigia+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 29/04/22.
+//  Created by Cristian Cerasuolo on 04/05/22.
 //
 //
 
@@ -17,50 +17,32 @@ extension Valigia {
     }
 
     @NSManaged public var categoria: String?
-    @NSManaged public var lunghezza: Int32
-    @NSManaged public var larghezza: Int32
-    @NSManaged public var profondita: Int32
-    @NSManaged public var volume: Int32
-    @NSManaged public var tara: Int32
     @NSManaged public var id: UUID?
+    @NSManaged public var larghezza: Int32
+    @NSManaged public var lunghezza: Int32
     @NSManaged public var nome: String?
+    @NSManaged public var profondita: Int32
+    @NSManaged public var tara: Int32
     @NSManaged public var utilizzato: Bool
-    @NSManaged public var oggetticontenuti: NSSet?
-    @NSManaged public var utilizzoviaggio: NSSet?
+    @NSManaged public var volume: Int32
+    @NSManaged public var valigiainviaggio: NSSet?
 
 }
 
-// MARK: Generated accessors for oggetticontenuti
+// MARK: Generated accessors for valigiainviaggio
 extension Valigia {
 
-    @objc(addOggetticontenutiObject:)
-    @NSManaged public func addToOggetticontenuti(_ value: Oggetto)
+    @objc(addValigiainviaggioObject:)
+    @NSManaged public func addToValigiainviaggio(_ value: ValigiaViaggiante)
 
-    @objc(removeOggetticontenutiObject:)
-    @NSManaged public func removeFromOggetticontenuti(_ value: Oggetto)
+    @objc(removeValigiainviaggioObject:)
+    @NSManaged public func removeFromValigiainviaggio(_ value: ValigiaViaggiante)
 
-    @objc(addOggetticontenuti:)
-    @NSManaged public func addToOggetticontenuti(_ values: NSSet)
+    @objc(addValigiainviaggio:)
+    @NSManaged public func addToValigiainviaggio(_ values: NSSet)
 
-    @objc(removeOggetticontenuti:)
-    @NSManaged public func removeFromOggetticontenuti(_ values: NSSet)
-
-}
-
-// MARK: Generated accessors for utilizzoviaggio
-extension Valigia {
-
-    @objc(addUtilizzoviaggioObject:)
-    @NSManaged public func addToUtilizzoviaggio(_ value: Viaggio)
-
-    @objc(removeUtilizzoviaggioObject:)
-    @NSManaged public func removeFromUtilizzoviaggio(_ value: Viaggio)
-
-    @objc(addUtilizzoviaggio:)
-    @NSManaged public func addToUtilizzoviaggio(_ values: NSSet)
-
-    @objc(removeUtilizzoviaggio:)
-    @NSManaged public func removeFromUtilizzoviaggio(_ values: NSSet)
+    @objc(removeValigiainviaggio:)
+    @NSManaged public func removeFromValigiainviaggio(_ values: NSSet)
 
 }
 

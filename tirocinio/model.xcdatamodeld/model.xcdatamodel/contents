@@ -9,7 +9,7 @@
         <attribute name="peso" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="profondita" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="volume" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="valigiacontenitore" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Valigia" inverseName="oggetticontenuti" inverseEntity="Valigia"/>
+        <relationship name="oggettivaligiaviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ValigiaViaggiante" inverseName="oggettiviaggio" inverseEntity="ValigiaViaggiante"/>
     </entity>
     <entity name="Valigia" representedClassName="Valigia" syncable="YES">
         <attribute name="categoria" optional="YES" attributeType="String"/>
@@ -21,18 +21,24 @@
         <attribute name="tara" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="utilizzato" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="volume" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="oggetticontenuti" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Oggetto" inverseName="valigiacontenitore" inverseEntity="Oggetto"/>
-        <relationship name="utilizzoviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Viaggio" inverseName="utilizzovaligia" inverseEntity="Viaggio"/>
+        <relationship name="valigiainviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ValigiaViaggiante" inverseName="valigiariferimento" inverseEntity="ValigiaViaggiante"/>
+    </entity>
+    <entity name="ValigiaViaggiante" representedClassName="ValigiaViaggiante" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="oggettiviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Oggetto" inverseName="oggettivaligiaviaggio" inverseEntity="Oggetto"/>
+        <relationship name="valigiariferimento" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Valigia" inverseName="valigiainviaggio" inverseEntity="Valigia"/>
+        <relationship name="viaggioriferimento" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Viaggio" inverseName="valigieinviaggio" inverseEntity="Viaggio"/>
     </entity>
     <entity name="Viaggio" representedClassName="Viaggio" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nome" optional="YES" attributeType="String"/>
-        <relationship name="utilizzovaligia" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Valigia" inverseName="utilizzoviaggio" inverseEntity="Valigia"/>
+        <relationship name="valigieinviaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ValigiaViaggiante" inverseName="viaggioriferimento" inverseEntity="ValigiaViaggiante"/>
     </entity>
     <elements>
-        <element name="Valigia" positionX="-689.11328125" positionY="-527.51171875" width="128" height="208"/>
         <element name="Oggetto" positionX="-319.1484375" positionY="-544.4921875" width="128" height="178"/>
+        <element name="Valigia" positionX="-689.11328125" positionY="-527.51171875" width="128" height="193"/>
         <element name="Viaggio" positionX="-771.71484375" positionY="-54.53125" width="128" height="103"/>
+        <element name="ValigiaViaggiante" positionX="-498.55859375" positionY="-295.08984375" width="128" height="103"/>
     </elements>
 </model>

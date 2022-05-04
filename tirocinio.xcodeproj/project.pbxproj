@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		40925D6B281C79F800F2F223 /* Valigia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */; };
-		40925D6C281C79F800F2F223 /* Valigia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */; };
-		40925D6D281C79F800F2F223 /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */; };
-		40925D6E281C79F800F2F223 /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */; };
-		40925D6F281C79F800F2F223 /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */; };
-		40925D70281C79F800F2F223 /* Viaggio+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */; };
-		40925D72281C7ED200F2F223 /* PersistenteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D71281C7ED200F2F223 /* PersistenteManager.swift */; };
+		4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */; };
+		4039D271282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */; };
+		4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */; };
+		4039D273282323D400908DCF /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */; };
+		4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */; };
+		4039D275282323D400908DCF /* Viaggio+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26D282323D400908DCF /* Viaggio+CoreDataProperties.swift */; };
+		4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */; };
+		4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */; };
+		40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D71281C7ED200F2F223 /* PersistenceManager.swift */; };
 		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
@@ -42,13 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataClass.swift"; sourceTree = "<group>"; };
-		40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
-		40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
-		40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		40925D71281C7ED200F2F223 /* PersistenteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenteManager.swift; sourceTree = "<group>"; };
+		4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValigiaViaggiante+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValigiaViaggiante+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4039D26D282323D400908DCF /* Viaggio+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		40925D71281C7ED200F2F223 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,13 +101,15 @@
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
-				40925D71281C7ED200F2F223 /* PersistenteManager.swift */,
-				40925D65281C79F800F2F223 /* Valigia+CoreDataClass.swift */,
-				40925D66281C79F800F2F223 /* Valigia+CoreDataProperties.swift */,
-				40925D67281C79F800F2F223 /* Oggetto+CoreDataClass.swift */,
-				40925D68281C79F800F2F223 /* Oggetto+CoreDataProperties.swift */,
-				40925D69281C79F800F2F223 /* Viaggio+CoreDataClass.swift */,
-				40925D6A281C79F800F2F223 /* Viaggio+CoreDataProperties.swift */,
+				4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */,
+				4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */,
+				4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */,
+				4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */,
+				4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */,
+				4039D26D282323D400908DCF /* Viaggio+CoreDataProperties.swift */,
+				4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */,
+				4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */,
+				40925D71281C7ED200F2F223 /* PersistenceManager.swift */,
 				F29EF2D928154A690013D6F5 /* tirocinio */,
 				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
 				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
@@ -289,15 +295,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40925D70281C79F800F2F223 /* Viaggio+CoreDataProperties.swift in Sources */,
-				40925D6D281C79F800F2F223 /* Oggetto+CoreDataClass.swift in Sources */,
+				4039D275282323D400908DCF /* Viaggio+CoreDataProperties.swift in Sources */,
+				4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */,
+				4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */,
+				4039D271282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
-				40925D72281C7ED200F2F223 /* PersistenteManager.swift in Sources */,
-				40925D6B281C79F800F2F223 /* Valigia+CoreDataClass.swift in Sources */,
+				4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */,
+				4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
+				40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
-				40925D6C281C79F800F2F223 /* Valigia+CoreDataProperties.swift in Sources */,
-				40925D6E281C79F800F2F223 /* Oggetto+CoreDataProperties.swift in Sources */,
-				40925D6F281C79F800F2F223 /* Viaggio+CoreDataClass.swift in Sources */,
+				4039D273282323D400908DCF /* Oggetto+CoreDataProperties.swift in Sources */,
+				4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
