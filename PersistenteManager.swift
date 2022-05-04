@@ -68,7 +68,7 @@ class PersistenceManager: ObservableObject {
     
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome:String, tara: Int, utilizzato:Bool){
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
-        if(!loadFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
+        if(loadFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
             let newValigia = Valigia(entity: entity!, insertInto: self.context)
             newValigia.nome = nome
             newValigia.categoria = categoria
@@ -86,7 +86,7 @@ class PersistenceManager: ObservableObject {
         }
     }
     
-    func loadAllValigie(){
+    func loadAllValigie() -> [Valigia] { //potremmo fargli ritornare l'array anziche niente ahah
         print("Recupero tutte le valigie dal context...")
         
         let request: NSFetchRequest<Valigia> = NSFetchRequest(entityName: "Valigia")
@@ -97,7 +97,8 @@ class PersistenceManager: ObservableObject {
         //  Nel nostro caso, dato che stiamo leggendo i valori degli oggetti, questa proprietà risulterebbe inutile dato che vogliamo leggere immediatamente i valori. Quindi, a valore = false, significa che gli oggetti vengono recuperati per interi.
         request.returnsObjectsAsFaults = false
         
-        let valigie = self.loadValigieFromFetchRequest(request: request)
+//        /*let valigie = */self.loadValigieFromFetchRequest(request: request)
+        return self.loadValigieFromFetchRequest(request: request)
     }
     
     func loadFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
@@ -108,10 +109,13 @@ class PersistenceManager: ObservableObject {
         
         let predicate1 = NSPredicate(format: "nome = %@", nome)
         let predicate2 = NSPredicate(format: "categoria = %@", categoria)
+//        let predicate1 = NSPredicate(format: "nome = 'myValigia'")
+//        let predicate2 = NSPredicate(format: "categoria = 'bagaglio a mano'")
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
         
         let valigie = self.loadValigieFromFetchRequest(request:request)
         
+        print("SONO IN LOAD NOME CATEGORIA")
         for x in valigie {
             let valigia = x
             print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
@@ -126,10 +130,10 @@ class PersistenceManager: ObservableObject {
             let array = try self.context.fetch(request)
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
-//            for x in array {
-//                let valigia = x
-//                print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
-//            }
+            for x in array {
+                let valigia = x
+                print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
+            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
