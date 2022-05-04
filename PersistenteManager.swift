@@ -12,6 +12,7 @@ import SwiftUI
 class PersistenceManager: ObservableObject {
     
     static let shared: PersistenceManager = PersistenceManager()
+    
     private var context : NSManagedObjectContext
 
     // An instance of NSPersistentContainer includes all objects needed to represent a functioning Core Data stack, and provides convenience methods and properties for common patterns.
@@ -67,6 +68,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome:String, tara: Int, utilizzato:Bool){
+        print("Provo ad aggiungere la valigia...")
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
         if(loadFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
             let newValigia = Valigia(entity: entity!, insertInto: self.context)
@@ -103,15 +105,12 @@ class PersistenceManager: ObservableObject {
     
     func loadFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
         
-        print("Controllo se esiste...")
+        print("Controllo se la Valigia esiste...")
         let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
         request.returnsObjectsAsFaults = false
         
-        let predicate1 = NSPredicate(format: "nome = %@", nome)
-        let predicate2 = NSPredicate(format: "categoria = %@", categoria)
-//        let predicate1 = NSPredicate(format: "nome = 'myValigia'")
-//        let predicate2 = NSPredicate(format: "categoria = 'bagaglio a mano'")
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+        let predicate = NSPredicate(format: "nome = %@ AND categoria = %@", nome, categoria)
+        request.predicate = predicate
         
         let valigie = self.loadValigieFromFetchRequest(request:request)
         
@@ -125,9 +124,9 @@ class PersistenceManager: ObservableObject {
     }
     
     func loadValigieFromFetchRequest(request: NSFetchRequest<Valigia>) -> [Valigia] {
-        let array = [Valigia] ()
+        var array = [Valigia] ()
         do{
-            let array = try self.context.fetch(request)
+            array = try self.context.fetch(request)
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
             for x in array {
@@ -144,12 +143,13 @@ class PersistenceManager: ObservableObject {
     
     func deleteValigia(nome: String, categoria: String) {
         let valigia = self.loadFromNomeCategoria(nome: nome, categoria: categoria)
-        // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
-        print("Valigie:")
-        for i in valigia {
-            print("\(i.nome)")
+        
+        if (valigia.count>0){
+            self.context.delete(valigia[0])
+            // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
+            print("Valigie: \(String(describing: valigia[0].nome))")
+            self.saveContext()
         }
-        self.saveContext()
     }
 
 }
