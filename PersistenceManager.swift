@@ -151,10 +151,10 @@ class PersistenceManager: ObservableObject {
         
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
-            for x in array {
-                let viaggio = x
-                print("Viaggio \(viaggio.nome!), data \(String(describing: viaggio.data)), id \(String(describing: viaggio.id))")
-            }
+//            for x in array {
+//                let viaggio = x
+//                print("Viaggio \(viaggio.nome!), data \(String(describing: viaggio.data)), id \(String(describing: viaggio.id))")
+//            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -188,10 +188,10 @@ class PersistenceManager: ObservableObject {
             array = try self.context.fetch(request)
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
-            for x in array {
-                let valigia = x
-                print("Valigia \(valigia.nome!), volume \(valigia.volume), id \(String(describing: valigia.id))")
-            }
+//            for x in array {
+//                let valigia = x
+//                print("Valigia \(valigia.nome!), volume \(valigia.volume)")
+//            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")

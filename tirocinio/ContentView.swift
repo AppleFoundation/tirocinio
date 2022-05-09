@@ -34,19 +34,33 @@ struct ContentView: View {
             HStack{
                 Button(action: {
                     let valigie = PersistenceManager.shared.loadAllValigie()
-                    print(valigie)
+                    for i in valigie{
+                        print("Nome valigia: \(i.nome)")
+                        print("Categoria valigia: \(i.categoria)")
+                        print("Volume valigia: \(i.volume)")
+                        print("\n\n")
+                    }
                 }, label: {
                     Text("Print Valigie")
                 })
                 Button(action: {
                     let viaggi = PersistenceManager.shared.loadAllViaggi()
-                    print(viaggi)
+                    for i in viaggi{
+                        print("Nome Viaggio: \(i.nome)")
+                        print("Data Viaggio: \(i.data)")
+                        print("\n\n")
+                    }
                 }, label: {
                     Text("Print Viaggi")
                 })
                 Button(action: {
                     let oggetto = PersistenceManager.shared.loadAllOggetti()
-                    print(oggetto)
+                    for i in oggetto{
+                        print("Nome oggetto: \(i.nome)")
+                        print("Categoria oggetto: \(i.categoria)")
+                        print("Volume oggetto: \(i.volume)")
+                        print("\n\n")
+                    }
                 }, label: {
                     Text("Print Oggetti")
                 })
