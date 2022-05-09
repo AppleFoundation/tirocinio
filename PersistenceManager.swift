@@ -149,9 +149,7 @@ class PersistenceManager: ObservableObject {
     func loadViaggiFromFetchRequest(request: NSFetchRequest<Viaggio>) -> [Viaggio] {
         var array = [Viaggio] ()
         do{
-            print("MY VIAGGIO")
             array = try self.context.fetch(request)
-            print("MY VIAGGIO")
 
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
@@ -175,7 +173,7 @@ class PersistenceManager: ObservableObject {
             
             for x in array {
                 let valigia = x
-                print("Valigia Viaggiante \(valigia.valigiariferimento!), data \(valigia.viaggioriferimento), id \(String(describing: valigia.id))")
+                print("Valigia Viaggiante \(valigia.valigiariferimento!), data \(String(describing: valigia.viaggioriferimento)), id \(String(describing: valigia.id))")
             }
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")

@@ -84,8 +84,8 @@ struct ContentView: View {
                     Text("Aggiungi viaggio")
                 })
                 Button(action: {
-                    let valigia = PersistenceManager.shared.loadValigieFromNomeCategoria(nome: "myValigia", categoria: "bagaglio a mano")[0]
-                    let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: "Fisciano")[0]
+                    let valigia = PersistenceManager.shared.loadAllValigie()[0] // prima valigia inserita
+                    let viaggio = PersistenceManager.shared.loadAllViaggi()[0] // primo viaggio inserito
 
                     PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: [], valigia: valigia, viaggio: viaggio)
                 }, label: {
