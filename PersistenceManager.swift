@@ -172,7 +172,7 @@ class PersistenceManager: ObservableObject {
             
             for x in array {
                 let valigia = x
-                print("Valigia Viaggiante \n Contenitore:\(valigia.valigiariferimento!.nome)\n Viaggio:\(valigia.viaggioriferimento?.nome)")
+                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiariferimento!.nome))\n Viaggio:\(valigia.viaggioriferimento?.nome)")
             }
             
         }catch let errore{
