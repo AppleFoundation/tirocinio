@@ -88,6 +88,22 @@ class PersistenceManager: ObservableObject {
         }
     }
     
+    func addValigiaViaggiante(oggettiInViaggio: [Oggetto], valigia: Valigia, viaggio: Viaggio){
+        let entity = NSEntityDescription.entity(forEntityName: "ValigiaViaggiante", in: self.context)
+        if(loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).isEmpty){
+            let newValigiaViaggiante = ValigiaViaggiante(entity: entity!, insertInto: self.context)
+            newValigiaViaggiante.oggettiviaggio?.mutableSetValue(forKey: "oggettiviaggio").addObjects(from: oggettiInViaggio)
+            newValigiaViaggiante.valigiariferimento = valigia
+            newValigiaViaggiante.viaggioriferimento = viaggio
+            newValigiaViaggiante.id = UUID()
+            valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
+            self.saveContext()
+            print("Valigia salvata!")
+        }else{
+            print("Questa valigia è già presente!")
+        }
+    }
+
     func addViaggio(data: Date, nome: String){
         print("provo ad aggiungere un viaggio")
         let entity = NSEntityDescription.entity(forEntityName: "Viaggio", in: self.context)
@@ -133,7 +149,10 @@ class PersistenceManager: ObservableObject {
     func loadViaggiFromFetchRequest(request: NSFetchRequest<Viaggio>) -> [Viaggio] {
         var array = [Viaggio] ()
         do{
+            print("MY VIAGGIO")
             array = try self.context.fetch(request)
+            print("MY VIAGGIO")
+
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
             for x in array {
@@ -141,6 +160,23 @@ class PersistenceManager: ObservableObject {
                 print("Viaggio \(viaggio.nome!), data \(String(describing: viaggio.data)), id \(String(describing: viaggio.id))")
             }
             
+        }catch let errore{
+            print("Problema nella esecuzione della FetchRequest")
+            print("\(errore)")
+        }
+        return array
+    }
+    
+    func loadValigieViaggiantiFromFetchRequest(request: NSFetchRequest<ValigiaViaggiante>) -> [ValigiaViaggiante] {
+        var array = [ValigiaViaggiante]()
+        do{
+            array = try self.context.fetch(request)
+            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            
+            for x in array {
+                let valigia = x
+                print("Valigia Viaggiante \(valigia.valigiariferimento!), data \(valigia.viaggioriferimento), id \(String(describing: valigia.id))")
+            }
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
             print("\(errore)")
@@ -192,6 +228,19 @@ class PersistenceManager: ObservableObject {
         return valigie
     }
     
+    func loadValigieViaggiantiFromViaggioValigia(viaggio: Viaggio, valigia: Valigia) -> [ValigiaViaggiante] {
+        print("Controllo se la Valigia esiste...")
+        let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "viaggio = %@ AND valigia = %@", viaggio, valigia)
+        request.predicate = predicate
+        
+        let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
+        
+        return valigie
+    }
+    
     func loadViaggiFromNome(nome: String) -> [Viaggio] {
         print("Controllo se il viaggio esiste...")
         let request: NSFetchRequest <Viaggio> = NSFetchRequest(entityName: "Viaggio")
@@ -201,7 +250,7 @@ class PersistenceManager: ObservableObject {
         request.predicate = predicate
         
         let viaggi = self.loadViaggiFromFetchRequest(request:request)
-        
+        print("MY VIAGGIO")
         return viaggi
     }
     
@@ -252,6 +301,13 @@ class PersistenceManager: ObservableObject {
         return self.loadOggettiFromFetchRequest(request: request)
     }
     
+    func loadAllValigieViaggianti() -> [ValigiaViaggiante] {
+        let request: NSFetchRequest<ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
+        request.returnsObjectsAsFaults = false
+        
+        return self.loadValigieViaggiantiFromFetchRequest(request: request)
+    }
+    
     //DELETE
     func deleteValigia(nome: String, categoria: String) {
         let valigie = self.loadValigieFromNomeCategoria(nome: nome, categoria: categoria)
@@ -260,6 +316,16 @@ class PersistenceManager: ObservableObject {
             self.context.delete(valigie[0])
             // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
             print("Valigie: \(String(describing: valigie[0].nome))")
+            self.saveContext()
+        }
+    }
+    
+    func deleteValigiaViaggiante(viaggio: Viaggio, valigia: Valigia) {
+        let valigieviaggianti = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia)
+        
+        if(valigieviaggianti.count > 0){
+            self.context.delete(valigieviaggianti[0])
+            
             self.saveContext()
         }
     }

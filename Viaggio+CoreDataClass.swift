@@ -11,5 +11,5 @@ import CoreData
 
 @objc(Viaggio)
 public class Viaggio: NSManagedObject {
-
+    
 }
