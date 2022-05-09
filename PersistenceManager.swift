@@ -167,12 +167,12 @@ class PersistenceManager: ObservableObject {
         var array = [ValigiaViaggiante]()
         do{
             array = try self.context.fetch(request)
-            print("ANY PROBLEM?")
+        
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
             for x in array {
                 let valigia = x
-                print("Valigia Viaggiante \(valigia.valigiariferimento!), data \(String(describing: valigia.viaggioriferimento)), id \(String(describing: valigia.id))")
+                print("Valigia Viaggiante \n Contenitore:\(valigia.valigiariferimento!.nome)\n Viaggio:\(valigia.viaggioriferimento?.nome)")
             }
             
         }catch let errore{
