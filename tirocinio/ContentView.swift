@@ -9,9 +9,45 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
+        
+        NavigationView {
+            
+            VStack{
+                
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 2)
+                    
+                    
+                
+                BagListScroll()
+            
+                
+                Rectangle()
+                    .fill(Color.gray)
+                    .frame(height: 2)
+                
+                TripListScroll()
+                
+                Spacer()
+                testCoreData()
+            }
+            
+            
+            .navigationTitle("Valigie Smart")
+        }
+        .navigationViewStyle(.stack)
+        
+        
+
+    }
+}
+
+struct testCoreData: View{
+    @Environment(\.managedObjectContext) private var viewContext
+    var body: some View{
         VStack{
             Text("Hello, Grazia!")
             HStack{
@@ -84,16 +120,15 @@ struct ContentView: View {
             }
             
         }
-
     }
 }
-
 
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 11")
     }
 }
 

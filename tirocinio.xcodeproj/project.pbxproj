@@ -16,6 +16,13 @@
 		4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */; };
 		4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */; };
 		40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D71281C7ED200F2F223 /* PersistenceManager.swift */; };
+		9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D51328C282B152A00DA3374 /* BagListScroll.swift */; };
+		9D51328F282B155900DA3374 /* TripListScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D51328E282B155900DA3374 /* TripListScroll.swift */; };
+		9D513291282B158900DA3374 /* AddBagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513290282B158900DA3374 /* AddBagView.swift */; };
+		9D513293282B15BB00DA3374 /* AddTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513292282B15BB00DA3374 /* AddTripView.swift */; };
+		9D513295282B162F00DA3374 /* DetailTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513294282B162F00DA3374 /* DetailTripView.swift */; };
+		9D513298282B1A3400DA3374 /* CategoriaScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */; };
+		9DE99337282A9772009A9330 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE99336282A9772009A9330 /* CardView.swift */; };
 		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
@@ -53,6 +60,13 @@
 		4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		40925D71281C7ED200F2F223 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		9D51328C282B152A00DA3374 /* BagListScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagListScroll.swift; sourceTree = "<group>"; };
+		9D51328E282B155900DA3374 /* TripListScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripListScroll.swift; sourceTree = "<group>"; };
+		9D513290282B158900DA3374 /* AddBagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBagView.swift; sourceTree = "<group>"; };
+		9D513292282B15BB00DA3374 /* AddTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTripView.swift; sourceTree = "<group>"; };
+		9D513294282B162F00DA3374 /* DetailTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTripView.swift; sourceTree = "<group>"; };
+		9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriaScrollView.swift; sourceTree = "<group>"; };
+		9DE99336282A9772009A9330 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -133,6 +147,13 @@
 			children = (
 				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
+				9D513294282B162F00DA3374 /* DetailTripView.swift */,
+				9DE99336282A9772009A9330 /* CardView.swift */,
+				9D51328C282B152A00DA3374 /* BagListScroll.swift */,
+				9D51328E282B155900DA3374 /* TripListScroll.swift */,
+				9D513290282B158900DA3374 /* AddBagView.swift */,
+				9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */,
+				9D513292282B15BB00DA3374 /* AddTripView.swift */,
 				F2CE1A81281942B400479BFB /* model.xcdatamodeld */,
 				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
 				F29EF2E028154A6C0013D6F5 /* Preview Content */,
@@ -295,13 +316,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D513295282B162F00DA3374 /* DetailTripView.swift in Sources */,
 				4039D275282323D400908DCF /* Viaggio+CoreDataProperties.swift in Sources */,
+				9D513298282B1A3400DA3374 /* CategoriaScrollView.swift in Sources */,
 				4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */,
 				4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */,
+				9D51328F282B155900DA3374 /* TripListScroll.swift in Sources */,
 				4039D271282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
+				9D513293282B15BB00DA3374 /* AddTripView.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
 				4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */,
 				4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
+				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
+				9D513291282B158900DA3374 /* AddBagView.swift in Sources */,
+				9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */,
 				40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
 				4039D273282323D400908DCF /* Oggetto+CoreDataProperties.swift in Sources */,
