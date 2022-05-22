@@ -66,6 +66,11 @@ class PersistenceManager: ObservableObject {
     func sceneDidEnterBackground(_ scene: UIScene){
         saveContext()
     }
+    
+    //Retunr the context
+    func getContext() -> NSManagedObjectContext{
+        return self.context
+    }
     //ADD
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome: String, tara: Int, utilizzato:Bool){
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
