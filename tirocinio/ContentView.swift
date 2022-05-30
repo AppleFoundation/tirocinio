@@ -9,28 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
-    
+//    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
+    @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = [GridItem(.fixed(170),spacing: 10),
                    GridItem(.fixed(170),spacing: 10)]
     
     @State var showAddViaggioView: Bool = false
-        
-    var body: some View{
-//        VStack{
-//            HStack{
-//                ActionButtonView(systemImage: "airplane", nameButton: "Viaggio ", colorImage: .blue)
-//                ActionButtonView(systemImage: "airplane", nameButton: "Viaggio ", colorImage: .blue)
-//
-//            }
-//            HStack{
-//                ActionButtonView(systemImage: "airplane", nameButton: "Viaggio ", colorImage: .blue)
-//                ActionButtonView(systemImage: "airplane", nameButton: "Viaggio ", colorImage: .blue)
-//
-//            }
-//        }.padding(.leading, 20)
-//        .padding(.trailing, 20)
 
+    var body: some View{
         NavigationView{
             ScrollView{
                 LazyVGrid(columns: columns) {
@@ -54,10 +40,8 @@ struct ContentView: View {
                 }
             }
         }.sheet(isPresented: $showAddViaggioView, onDismiss:{
-//            allViaggi = PersistenceManager.shared.loadAllViaggi()
             showAddViaggioView = false
         }){
-//            AddViaggioView(allViaggi: $allViaggi)
             AddViaggioView()
         }
     }
