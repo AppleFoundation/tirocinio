@@ -97,12 +97,13 @@ class PersistenceManager: ObservableObject {
         if(loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).isEmpty){
             let newValigiaViaggiante = ValigiaViaggiante(entity: entity!, insertInto: self.context)
             newValigiaViaggiante.oggettiviaggio?.mutableSetValue(forKey: "oggettiviaggio").addObjects(from: oggettiInViaggio)
+                print(newValigiaViaggiante.oggettiviaggio)//DEBUG
             newValigiaViaggiante.valigiariferimento = valigia
             newValigiaViaggiante.viaggioriferimento = viaggio
             newValigiaViaggiante.id = UUID()
             valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
             self.saveContext()
-            print("Valigia salvata!")
+            print("ValigiaViaggiante salvata!")
         }else{
             print("Questa valigia è già presente!")
         }
@@ -141,7 +142,7 @@ class PersistenceManager: ObservableObject {
             newOggetto.id = UUID()
             
             self.saveContext()
-            print("Viaggio salvato!")
+            print("Oggetto salvato!")
         }else{
             print("Questo oggetto esiste già")
         }

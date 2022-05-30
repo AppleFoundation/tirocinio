@@ -13,20 +13,34 @@ struct AddBagView: View {
     //Qui ci deve essere una variabile che prende tutto il DB di valigie e metta una struttura tutte le valigie possibili
     
     var body: some View {
-        ScrollView(.vertical){
-            VStack{
-               
-                //Qui si deve passare a categoria un array di valigie di quella categoria in modo dale che le possa visualizzare
-                
-                CategoriaScrollView(nome: "Categoria 1")
-                CategoriaScrollView(nome: "Categoria 2")
-                CategoriaScrollView(nome: "Categoria 3")
-                CategoriaScrollView(nome: "Categoria 4")
-                CategoriaScrollView(nome: "Categoria 5")
+        NavigationView{
+            
+            ScrollView(.vertical){
+                VStack{
+                    
+                    //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
+                   
+                    CategoriaScrollView(nome: "Categoria 1")
+                    CategoriaScrollView(nome: "Categoria 2")
+                    CategoriaScrollView(nome: "Categoria 3")
+                    CategoriaScrollView(nome: "Categoria 4")
+                    CategoriaScrollView(nome: "Categoria 5")
+                    
+                }
                 
             }
             
+            .toolbar{
+                ToolbarItem(placement: .navigationBarTrailing){
+                    NavigationLink(destination: DetailTripView()){
+                        Text("Prosegui")
+                    }
+                }
+
+            }
+            
         }
+        .navigationBarHidden(true)
     }
 }
 

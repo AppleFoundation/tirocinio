@@ -46,7 +46,10 @@ struct AddViaggioView: View {
                     }, label: {Text("Cancel")})
                 }
             }
+            
         }
+        .navigationBarHidden(true)
+        
     }
 }
 

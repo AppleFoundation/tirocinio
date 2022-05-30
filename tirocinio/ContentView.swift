@@ -18,13 +18,44 @@ struct ContentView: View {
 
     var body: some View{
         NavigationView{
+            
+            //###INIZIO - SEZIONE DI TEST COSE
+            
+//            VStack{
+//                Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
+//                
+//                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Polo")}, label: {Text("Crea Oggetto 1")})
+//                
+//                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "cibo")}, label: {Text("Crea Oggetto 2")})
+//                
+//                
+//                Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
+//                
+//                Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
+//            }
+           
+            
+            //###FINE - SEZIONE DI TEST COSE
+
             ScrollView{
                 LazyVGrid(columns: columns) {
                     
                     ForEach(allViaggi){
                         viaggio in
-                        NavigationLink(destination: ViaggioView()){
+                        NavigationLink(destination: DetailTripView()){
                             ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
+                        }
+                        .contextMenu
+                        {
+                            Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
+                            {
+                                Text("Elimina")
+                            })
+                            
+                            Button(action: { print("action 2 triggered") }, label:
+                            {
+                                Text("Modifica")
+                            })
                         }
                     }
 
@@ -36,7 +67,8 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink(destination: AddViaggioView()){
                         Image(systemName: "plus")
-                    }                    
+                    }
+                    
                 }
             }
         }.sheet(isPresented: $showAddViaggioView, onDismiss:{
@@ -90,6 +122,8 @@ struct ActionButtonView: View{
         .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
     }
 }
+
+
 //struct testCoreData: View{
 //    @Environment(\.managedObjectContext) private var viewContext
 //    var body: some View{

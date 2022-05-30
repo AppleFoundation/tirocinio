@@ -10,11 +10,17 @@ import SwiftUI
 struct DetailTripView: View {
     var body: some View {
         
-
-        Text("Hello, World!")
-        .navigationTitle("Dettagli Viaggio")
-       
+        VStack{
+            Text("Non sembrano esserci oggetti per il tuo viaggio")
+            
+            NavigationLink(destination: AddTripView()){
+                Text("Aggiungi Oggetti")
+            }
+        }
         
+        
+       
+        .navigationTitle("Dettagli Viaggio")
     }
 }
 
