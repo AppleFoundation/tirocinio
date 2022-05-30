@@ -11,6 +11,7 @@ struct CategoriaScrollView: View{
     
     var nome: String
     
+    //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
     var body: some View{
         VStack{

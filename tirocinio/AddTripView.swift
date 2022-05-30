@@ -10,9 +10,13 @@ import SwiftUI
 
 struct AddTripView: View {
     
+    //Qui si deve prendere al DB tutto quello che si ha riguardo agli oggetti
+    
     var body: some View {
         ScrollView(.vertical){
             VStack{
+                
+                //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                
                 CategoriaScrollView(nome: "Categoria 1")
                 CategoriaScrollView(nome: "Categoria 2")

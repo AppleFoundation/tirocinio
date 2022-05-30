@@ -21,5 +21,6 @@ struct DetailTripView: View {
 struct DetailTripView_Previews: PreviewProvider {
     static var previews: some View {
         DetailTripView()
+            .previewDevice("iPhone 11")
     }
 }

@@ -34,8 +34,8 @@ struct AddViaggioView: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
-                        presentationMode.wrappedValue.dismiss()
                         PersistenceManager.shared.addViaggio(data: dataViaggio, nome: nomeViaggio)
+                        presentationMode.wrappedValue.dismiss()
                         
                     }, label: {Text("Save")})
                 }

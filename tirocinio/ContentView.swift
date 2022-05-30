@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
+    
     let columns = [GridItem(.fixed(170),spacing: 10),
                    GridItem(.fixed(170),spacing: 10)]
     
@@ -33,6 +34,7 @@ struct ContentView: View {
         NavigationView{
             ScrollView{
                 LazyVGrid(columns: columns) {
+                    
                     ForEach(allViaggi){
                         viaggio in
                         NavigationLink(destination: ViaggioView()){
@@ -46,9 +48,9 @@ struct ContentView: View {
             
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {showAddViaggioView.toggle()}){
+                    NavigationLink(destination: AddViaggioView()){
                         Image(systemName: "plus")
-                    }
+                    }                    
                 }
             }
         }.sheet(isPresented: $showAddViaggioView, onDismiss:{
@@ -61,6 +63,8 @@ struct ContentView: View {
     }
     
 }
+
+
 struct ActionButtonView: View{
     
     @Environment(\.colorScheme) var colorScheme
