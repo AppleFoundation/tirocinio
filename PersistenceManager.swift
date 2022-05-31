@@ -134,7 +134,6 @@ class PersistenceManager: ObservableObject {
             
             newOggetto.categoria = categoria
             newOggetto.nome = nome
-            newOggetto.quantita = 0
             newOggetto.larghezza = Int32(larghezza)
             newOggetto.lunghezza = Int32(lunghezza)
             newOggetto.profondita = Int32(profondita)
