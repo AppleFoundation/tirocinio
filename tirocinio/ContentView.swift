@@ -17,38 +17,46 @@ struct ContentView: View {
     @State var showAddViaggioView: Bool = false
     @State var showEditViaggioView: Bool = false
     @State private var showEditView = false
-   // @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
+    // @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
     
     var body: some View{
         NavigationView{
             
             //###INIZIO - SEZIONE DI TEST COSE
             
-//                        VStack{
-//                            Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
-//            
-//                            Button(action: {
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Cane")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Gatto")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Stella")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Albero")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Pianta")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
-//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Topolino")
-//                                
-//                            }, label: {Text("Crea Oggetti")})
-//            
-//            
-//            
-//                            Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
-//            
-//                            Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
-//                        }
-            
             
             //###FINE - SEZIONE DI TEST COSE
             
             ScrollView{
+                
+                Button(action: {
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Cane")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Gatto")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Stella")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Albero")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Pianta")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Topolino")
+                    PersistenceManager.shared.addOggetto(categoria: "Felpe", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
+                    
+                    
+                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)
+                    
+                    PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])
+                    
+                    
+                    
+                }, label: {Text("Inizializza")})
+                
+                NavigationLink(destination: AddNuovoOggetto(), label: {
+                    Text("Aggiungi nuovo oggetto")
+                })
+                
+                NavigationLink(destination: AddNuovaValigia(), label: {
+                    Text("Aggiungi nuova valigia")
+                })
+                
+                
                 LazyVGrid(columns: columns) {
                     
                     ForEach(allViaggi){
@@ -83,9 +91,9 @@ struct ContentView: View {
                         
                     }
                     
-//                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
-//                        EmptyView()
-//                    }
+                    //                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
+                    //                        EmptyView()
+                    //                    }
                     
                 }
             }

@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+extension String: Identifiable {
+    public var id: String {
+        self
+    }
+}
 
 struct AddTripView: View {
     
@@ -16,7 +21,15 @@ struct AddTripView: View {
     
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
     
-    let categories = ["Maglie","Felpe"]
+    
+    let categories = ["Maglie",
+                      "Felpe",
+                      "Oggetti per la casa",
+                      "Beauty",
+                      "Prova"
+    ]
+    
+    
    
     
     var body: some View {
@@ -29,17 +42,14 @@ struct AddTripView: View {
                     
                     //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                    
-                    
-                    CategoriaScrollView(nome: categories[0], oggettiCategia: PersistenceManager.shared.loadOggettiFromCategoria(categoria: categories[0]))
-                    
-                    CategoriaScrollView(nome: categories[1], oggettiCategia: PersistenceManager.shared.loadOggettiFromCategoria(categoria: categories[1]))
-                    
-//                    CategoriaScrollView(nome: "Categoria 1")
-//                    CategoriaScrollView(nome: "Categoria 2")
-//                    CategoriaScrollView(nome: "Categoria 3")
-//                    CategoriaScrollView(nome: "Categoria 4")
-//                    CategoriaScrollView(nome: "Categoria 5")
-                    
+                    ForEach(categories){ currentCat in
+                        let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
+                        
+                        if (!cat.isEmpty){
+                            CategoriaScrollView(nome: currentCat, oggettiCategia: cat)
+                        }
+                    }
+                  
                 }
                 .padding()
                 

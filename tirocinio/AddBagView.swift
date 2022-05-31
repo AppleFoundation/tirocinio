@@ -1,37 +1,61 @@
 //
-//  AddTripView.swift
+//  AddBagView.swift
 //  ValigieSmart
 //
 //  Created by Salvatore Apicella on 25/04/22.
 //
 
+
 import SwiftUI
 
+//extension String: Identifiable {
+//    public var id: String {
+//        self
+//    }
+//}
 
 struct AddBagView: View {
     
-    //Qui ci deve essere una variabile che prende tutto il DB di valigie e metta una struttura tutte le valigie possibili
-    
+    //Qui si deve prendere al DB tutto quello che si ha riguardo agli oggetti
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    
+    @FetchRequest<Valigia>(entity: Valigia.entity(), sortDescriptors: []) var allValigie: FetchedResults<Valigia>
+    
+    
+    
+    
+    let categories = ["Trolley",
+                      "Da stiva",
+                      "Piccola",
+                      "Prova"
+    ]
+    
+    
+   
+    
     var body: some View {
+        
+        
+        
             
             ScrollView(.vertical){
                 VStack{
                     
                     //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                    
-//                    CategoriaScrollView(nome: "Categoria 1")
-//                    CategoriaScrollView(nome: "Categoria 2")
-//                    CategoriaScrollView(nome: "Categoria 3")
-//                    CategoriaScrollView(nome: "Categoria 4")
-//                    CategoriaScrollView(nome: "Categoria 5")
-                    
+                    ForEach(categories){ currentCat in
+                        let cat = PersistenceManager.shared.loadValigieFromCategoria(categoria: currentCat)
+                        
+                        if (!cat.isEmpty){
+                            BagCategoriaScrollView(nome: currentCat, valigiaCategoria: cat)
+                        }
+                    }
+                  
                 }
                 .padding()
                 
             }
-            
             
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
@@ -42,16 +66,18 @@ struct AddBagView: View {
                     })
                     
                 }
-
+                
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salva")
                     })
+                    
                 }
 
             }
+        
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Aggiungi Valigie")
     }
@@ -61,10 +87,10 @@ struct AddBagView: View {
 
 
 
-
 struct AddBagView_Previews: PreviewProvider {
     static var previews: some View {
-        AddBagView()
-            .previewDevice("iPhone 11")
+        AddTripView()
     }
 }
+
+

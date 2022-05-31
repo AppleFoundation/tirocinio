@@ -235,6 +235,18 @@ class PersistenceManager: ObservableObject {
         return valigie
     }
     
+    func loadValigieFromCategoria(categoria: String) -> [Valigia] {
+        let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "categoria = %@", categoria)
+        request.predicate = predicate
+        
+        let valigie = self.loadValigieFromFetchRequest(request:request)
+        
+        return valigie
+    }
+    
     func loadValigieViaggiantiFromViaggioValigia(viaggio: Viaggio, valigia: Valigia) -> [ValigiaViaggiante] {
         let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
@@ -285,6 +297,8 @@ class PersistenceManager: ObservableObject {
         
         return oggetti
     }
+    
+    
     
     func loadAllViaggi() -> [Viaggio] {
         let request: NSFetchRequest<Viaggio> = NSFetchRequest(entityName: "Viaggio")
