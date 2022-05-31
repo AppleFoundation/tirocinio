@@ -2,7 +2,7 @@
 //  ValigiaViaggiante+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 04/05/22.
+//  Created by Cristian Cerasuolo on 31/05/22.
 //
 //
 
@@ -18,25 +18,25 @@ extension ValigiaViaggiante {
 
     @NSManaged public var id: UUID?
     @NSManaged public var valigiariferimento: Valigia?
-    @NSManaged public var oggettiviaggio: NSSet?
     @NSManaged public var viaggioriferimento: Viaggio?
+    @NSManaged public var oggettiviaggianti: NSSet?
 
 }
 
-// MARK: Generated accessors for oggettiviaggio
+// MARK: Generated accessors for oggettiviaggianti
 extension ValigiaViaggiante {
 
-    @objc(addOggettiviaggioObject:)
-    @NSManaged public func addToOggettiviaggio(_ value: Oggetto)
+    @objc(addOggettiviaggiantiObject:)
+    @NSManaged public func addToOggettiviaggianti(_ value: OggettoViaggiante)
 
-    @objc(removeOggettiviaggioObject:)
-    @NSManaged public func removeFromOggettiviaggio(_ value: Oggetto)
+    @objc(removeOggettiviaggiantiObject:)
+    @NSManaged public func removeFromOggettiviaggianti(_ value: OggettoViaggiante)
 
-    @objc(addOggettiviaggio:)
-    @NSManaged public func addToOggettiviaggio(_ values: NSSet)
+    @objc(addOggettiviaggianti:)
+    @NSManaged public func addToOggettiviaggianti(_ values: NSSet)
 
-    @objc(removeOggettiviaggio:)
-    @NSManaged public func removeFromOggettiviaggio(_ values: NSSet)
+    @objc(removeOggettiviaggianti:)
+    @NSManaged public func removeFromOggettiviaggianti(_ values: NSSet)
 
 }
 

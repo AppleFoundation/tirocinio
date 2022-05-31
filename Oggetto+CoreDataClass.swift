@@ -2,7 +2,7 @@
 //  Oggetto+CoreDataClass.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 04/05/22.
+//  Created by Cristian Cerasuolo on 31/05/22.
 //
 //
 

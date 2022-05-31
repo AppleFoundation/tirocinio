@@ -2,7 +2,7 @@
 //  Oggetto+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 04/05/22.
+//  Created by Cristian Cerasuolo on 31/05/22.
 //
 //
 
@@ -24,24 +24,6 @@ extension Oggetto {
     @NSManaged public var peso: Int32
     @NSManaged public var profondita: Int32
     @NSManaged public var volume: Int32
-    @NSManaged public var oggettivaligiaviaggio: NSSet?
-
-}
-
-// MARK: Generated accessors for oggettivaligiaviaggio
-extension Oggetto {
-
-    @objc(addOggettivaligiaviaggioObject:)
-    @NSManaged public func addToOggettivaligiaviaggio(_ value: ValigiaViaggiante)
-
-    @objc(removeOggettivaligiaviaggioObject:)
-    @NSManaged public func removeFromOggettivaligiaviaggio(_ value: ValigiaViaggiante)
-
-    @objc(addOggettivaligiaviaggio:)
-    @NSManaged public func addToOggettivaligiaviaggio(_ values: NSSet)
-
-    @objc(removeOggettivaligiaviaggio:)
-    @NSManaged public func removeFromOggettivaligiaviaggio(_ values: NSSet)
 
 }
 
