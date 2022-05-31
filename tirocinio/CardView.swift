@@ -38,7 +38,7 @@ struct CardView: View {
                 
                 Spacer()
                 
-                Image("t-shirt")
+                Image("\(oggetto.nome ?? "Base")")
                     .resizable()
                     .frame(width: 75, height: 75, alignment: .center)
                     

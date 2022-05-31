@@ -17,25 +17,33 @@ struct ContentView: View {
     @State var showAddViaggioView: Bool = false
     @State var showEditViaggioView: Bool = false
     @State private var showEditView = false
-    @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
+   // @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
     
     var body: some View{
         NavigationView{
             
             //###INIZIO - SEZIONE DI TEST COSE
             
-            //            VStack{
-            //                Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
-            //
-            //                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Polo")}, label: {Text("Crea Oggetto 1")})
-            //
-            //                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "cibo")}, label: {Text("Crea Oggetto 2")})
-            //
-            //
-            //                Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
-            //
-            //                Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
-            //            }
+//                        VStack{
+//                            Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
+//            
+//                            Button(action: {
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Cane")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Gatto")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Stella")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Albero")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Pianta")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
+//                                PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Topolino")
+//                                
+//                            }, label: {Text("Crea Oggetti")})
+//            
+//            
+//            
+//                            Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
+//            
+//                            Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
+//                        }
             
             
             //###FINE - SEZIONE DI TEST COSE
@@ -62,7 +70,7 @@ struct ContentView: View {
                             
                             Button(action: {
                                 self.showEditView = true
-                                viaggioScelto = viaggio
+                                //viaggioScelto = viaggio
                             }, label: {
                                 HStack {
                                     Text("Edit")
@@ -75,9 +83,9 @@ struct ContentView: View {
                         
                     }
                     
-                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
-                        EmptyView()
-                    }
+//                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
+//                        EmptyView()
+//                    }
                     
                 }
             }
@@ -94,7 +102,7 @@ struct ContentView: View {
         }.sheet(isPresented: $showEditViaggioView, onDismiss:{
             showAddViaggioView = false
         }){
-            EditViaggioView( viaggio: PersistenceManager.shared.loadAllViaggi()[0])
+            //EditViaggioView( viaggio: PersistenceManager.shared.loadAllViaggi()[0])
         }
     }
     

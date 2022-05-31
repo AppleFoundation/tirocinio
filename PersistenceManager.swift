@@ -40,7 +40,11 @@ class PersistenceManager: ObservableObject {
             if self.persistentContainer.viewContext.hasChanges {
                 try? self.persistentContainer.viewContext.save()
             }
+            
+            
         }
+        
+        
     }
     
     //     for later usage
@@ -361,13 +365,5 @@ class PersistenceManager: ObservableObject {
     
     //UPDATE -> Vedremo poi...
 
-    func updateOggetto(nome: String, categoria: String, newQuantita: Int){
-        let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
-        
-        if(oggetti.count > 0){
-            oggetti[0].quantita = Int32(newQuantita)
-            self.saveContext()
-        }
-    }
 
 }
