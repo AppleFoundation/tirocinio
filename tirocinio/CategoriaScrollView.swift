@@ -11,6 +11,8 @@ struct CategoriaScrollView: View{
     
     var nome: String
     
+    var oggettiCategia: [Oggetto]
+    
     //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
     var body: some View{
@@ -25,12 +27,18 @@ struct CategoriaScrollView: View{
             
             ScrollView(.horizontal){
                 HStack{
-                    CardView(nome: "Maglia")
-                    CardView(nome: "Maglione")
-                    CardView(nome: "Jeans")
-                    CardView(nome: "Canottiera")
-                    CardView(nome: "Camicia")
-                    CardView(nome: "Guanti")
+                    
+                    ForEach(oggettiCategia){
+                        oggetto in
+                        CardView(oggetto: oggetto)
+                    }
+                    
+//                    CardView(nome: "Maglia")
+//                    CardView(nome: "Maglione")
+//                    CardView(nome: "Jeans")
+//                    CardView(nome: "Canottiera")
+//                    CardView(nome: "Camicia")
+//                    CardView(nome: "Guanti")
                 }
                 
             }
@@ -40,6 +48,6 @@ struct CategoriaScrollView: View{
 
 struct CategoriaScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriaScrollView(nome: "Test")
+        CategoriaScrollView(nome: "Test", oggettiCategia: PersistenceManager.shared.loadAllOggetti())
     }
 }

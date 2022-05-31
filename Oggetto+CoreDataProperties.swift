@@ -18,6 +18,7 @@ extension Oggetto {
 
     @NSManaged public var categoria: String?
     @NSManaged public var id: UUID?
+    @NSManaged public var quantita: Int32
     @NSManaged public var larghezza: Int32
     @NSManaged public var lunghezza: Int32
     @NSManaged public var nome: String?

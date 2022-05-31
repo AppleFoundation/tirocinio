@@ -9,60 +9,80 @@ import SwiftUI
 
 struct ContentView: View {
     
-//    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
+    //    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = [GridItem(.fixed(170),spacing: 10),
                    GridItem(.fixed(170),spacing: 10)]
     
     @State var showAddViaggioView: Bool = false
-
+    @State var showEditViaggioView: Bool = false
+    @State private var showEditView = false
+    @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
+    
     var body: some View{
         NavigationView{
             
             //###INIZIO - SEZIONE DI TEST COSE
             
-//            VStack{
-//                Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
-//                
-//                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Polo")}, label: {Text("Crea Oggetto 1")})
-//                
-//                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "cibo")}, label: {Text("Crea Oggetto 2")})
-//                
-//                
-//                Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
-//                
-//                Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
-//            }
-           
+            //            VStack{
+            //                Button(action: {PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)}, label: {Text("Crea valigia")})
+            //
+            //                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Polo")}, label: {Text("Crea Oggetto 1")})
+            //
+            //                Button(action: {PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "cibo")}, label: {Text("Crea Oggetto 2")})
+            //
+            //
+            //                Button(action: {PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])}, label: {Text("AggiungiOggetto")})
+            //
+            //                Button(action: {print(PersistenceManager.shared.loadAllValigieViaggianti())}, label: {Text("Stampa valigie")})
+            //            }
+            
             
             //###FINE - SEZIONE DI TEST COSE
-
+            
             ScrollView{
                 LazyVGrid(columns: columns) {
                     
                     ForEach(allViaggi){
                         viaggio in
-                        NavigationLink(destination: DetailTripView()){
+                        NavigationLink(destination: DetailTripView(viaggio: viaggio)){
                             ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
                         }
                         .contextMenu
                         {
                             Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
-                            {
-                                Text("Elimina")
+                                    {
+                                HStack{
+                                    Text("Elimina")
+                                    Image(systemName: "trash.fill")
+                                    
+                                }
+                                
                             })
                             
-                            Button(action: { print("action 2 triggered") }, label:
-                            {
-                                Text("Modifica")
+                            Button(action: {
+                                self.showEditView = true
+                                viaggioScelto = viaggio
+                            }, label: {
+                                HStack {
+                                    Text("Edit")
+                                    Image(systemName: "pencil")
+                                }
                             })
+                            
                         }
+                        
+                        
                     }
-
+                    
+                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
+                        EmptyView()
+                    }
+                    
                 }
             }
-            .navigationTitle("SmartSuitCase").multilineTextAlignment(.center)
             
+            .navigationTitle("SmartSuitCase").multilineTextAlignment(.center)
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink(destination: AddViaggioView()){
@@ -71,10 +91,10 @@ struct ContentView: View {
                     
                 }
             }
-        }.sheet(isPresented: $showAddViaggioView, onDismiss:{
+        }.sheet(isPresented: $showEditViaggioView, onDismiss:{
             showAddViaggioView = false
         }){
-            AddViaggioView()
+            EditViaggioView( viaggio: PersistenceManager.shared.loadAllViaggi()[0])
         }
     }
     
@@ -114,7 +134,7 @@ struct ActionButtonView: View{
             .frame(width: reader.size.width, height: reader.size.height)
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
             
-           
+            
             
         }
         .frame(height: 150)

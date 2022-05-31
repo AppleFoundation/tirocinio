@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct AddViaggioView: View {
+struct EditViaggioView: View {
     @State var nomeViaggio: String = ""
     @State var dataViaggio: Date = Date.now
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    
+    var viaggio: Viaggio
     
 //    @Binding var allViaggi: [Viaggio]
 //    
@@ -21,25 +21,28 @@ struct AddViaggioView: View {
 //        self._allViaggi = allViaggi
 //    }
     var body: some View {
+
             Form{
                 //nome, data
-                Section(header: Text("Nome")){
+                Section(header: Text("Vecchio nome: \(viaggio.nome ?? "Vecchio nome")")){
                     
-                    TextField("Nome Viaggio", text: $nomeViaggio)
+                    TextField("Nuovo nome viaggio", text: $nomeViaggio)
                     
                     //Inserire un limite di caratteri massimo 30
                         
         
                 }
-                Section(header: Text("Data")){
+                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
                     DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
                 }
             }
             .navigationBarBackButtonHidden(true)
-            .navigationTitle("Nuovo viaggio")
+            .navigationTitle("Modifica viaggio")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
+                        //⚠️ DA IMPLEMENTARE UN MECCANISMO PER CAMBIARE IL NOME DEL VIAGGIO SE SI PUÒ
+                        PersistenceManager.shared.deleteViaggio(nome: viaggio.nome!)
                         PersistenceManager.shared.addViaggio(data: dataViaggio, nome: nomeViaggio)
                         presentationMode.wrappedValue.dismiss()
                         
@@ -54,11 +57,12 @@ struct AddViaggioView: View {
             }
             
         
+        
     }
 }
 
 //struct AddViaggioView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        AddViaggioView()
+//        EditViaggioView()
 //    }
 //}

@@ -12,35 +12,48 @@ struct AddBagView: View {
     
     //Qui ci deve essere una variabile che prende tutto il DB di valigie e metta una struttura tutte le valigie possibili
     
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var body: some View {
-        NavigationView{
             
             ScrollView(.vertical){
                 VStack{
                     
                     //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                    
-                    CategoriaScrollView(nome: "Categoria 1")
-                    CategoriaScrollView(nome: "Categoria 2")
-                    CategoriaScrollView(nome: "Categoria 3")
-                    CategoriaScrollView(nome: "Categoria 4")
-                    CategoriaScrollView(nome: "Categoria 5")
+//                    CategoriaScrollView(nome: "Categoria 1")
+//                    CategoriaScrollView(nome: "Categoria 2")
+//                    CategoriaScrollView(nome: "Categoria 3")
+//                    CategoriaScrollView(nome: "Categoria 4")
+//                    CategoriaScrollView(nome: "Categoria 5")
                     
                 }
+                .padding()
                 
             }
             
+            
             .toolbar{
+                ToolbarItem(placement: .navigationBarLeading){
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Cancel")
+                    })
+                    
+                }
+
                 ToolbarItem(placement: .navigationBarTrailing){
-                    NavigationLink(destination: DetailTripView()){
-                        Text("Prosegui")
-                    }
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Salva")
+                    })
                 }
 
             }
-            
-        }
-        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Aggiungi Valigie")
     }
 }
 

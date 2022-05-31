@@ -134,6 +134,7 @@ class PersistenceManager: ObservableObject {
             
             newOggetto.categoria = categoria
             newOggetto.nome = nome
+            newOggetto.quantita = 0
             newOggetto.larghezza = Int32(larghezza)
             newOggetto.lunghezza = Int32(lunghezza)
             newOggetto.profondita = Int32(profondita)
@@ -267,6 +268,21 @@ class PersistenceManager: ObservableObject {
         return oggetti
     }
     
+    func loadOggettiFromCategoria(categoria: String) -> [Oggetto] {
+        let request: NSFetchRequest <Oggetto> = NSFetchRequest(entityName: "Oggetto")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "categoria = %@", categoria)
+        request.predicate = predicate
+        
+        let oggetti = self.loadOggettiFromFetchRequest(request:request)
+        
+        
+        
+        
+        return oggetti
+    }
+    
     func loadAllViaggi() -> [Viaggio] {
         let request: NSFetchRequest<Viaggio> = NSFetchRequest(entityName: "Viaggio")
         request.returnsObjectsAsFaults = false
@@ -346,5 +362,13 @@ class PersistenceManager: ObservableObject {
     
     //UPDATE -> Vedremo poi...
 
+    func updateOggetto(nome: String, categoria: String, newQuantita: Int){
+        let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
+        
+        if(oggetti.count > 0){
+            oggetti[0].quantita = Int32(newQuantita)
+            self.saveContext()
+        }
+    }
 
 }

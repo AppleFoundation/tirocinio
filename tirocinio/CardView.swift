@@ -10,7 +10,8 @@ import SceneKit
 
 struct CardView: View {
     
-    var nome: String
+    
+    var oggetto: Oggetto
     
     @State var value = 0
         let step = 1
@@ -33,7 +34,7 @@ struct CardView: View {
             }
             
             VStack {
-               Text(nome)
+                Text(oggetto.nome ?? "Nome")
                 
                 Spacer()
                 
@@ -68,9 +69,10 @@ struct CardView: View {
         }
         
         
-        
     }
+    
 }
+    
 
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
@@ -78,3 +80,4 @@ struct CardView_Previews: PreviewProvider {
             .previewDevice("iPhone 11")
     }
 }
+
