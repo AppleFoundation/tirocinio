@@ -59,7 +59,7 @@ struct AddTripView: View {
             .toolbar{
                 
 
-                ToolbarItem(placement: .navigationBarLeading){
+                ToolbarItem(placement: .cancellationAction){
                     Button(action: {
 
                         self.presentationMode.wrappedValue.dismiss()
@@ -80,6 +80,7 @@ struct AddTripView: View {
             }
         
             .navigationBarBackButtonHidden(true)
+            
         .navigationTitle("Aggiungi Oggetti")
     }
 }
