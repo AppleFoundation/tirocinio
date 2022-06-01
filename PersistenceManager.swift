@@ -158,7 +158,7 @@ class PersistenceManager: ObservableObject {
         let entity = NSEntityDescription.entity(forEntityName: "OggettoViaggiante", in: self.context)
         
         //controllo se dati oggetto e valigia viaggiante, vi sia un oggetto viaggiante definito
-        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoValigia(oggettoRef: oggetto, viaggioRef: viaggio)
+        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
         
       
             let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
@@ -298,11 +298,35 @@ class PersistenceManager: ObservableObject {
         return valigie
     }
     
-    func loadOggettiViaggiantiFromOggettoValigia(oggettoRef: Oggetto, viaggioRef: Viaggio) -> [OggettoViaggiante]{
+    func loadValigieViaggiantiFromViaggio(viaggio: Viaggio) -> [ValigiaViaggiante] {
+        let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "viaggioRef = %@", viaggio)
+        request.predicate = predicate
+        
+        let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
+        
+        return valigie
+    }
+    
+    func loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: Oggetto, viaggioRef: Viaggio) -> [OggettoViaggiante]{
         let request: NSFetchRequest <OggettoViaggiante> = NSFetchRequest(entityName: "OggettoViaggiante")
         request.returnsObjectsAsFaults = false
         
         let predicate = NSPredicate(format: "oggettoRef = %@ AND viaggioRef = %@", oggettoRef, viaggioRef)
+        request.predicate = predicate
+        
+        let oggetti = self.loadOggettiViaggiantiFromFetchRequest(request:request)
+        
+        return oggetti
+    }
+    
+    func loadOggettiViaggiantiFromViaggio(viaggioRef: Viaggio) -> [OggettoViaggiante]{
+        let request: NSFetchRequest <OggettoViaggiante> = NSFetchRequest(entityName: "OggettoViaggiante")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "viaggioRef = %@", viaggioRef)
         request.predicate = predicate
         
         let oggetti = self.loadOggettiViaggiantiFromFetchRequest(request:request)
@@ -436,7 +460,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func deleteOggettoViaggiante(ogetto: Oggetto, viaggio: Viaggio){
-        let oggettiViaggianti = self.loadOggettiViaggiantiFromOggettoValigia(oggettoRef: ogetto, viaggioRef: viaggio)
+        let oggettiViaggianti = self.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: ogetto, viaggioRef: viaggio)
         
         if(oggettiViaggianti.count > 0){
             self.context.delete(oggettiViaggianti[0])

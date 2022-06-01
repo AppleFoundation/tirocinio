@@ -42,7 +42,7 @@ struct AddNuovoOggetto: View {
                 
             }
             .navigationBarBackButtonHidden(true)
-            .navigationTitle("Nuovo viaggio")
+            .navigationTitle("Nuovo oggetto")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {

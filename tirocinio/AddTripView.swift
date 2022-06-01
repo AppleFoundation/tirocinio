@@ -57,16 +57,9 @@ struct AddTripView: View {
             }
             
             .toolbar{
-//                ToolbarItem(placement: .navigationBarLeading){
-//                    Button(action: {
-//                        self.presentationMode.wrappedValue.dismiss()
-//                    }, label: {
-//                        Text("Salva e chiudi")
-//                    })
-//
-//                }
+                
 
-                ToolbarItem(placement: .navigationBarTrailing){
+                ToolbarItem(placement: .navigationBarLeading){
                     Button(action: {
 
                         self.presentationMode.wrappedValue.dismiss()
@@ -74,6 +67,14 @@ struct AddTripView: View {
                         Text("Salva")
                     })
 
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing){
+                    
+                    NavigationLink(destination: AddNuovoOggetto(), label: {
+                        Image(systemName: "plus")
+                    })
+                   
                 }
 
             }

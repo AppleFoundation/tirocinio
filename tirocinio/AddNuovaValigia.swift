@@ -42,11 +42,11 @@ struct AddNuovaValigia: View {
                 
             }
             .navigationBarBackButtonHidden(true)
-            .navigationTitle("Nuovo viaggio")
+            .navigationTitle("Nuova valigia")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
-                        PersistenceManager.shared.addValigia(categoria: categoria, lunghezza: 1, larghezza: 1, profondita: 1, nome: nome, tara: 1, utilizzato: true)
+                        PersistenceManager.shared.addValigia(categoria: categoria, lunghezza: 1, larghezza: 1, profondita: 1, nome: nome, tara: 1000, utilizzato: true)
                         presentationMode.wrappedValue.dismiss()
                         
                     }, label: {Text("Save")})

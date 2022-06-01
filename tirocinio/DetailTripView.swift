@@ -11,66 +11,49 @@ struct DetailTripView: View {
     
     var viaggio: Viaggio
     
-
+    
     
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        
-        VStack{
-            Text("Per essere pronto al viaggio non dimenticare di aggiungere tutti gli oggetti necessari e le valigie che hai a disposizione per questo viaggio!")
-                .font(.headline)
-                .multilineTextAlignment(.center)
-            
-            HStack{
+        ScrollView(.vertical){
+            VStack{
                 
-                Spacer()
-                NavigationLink(destination: AddTripView(viaggio: viaggio)){
-                    VStack{
-                        Text("Aggiungi Oggetti")
-                        Image(systemName: "archivebox.fill")
-                            .padding(.top, 1.0)
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.3))
-                    .cornerRadius(10)
-                    
-                }
+                let valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
+                let oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
                 
-                Spacer()
-                
-                NavigationLink(destination: AddBagView(viaggio: viaggio)){
-                    VStack{
-                        Text("Aggiungi Valigie")
-                        Image(systemName: "suitcase.fill")
-                            .padding(.top, 1.0)
-                    }
-                    .padding()
-                    .background(Color.gray.opacity(0.3))
-                    .cornerRadius(10)
-                }
-                
-                Spacer()
-                
-                
-            }
-            
-            
-            //            ForEach(PersistenceManager.shared.loadAllOggettiViaggianti()){
-            //                oggettino in
-            //                Text((oggettino.oggettoRef?.nome)!)
-            //            }
-            //            ForEach(PersistenceManager.shared.loadAllValigieViaggianti()){
-            //                valigetta in
-            //                Text((valigetta.valigiaRef?.nome)!)
-            //            }
-            
-            
-            ScrollView(.vertical){
-                let valigieDB = PersistenceManager.shared.loadAllValigieViaggianti()
-                let oggettiDB = PersistenceManager.shared.loadAllOggettiViaggianti()
                 let insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
+                
+                HStack{
+                    Spacer()
+                    NavigationLink(destination: AddTripView(viaggio: viaggio)){
+                        VStack{
+                            Text("Aggiungi Oggetti")
+                            Image(systemName: "archivebox.fill")
+                                .padding(.top, 1.0)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: AddBagView(viaggio: viaggio)){
+                        VStack{
+                            Text("Aggiungi Valigie")
+                            Image(systemName: "suitcase.fill")
+                                .padding(.top, 1.0)
+                        }
+                        .padding()
+                        .background(Color.gray.opacity(0.3))
+                        .cornerRadius(10)
+                    }
+                    Spacer()
+                }
+                
                 
                 ForEach(insiemeDiValigie.tutteLeValigie){
                     singolaIstanza in
@@ -82,8 +65,8 @@ struct DetailTripView: View {
                                 Text(singolaIstanza.nomeValigia)
                                     .font(.title)
                                     .fontWeight(.bold)
-//                                    .foregroundColor(Color.blue)
-                                    
+                                //                                    .foregroundColor(Color.blue)
+                                
                                 Spacer()
                                 VStack(alignment: .trailing){
                                     Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
@@ -103,8 +86,8 @@ struct DetailTripView: View {
                                         .multilineTextAlignment(.leading)
                                     Spacer()
                                 }
-                               
-
+                                
+                                
                             }
                             Spacer()
                         }
@@ -112,23 +95,12 @@ struct DetailTripView: View {
                         .background(scegliColore.init(valigia: singolaIstanza).coloreDellaScheda)
                         .cornerRadius(15)
                     }
-                    
-//                    if(singolaIstanza.pesoAttuale > singolaIstanza.pesoMassimo){
-//                        coloreScehda = Color.red.opacity(0.6)
-//                    }
-                    
-                   
-                    
-                    
-                    
                 }
-                
             }
-
             Spacer()
         }
-        .padding()
         
+        .padding(.horizontal)
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
         
@@ -179,10 +151,12 @@ struct scegliColore{
             coloreDellaScheda = Color.red.opacity(0.6)
         }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
             coloreDellaScheda = Color.yellow.opacity(0.6)
+            
         }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.5){
-            coloreDellaScheda = Color.blue.opacity(0.6)
-        }else{
             coloreDellaScheda = Color.green.opacity(0.6)
+            
+        }else{
+            coloreDellaScheda = Color.black.opacity(0.05)
         }
     }
 }
@@ -213,7 +187,7 @@ struct leMieValigie{
             for valigiaAttuale in tutteLeValigie{
                 if(temp.1 == false){
                     //Attualmente l'algoritmo implementato si basa solo ed unicamente sul peso va implementato anche sul volume
-                    if((valigiaAttuale.pesoAttuale + Int(temp.0!.oggettoRef!.peso)) < valigiaAttuale.pesoMassimo){
+                    if((valigiaAttuale.pesoAttuale + Int(temp.0!.oggettoRef!.peso)) <= valigiaAttuale.pesoMassimo){
                         valigiaAttuale.oggettiInseriti.append(temp.0!)
                         valigiaAttuale.pesoAttuale += Int(temp.0!.oggettoRef!.peso)
                         temp.1 = true

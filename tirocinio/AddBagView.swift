@@ -58,22 +58,24 @@ struct AddBagView: View {
             }
             
             .toolbar{
+                
+
                 ToolbarItem(placement: .navigationBarLeading){
                     Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                    })
-                    
-                }
-                
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {
+
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salva")
                     })
+
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing){
                     
+                    NavigationLink(destination: AddNuovaValigia(), label: {
+                        Image(systemName: "plus")
+                    })
+                   
                 }
 
             }

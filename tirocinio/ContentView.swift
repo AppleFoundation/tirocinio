@@ -42,6 +42,8 @@ struct ContentView: View {
                     
                     PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Blu", tara: 1000, utilizzato: true)
                     PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Rossa", tara: 1000, utilizzato: true)
+                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Verde", tara: 1000, utilizzato: true)
+                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Viola", tara: 1000, utilizzato: true)
                     
                     
 //                    PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])
