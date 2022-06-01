@@ -11,6 +11,9 @@ struct DetailTripView: View {
     
     var viaggio: Viaggio
     
+
+
+    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -19,7 +22,7 @@ struct DetailTripView: View {
             Text("Per essere pronto al viaggio non dimenticare di aggiungere tutti gli oggetti necessari e le valigie che hai a disposizione per questo viaggio!")
                 .font(.headline)
                 .multilineTextAlignment(.center)
-                
+            
             HStack{
                 
                 Spacer()
@@ -34,9 +37,9 @@ struct DetailTripView: View {
                     .cornerRadius(10)
                     
                 }
-            
+                
                 Spacer()
-            
+                
                 NavigationLink(destination: AddBagView(viaggio: viaggio)){
                     VStack{
                         Text("Aggiungi Valigie")
@@ -49,57 +52,70 @@ struct DetailTripView: View {
                 }
                 
                 Spacer()
-               
+                
                 
             }
             
             
-//            ForEach(PersistenceManager.shared.loadAllOggettiViaggianti()){
-//                oggettino in
-//                Text((oggettino.oggettoRef?.nome)!)
-//            }
-//            ForEach(PersistenceManager.shared.loadAllValigieViaggianti()){
-//                valigetta in
-//                Text((valigetta.valigiaRef?.nome)!)
-//            }
+            //            ForEach(PersistenceManager.shared.loadAllOggettiViaggianti()){
+            //                oggettino in
+            //                Text((oggettino.oggettoRef?.nome)!)
+            //            }
+            //            ForEach(PersistenceManager.shared.loadAllValigieViaggianti()){
+            //                valigetta in
+            //                Text((valigetta.valigiaRef?.nome)!)
+            //            }
             
             
             ScrollView(.vertical){
-                
-                var valigieDB = PersistenceManager.shared.loadAllValigieViaggianti()
-                var oggettiDB = PersistenceManager.shared.loadAllOggettiViaggianti()
-               
+                let valigieDB = PersistenceManager.shared.loadAllValigieViaggianti()
+                let oggettiDB = PersistenceManager.shared.loadAllOggettiViaggianti()
                 let insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
-                
-//                ForEach(insiemeDiValigie.tutteLeValigie){
-//                    singolaIstanza in
-//                    Text("Nome valigia:\(singolaIstanza.nomeValigia), ci sono \(singolaIstanza.oggettiInseriti.count)oggetti")
-//                }
                 
                 ForEach(insiemeDiValigie.tutteLeValigie){
                     singolaIstanza in
+                    
+                    
+                    
+//                    if(singolaIstanza.pesoAttuale > singolaIstanza.pesoMassimo){
+//                        coloreScehda = Color.red.opacity(0.6)
+//                    }
+                    
                     VStack{
-                        Text(singolaIstanza.nomeValigia)
-                            .font(.title)
-                            .foregroundColor(Color.blue)
+                        HStack{
+                            Text(singolaIstanza.nomeValigia)
+                                .font(.title)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color.blue)
+                                
+                            Spacer()
+                            VStack(alignment: .trailing){
+                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale) di \(singolaIstanza.volumeMassimo)")
+                                    .font(.caption)
+                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale) di \(singolaIstanza.pesoMassimo)")
+                                    .font(.caption)
+                            }
+                        }
                         ForEach(singolaIstanza.oggettiInseriti){
                             singoloOggetto in
-                            Text((singoloOggetto.oggettoRef?.nome)!)
+                            Text("\((singoloOggetto.oggettoRef?.nome)!): \((singoloOggetto.oggettoRef?.peso)!)")
                                 .font(.body)
                             
                         }
                         Spacer()
                     }
+                    .padding()
+                    .background(Color.yellow.opacity(0.6))
+                    .cornerRadius(15)
+                    
+                    
+                    
                 }
+                
             }
-            
-             
-            
             Spacer()
         }
         .padding()
-        
-        
         
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
@@ -154,12 +170,13 @@ struct leMieValigie{
         self.tutteLeValigie.append(valigiaDaRiempire.init(nomeValigiaExtra: "Non allocati"))
         for singolaValigia in valigieViaggianti{
             tutteLeValigie.append(valigiaDaRiempire.init(valigiaDaAggiungere: singolaValigia))
-            }
+        }
         
         
         
         self.oggettiDaAllocare = oggettiViaggianti
         
+        //Qui andrebbe ordinato il vettore oggettiDaAllocare in ordine di peso o di volume
         
         while (oggettiDaAllocare.isEmpty == false){
             
@@ -167,6 +184,7 @@ struct leMieValigie{
             
             for valigiaAttuale in tutteLeValigie{
                 if(temp.1 == false){
+                    //Attualmente l'algoritmo implementato si basa solo ed unicamente sul peso va implementato anche sul volume
                     if((valigiaAttuale.pesoAttuale + Int(temp.0!.oggettoRef!.peso)) < valigiaAttuale.pesoMassimo){
                         valigiaAttuale.oggettiInseriti.append(temp.0!)
                         valigiaAttuale.pesoAttuale += Int(temp.0!.oggettoRef!.peso)
@@ -176,6 +194,7 @@ struct leMieValigie{
             }
             if(temp.1 == false){
                 tutteLeValigie[0].oggettiInseriti.append(temp.0!)
+                tutteLeValigie[0].pesoAttuale += Int(temp.0!.oggettoRef!.peso)
                 temp.1 = true
             }
             
