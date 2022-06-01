@@ -148,12 +148,12 @@ struct scegliColore{
     
     init(valigia: valigiaDaRiempire){
         if(valigia.pesoAttuale > valigia.pesoMassimo){
-            coloreDellaScheda = Color.red.opacity(0.6)
+            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 0.4, blue: 0.4, opacity: 1.0)
         }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
-            coloreDellaScheda = Color.yellow.opacity(0.6)
+            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 0.74, blue: 0.18, opacity: 1.0)
             
         }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.5){
-            coloreDellaScheda = Color.green.opacity(0.6)
+            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 0.39, green: 0.92, blue: 0.39, opacity: 1.0)
             
         }else{
             coloreDellaScheda = Color.black.opacity(0.05)
