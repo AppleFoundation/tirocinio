@@ -22,12 +22,13 @@ struct AddTripView: View {
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
     
     
-    let categories = ["Maglie",
-                      "Felpe",
-                      "Oggetti per la casa",
-                      "Beauty",
-                      "Prova",
-                      "Doccia"
+    let categories = ["Articoli da bagno",
+                      "Abbigliamento",
+                      "Essenziali",
+                      "Campeggio",
+                      "Spiaggia",
+                      "Sport",
+                      "Informatica ed Elettronica"
     ]
     
     var viaggio: Viaggio
