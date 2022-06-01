@@ -34,7 +34,7 @@ struct TripListScroll: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: AddTripView(), label: {
+                NavigationLink(destination: EmptyView(), label: {
                     VStack{
                         Image(systemName: "plus.circle")
                             .resizable()

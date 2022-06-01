@@ -11,6 +11,8 @@ struct CategoriaScrollView: View{
     
     var nome: String
     
+    var viaggio: Viaggio
+    
     var oggettiCategia: [Oggetto]
     
     //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
@@ -30,7 +32,7 @@ struct CategoriaScrollView: View{
                     
                     ForEach(oggettiCategia){
                         oggetto in
-                        CardView(oggetto: oggetto)
+                        CardView(oggetto: oggetto, viaggio: viaggio, value: PersistenceManager.shared.loadOggettiViaggiantiFromOggettoValigia(oggettoRef: oggetto, viaggioRef: viaggio).count)
                     }
                     
 //                    CardView(nome: "Maglia")
@@ -46,8 +48,8 @@ struct CategoriaScrollView: View{
     }
 }
 
-struct CategoriaScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoriaScrollView(nome: "Test", oggettiCategia: PersistenceManager.shared.loadAllOggetti())
-    }
-}
+//struct CategoriaScrollView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoriaScrollView(nome: "Test", viaggio: <#Viaggio#>, oggettiCategia: PersistenceManager.shared.loadAllOggetti())
+//    }
+//}

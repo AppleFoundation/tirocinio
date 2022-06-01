@@ -96,16 +96,16 @@ class PersistenceManager: ObservableObject {
         }
     }
     
-    func addValigiaViaggiante(oggettiInViaggio: [OggettoViaggiante], valigia: Valigia, viaggio: Viaggio){
+    func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
         let entity = NSEntityDescription.entity(forEntityName: "ValigiaViaggiante", in: self.context)
+        
         if(loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).isEmpty){
             let newValigiaViaggiante = ValigiaViaggiante(entity: entity!, insertInto: self.context)
 //            newValigiaViaggiante.oggettiviaggio?.mutableSetValue(forKey: "oggettiviaggio").addObjects(from: oggettiInViaggio)
 //                print(newValigiaViaggiante.oggettiviaggio)//DEBUG
-            newValigiaViaggiante.addToOggettiviaggianti(NSSet(array: oggettiInViaggio))
             
-            newValigiaViaggiante.valigiariferimento = valigia
-            newValigiaViaggiante.viaggioriferimento = viaggio
+            newValigiaViaggiante.valigiaRef = valigia
+            newValigiaViaggiante.viaggioRef = viaggio
             newValigiaViaggiante.id = UUID()
             valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
             self.saveContext()
@@ -154,24 +154,20 @@ class PersistenceManager: ObservableObject {
         }
     }
     
-    func addOggettoViaggiante(oggettoPadre: Oggetto, quantity: Int, valigiaviaggiante: ValigiaViaggiante){
+    func addOggettoViaggiante(oggetto: Oggetto, viaggio: Viaggio){
         let entity = NSEntityDescription.entity(forEntityName: "OggettoViaggiante", in: self.context)
         
         //controllo se dati oggetto e valigia viaggiante, vi sia un oggetto viaggiante definito
-        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoValigia(oggettopadre: oggettoPadre, valigiacontenitrice: valigiaviaggiante)
+        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoValigia(oggettoRef: oggetto, viaggioRef: viaggio)
         
-        if(oggettoInQuestione.isEmpty){//in realtà è uno solo, ma lo trattiamo come array
-            //lo posso creare
+      
             let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
-            
-            newOggettoViaggiante.quantity = Int16(quantity)
+
             newOggettoViaggiante.id = UUID()
-            newOggettoViaggiante.oggettoPadre = oggettoPadre
-            newOggettoViaggiante.valigiaContenitrice = valigiaviaggiante
-        }else{
-            //lo devo aggionrare in quantità
-            oggettoInQuestione[0].quantity = Int16(quantity)
-        }
+            newOggettoViaggiante.oggettoRef = oggetto
+            newOggettoViaggiante.viaggioRef = viaggio
+        
+        
         self.saveContext()
         print("Oggetto viaggiante salvato!")
     }
@@ -206,7 +202,7 @@ class PersistenceManager: ObservableObject {
             
             for x in array {
                 let valigia = x
-                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiariferimento!.nome))\n Viaggio:\(valigia.viaggioriferimento?.nome)")
+                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiaRef!.nome))\n Viaggio:\(valigia.valigiaRef?.nome)")
             }
             
         }catch let errore{
@@ -225,7 +221,7 @@ class PersistenceManager: ObservableObject {
             
             for x in array {
                 let oggetto = x
-                print("Oggetto Viaggiante \n Oggetto padre:\(String(describing: oggetto.oggettoPadre))\n Valigia contenitrice:\(String(describing: oggetto.valigiaContenitrice))")
+                print("Oggetto Viaggiante \n OggettoRef:\(String(describing: oggetto.oggettoRef))\n ViaggioRef:\(String(describing: oggetto.viaggioRef))")
             }
             
         }catch let errore{
@@ -294,7 +290,7 @@ class PersistenceManager: ObservableObject {
         let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "viaggioriferimento = %@ AND valigiariferimento = %@", viaggio, valigia)
+        let predicate = NSPredicate(format: "viaggioRef = %@ AND valigiaRef = %@", viaggio , valigia)
         request.predicate = predicate
         
         let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
@@ -302,11 +298,11 @@ class PersistenceManager: ObservableObject {
         return valigie
     }
     
-    func loadOggettiViaggiantiFromOggettoValigia(oggettopadre: Oggetto, valigiacontenitrice: ValigiaViaggiante) -> [OggettoViaggiante]{
+    func loadOggettiViaggiantiFromOggettoValigia(oggettoRef: Oggetto, viaggioRef: Viaggio) -> [OggettoViaggiante]{
         let request: NSFetchRequest <OggettoViaggiante> = NSFetchRequest(entityName: "OggettoViaggiante")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "oggettoPadre = %@ AND valigiaContenitrice = %@", oggettopadre, valigiacontenitrice)
+        let predicate = NSPredicate(format: "oggettoRef = %@ AND viaggioRef = %@", oggettoRef, viaggioRef)
         request.predicate = predicate
         
         let oggetti = self.loadOggettiViaggiantiFromFetchRequest(request:request)
@@ -383,6 +379,13 @@ class PersistenceManager: ObservableObject {
         return self.loadOggettiFromFetchRequest(request: request)
     }
     
+    func loadAllOggettiViaggianti() -> [OggettoViaggiante]{
+        let request: NSFetchRequest<OggettoViaggiante> = NSFetchRequest(entityName: "OggettoViaggiante")
+        request.returnsObjectsAsFaults = false
+    
+        return self.loadOggettiViaggiantiFromFetchRequest(request: request)
+    }
+    
     func loadAllValigieViaggianti() -> [ValigiaViaggiante] {
         let request: NSFetchRequest<ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
@@ -428,6 +431,16 @@ class PersistenceManager: ObservableObject {
         if(oggetti.count > 0){
             self.context.delete(oggetti[0])
             print("Oggetti: \(String(describing: oggetti[0].nome))")
+            self.saveContext()
+        }
+    }
+    
+    func deleteOggettoViaggiante(ogetto: Oggetto, viaggio: Viaggio){
+        let oggettiViaggianti = self.loadOggettiViaggiantiFromOggettoValigia(oggettoRef: ogetto, viaggioRef: viaggio)
+        
+        if(oggettiViaggianti.count > 0){
+            self.context.delete(oggettiViaggianti[0])
+            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
             self.saveContext()
         }
     }

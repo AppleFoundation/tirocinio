@@ -32,7 +32,7 @@ struct AddBagView: View {
     ]
     
     
-   
+    var viaggio: Viaggio
     
     var body: some View {
         
@@ -48,7 +48,7 @@ struct AddBagView: View {
                         let cat = PersistenceManager.shared.loadValigieFromCategoria(categoria: currentCat)
                         
                         if (!cat.isEmpty){
-                            BagCategoriaScrollView(nome: currentCat, valigiaCategoria: cat)
+                            BagCategoriaScrollView(nome: currentCat, viaggio: viaggio, valigiaCategoria: cat)
                         }
                     }
                   
@@ -87,10 +87,10 @@ struct AddBagView: View {
 
 
 
-struct AddBagView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTripView()
-    }
-}
+//struct AddBagView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddTripView()
+//    }
+//}
 
 

@@ -2,7 +2,7 @@
 //  OggettoViaggiante+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 31/05/22.
+//  Created by Salvatore Apicella on 31/05/22.
 //
 //
 
@@ -17,9 +17,8 @@ extension OggettoViaggiante {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var quantity: Int16
-    @NSManaged public var oggettoPadre: Oggetto?
-    @NSManaged public var valigiaContenitrice: ValigiaViaggiante?
+    @NSManaged public var oggettoRef: Oggetto?
+    @NSManaged public var viaggioRef: Viaggio?
 
 }
 

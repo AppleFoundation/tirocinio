@@ -10,7 +10,6 @@
 		4012AC3D283AD0A4002F4776 /* ViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012AC3C283AD0A4002F4776 /* ViaggioView.swift */; };
 		4012AC3F283AD703002F4776 /* AddViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012AC3E283AD703002F4776 /* AddViaggioView.swift */; };
 		4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */; };
-		4039D271282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */; };
 		4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */; };
 		4039D273282323D400908DCF /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */; };
 		4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */; };
@@ -18,6 +17,10 @@
 		4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */; };
 		4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */; };
 		40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40925D71281C7ED200F2F223 /* PersistenceManager.swift */; };
+		9D203D7C28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203D7B28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift */; };
+		9D203D7E28469F580091A675 /* OggettoViaggianteClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */; };
+		9D203D812846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203D7F2846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift */; };
+		9D203D822846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203D802846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift */; };
 		9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D51328C282B152A00DA3374 /* BagListScroll.swift */; };
 		9D51328F282B155900DA3374 /* TripListScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D51328E282B155900DA3374 /* TripListScroll.swift */; };
 		9D513291282B158900DA3374 /* AddBagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513290282B158900DA3374 /* AddBagView.swift */; };
@@ -60,7 +63,6 @@
 		4012AC3C283AD0A4002F4776 /* ViaggioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViaggioView.swift; sourceTree = "<group>"; };
 		4012AC3E283AD703002F4776 /* AddViaggioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViaggioView.swift; sourceTree = "<group>"; };
 		4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValigiaViaggiante+CoreDataClass.swift"; sourceTree = "<group>"; };
-		4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValigiaViaggiante+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -68,6 +70,10 @@
 		4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataClass.swift"; sourceTree = "<group>"; };
 		4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Valigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		40925D71281C7ED200F2F223 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		9D203D7B28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OggettoViaggiante+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OggettoViaggianteClass.swift; sourceTree = "<group>"; };
+		9D203D7F2846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValigiaViaggiante+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9D203D802846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OggettoViaggiante+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9D51328C282B152A00DA3374 /* BagListScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BagListScroll.swift; sourceTree = "<group>"; };
 		9D51328E282B155900DA3374 /* TripListScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripListScroll.swift; sourceTree = "<group>"; };
 		9D513290282B158900DA3374 /* AddBagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBagView.swift; sourceTree = "<group>"; };
@@ -127,8 +133,10 @@
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
+				9D203D7F2846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift */,
+				9D203D802846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift */,
+				9D203D7B28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift */,
 				4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */,
-				4039D269282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift */,
 				4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */,
 				4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */,
 				4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */,
@@ -158,16 +166,17 @@
 			isa = PBXGroup;
 			children = (
 				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
+				9D513292282B15BB00DA3374 /* AddTripView.swift */,
+				9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */,
+				9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */,
+				9DE99336282A9772009A9330 /* CardView.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
 				9D513294282B162F00DA3374 /* DetailTripView.swift */,
-				9DE99336282A9772009A9330 /* CardView.swift */,
 				9D9EB393284602CF008D4341 /* ValigiaCardView.swift */,
 				9D51328C282B152A00DA3374 /* BagListScroll.swift */,
 				9D51328E282B155900DA3374 /* TripListScroll.swift */,
 				9D513290282B158900DA3374 /* AddBagView.swift */,
-				9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */,
 				9D9EB39128460154008D4341 /* BagCategoriaScrollView.swift */,
-				9D513292282B15BB00DA3374 /* AddTripView.swift */,
 				F2CE1A81281942B400479BFB /* model.xcdatamodeld */,
 				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
 				F29EF2E028154A6C0013D6F5 /* Preview Content */,
@@ -342,8 +351,8 @@
 				4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */,
 				4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */,
 				9D9EB39228460154008D4341 /* BagCategoriaScrollView.swift in Sources */,
+				9D203D822846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift in Sources */,
 				9D51328F282B155900DA3374 /* TripListScroll.swift in Sources */,
-				4039D271282323D400908DCF /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
 				9D513293282B15BB00DA3374 /* AddTripView.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
 				4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */,
@@ -351,12 +360,15 @@
 				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
 				9D513291282B158900DA3374 /* AddBagView.swift in Sources */,
 				4012AC3F283AD703002F4776 /* AddViaggioView.swift in Sources */,
+				9D203D7E28469F580091A675 /* OggettoViaggianteClass.swift in Sources */,
 				9D9EB39628460470008D4341 /* AddNuovoOggetto.swift in Sources */,
 				9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */,
 				40925D72281C7ED200F2F223 /* PersistenceManager.swift in Sources */,
+				9D203D7C28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
 				9D9EB3982846047A008D4341 /* AddNuovaValigia.swift in Sources */,
 				4039D273282323D400908DCF /* Oggetto+CoreDataProperties.swift in Sources */,
+				9D203D812846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
 				4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
 			);

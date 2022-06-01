@@ -30,20 +30,21 @@ struct ContentView: View {
             ScrollView{
                 
                 Button(action: {
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Cane")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Gatto")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Stella")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Albero")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Pianta")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
-                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Topolino")
-                    PersistenceManager.shared.addOggetto(categoria: "Felpe", larghezza: 3, lunghezza: 3, profondita: 3, peso: 1, nome: "Matita")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 20, profondita: 5, peso: 500, nome: "Cane")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 25, profondita: 1, peso: 400, nome: "Gatto")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 10, profondita: 3, peso: 120, nome: "Stella")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 15, profondita: 3, peso: 100, nome: "Albero")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 12, profondita: 4, peso: 80, nome: "Pianta")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 19, profondita: 3, peso: 300, nome: "Matita")
+                    PersistenceManager.shared.addOggetto(categoria: "Maglie", larghezza: 10, lunghezza: 26, profondita: 6, peso: 300, nome: "Topolino")
+                    PersistenceManager.shared.addOggetto(categoria: "Felpe", larghezza: 10, lunghezza: 4, profondita: 3, peso: 200, nome: "Matita")
                     
                     
-                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 10, larghezza: 10, profondita: 10, nome: "Carpisa", tara: 1, utilizzato: true)
+                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Blu", tara: 1000, utilizzato: true)
+                    PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Rossa", tara: 1000, utilizzato: true)
                     
-                    PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])
-                    
+//                    PersistenceManager.shared.addValigiaViaggiante(oggettiInViaggio: PersistenceManager.shared.loadAllOggetti(), valigia: PersistenceManager.shared.loadAllValigie()[0], viaggio: PersistenceManager.shared.loadAllViaggi()[0])
+//
                     
                     
                 }, label: {Text("Inizializza")})
@@ -64,6 +65,8 @@ struct ContentView: View {
                         NavigationLink(destination: DetailTripView(viaggio: viaggio)){
                             ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
                         }
+                        
+                        
                         .contextMenu
                         {
                             Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:

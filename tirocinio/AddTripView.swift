@@ -26,11 +26,12 @@ struct AddTripView: View {
                       "Felpe",
                       "Oggetti per la casa",
                       "Beauty",
-                      "Prova"
+                      "Prova",
+                      "Doccia"
     ]
     
-    
-   
+    var viaggio: Viaggio
+
     
     var body: some View {
         
@@ -46,7 +47,7 @@ struct AddTripView: View {
                         let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
                         
                         if (!cat.isEmpty){
-                            CategoriaScrollView(nome: currentCat, oggettiCategia: cat)
+                            CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategia: cat)
                         }
                     }
                   
@@ -56,27 +57,28 @@ struct AddTripView: View {
             }
             
             .toolbar{
-                ToolbarItem(placement: .navigationBarLeading){
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Cancel")
-                    })
-                    
-                }
-                
+//                ToolbarItem(placement: .navigationBarLeading){
+//                    Button(action: {
+//                        self.presentationMode.wrappedValue.dismiss()
+//                    }, label: {
+//                        Text("Salva e chiudi")
+//                    })
+//
+//                }
+
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
+
                         self.presentationMode.wrappedValue.dismiss()
                     }, label: {
                         Text("Salva")
                     })
-                    
+
                 }
 
             }
         
-        .navigationBarBackButtonHidden(true)
+            .navigationBarBackButtonHidden(true)
         .navigationTitle("Aggiungi Oggetti")
     }
 }
@@ -84,9 +86,9 @@ struct AddTripView: View {
 
 
 
-
-struct AddTripView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddTripView()
-    }
-}
+//
+//struct AddTripView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddTripView()
+//    }
+//}

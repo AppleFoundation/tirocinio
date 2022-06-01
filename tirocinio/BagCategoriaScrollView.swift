@@ -10,6 +10,7 @@ import SwiftUI
 struct BagCategoriaScrollView: View{
     
     var nome: String
+    var viaggio: Viaggio
     
     var valigiaCategoria: [Valigia]
     
@@ -30,7 +31,7 @@ struct BagCategoriaScrollView: View{
                     
                     ForEach(valigiaCategoria){
                         valigia in
-                        ValigiaCardView(valigia: valigia)
+                        ValigiaCardView(valigia: valigia, viaggio: viaggio, value: PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count)
                     }
                     
 //                    CardView(nome: "Maglia")
@@ -46,9 +47,9 @@ struct BagCategoriaScrollView: View{
     }
 }
 
-struct BagCategoriaScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoriaScrollView(nome: "Test", oggettiCategia: PersistenceManager.shared.loadAllOggetti())
-    }
-}
+//struct BagCategoriaScrollView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoriaScrollView(nome: "Test", oggettiCategia: PersistenceManager.shared.loadAllOggetti())
+//    }
+//}
 

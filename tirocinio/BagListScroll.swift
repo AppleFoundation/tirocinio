@@ -31,7 +31,7 @@ struct BagListScroll: View {
                 
             
                 
-                NavigationLink(destination: AddBagView(), label: {
+                NavigationLink(destination: EmptyView(), label: {
                     VStack{
                         Image(systemName: "plus.circle")
                             .resizable()
