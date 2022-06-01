@@ -12,7 +12,7 @@ struct DetailTripView: View {
     var viaggio: Viaggio
     
 
-
+    
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
@@ -75,44 +75,56 @@ struct DetailTripView: View {
                 ForEach(insiemeDiValigie.tutteLeValigie){
                     singolaIstanza in
                     
-                    
+                    if(singolaIstanza.oggettiInseriti.isEmpty == false){
+                        Text("")
+                        VStack{
+                            HStack{
+                                Text(singolaIstanza.nomeValigia)
+                                    .font(.title)
+                                    .fontWeight(.bold)
+//                                    .foregroundColor(Color.blue)
+                                    
+                                Spacer()
+                                VStack(alignment: .trailing){
+                                    Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
+                                        .font(.caption)
+                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                        .font(.caption)
+                                }
+                            }
+                            .padding(.bottom)
+                            
+                            ForEach(singolaIstanza.oggettiInseriti){
+                                singoloOggetto in
+                                
+                                HStack{
+                                    Text("\((singoloOggetto.oggettoRef?.nome)!): \((singoloOggetto.oggettoRef?.peso)!)g")
+                                        .font(.body)
+                                        .multilineTextAlignment(.leading)
+                                    Spacer()
+                                }
+                               
+
+                            }
+                            Spacer()
+                        }
+                        .padding()
+                        .background(scegliColore.init(valigia: singolaIstanza).coloreDellaScheda)
+                        .cornerRadius(15)
+                    }
                     
 //                    if(singolaIstanza.pesoAttuale > singolaIstanza.pesoMassimo){
 //                        coloreScehda = Color.red.opacity(0.6)
 //                    }
                     
-                    VStack{
-                        HStack{
-                            Text(singolaIstanza.nomeValigia)
-                                .font(.title)
-                                .fontWeight(.bold)
-                                .foregroundColor(Color.blue)
-                                
-                            Spacer()
-                            VStack(alignment: .trailing){
-                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale) di \(singolaIstanza.volumeMassimo)")
-                                    .font(.caption)
-                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale) di \(singolaIstanza.pesoMassimo)")
-                                    .font(.caption)
-                            }
-                        }
-                        ForEach(singolaIstanza.oggettiInseriti){
-                            singoloOggetto in
-                            Text("\((singoloOggetto.oggettoRef?.nome)!): \((singoloOggetto.oggettoRef?.peso)!)")
-                                .font(.body)
-                            
-                        }
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color.yellow.opacity(0.6))
-                    .cornerRadius(15)
+                   
                     
                     
                     
                 }
                 
             }
+
             Spacer()
         }
         .padding()
@@ -156,6 +168,22 @@ class valigiaDaRiempire: Identifiable{
     
     func aggiungiOggettoAValigia(oggettoSingolo: OggettoViaggiante){
         self.oggettiInseriti.append(oggettoSingolo)
+    }
+}
+
+struct scegliColore{
+    var coloreDellaScheda:Color = Color.white
+    
+    init(valigia: valigiaDaRiempire){
+        if(valigia.pesoAttuale > valigia.pesoMassimo){
+            coloreDellaScheda = Color.red.opacity(0.6)
+        }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
+            coloreDellaScheda = Color.yellow.opacity(0.6)
+        }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.5){
+            coloreDellaScheda = Color.blue.opacity(0.6)
+        }else{
+            coloreDellaScheda = Color.green.opacity(0.6)
+        }
     }
 }
 
