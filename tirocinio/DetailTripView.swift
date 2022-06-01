@@ -66,8 +66,8 @@ struct DetailTripView: View {
             
             ScrollView(.vertical){
                 
-                let valigieDB = PersistenceManager.shared.loadAllValigieViaggianti()
-                let oggettiDB = PersistenceManager.shared.loadAllOggettiViaggianti()
+                var valigieDB = PersistenceManager.shared.loadAllValigieViaggianti()
+                var oggettiDB = PersistenceManager.shared.loadAllOggettiViaggianti()
                
                 let insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
                 
@@ -128,6 +128,16 @@ class valigiaDaRiempire: Identifiable{
         self.oggettiInseriti = []
     }
     
+    init(nomeValigiaExtra: String){
+        self.id = UUID()
+        self.nomeValigia = nomeValigiaExtra
+        self.volumeAttuale = 0
+        self.volumeMassimo = 0
+        self.pesoAttuale = 0
+        self.pesoMassimo = 0
+        self.oggettiInseriti = []
+    }
+    
     func aggiungiOggettoAValigia(oggettoSingolo: OggettoViaggiante){
         self.oggettiInseriti.append(oggettoSingolo)
     }
@@ -135,23 +145,42 @@ class valigiaDaRiempire: Identifiable{
 
 struct leMieValigie{
     
+    var oggettiDaAllocare: [OggettoViaggiante]
+    
     var tutteLeValigie: [valigiaDaRiempire]
     
     init(valigieViaggianti: [ValigiaViaggiante], oggettiViaggianti: [OggettoViaggiante]){
         self.tutteLeValigie = []
+        self.tutteLeValigie.append(valigiaDaRiempire.init(nomeValigiaExtra: "Non allocati"))
         for singolaValigia in valigieViaggianti{
             tutteLeValigie.append(valigiaDaRiempire.init(valigiaDaAggiungere: singolaValigia))
             }
         
-      
-        for valigiaAttuale in tutteLeValigie{
-            for singoloOggetto in oggettiViaggianti{
-                if((valigiaAttuale.pesoAttuale + Int(singoloOggetto.oggettoRef!.peso)) < valigiaAttuale.pesoMassimo){
-                    valigiaAttuale.oggettiInseriti.append(singoloOggetto)
-                    valigiaAttuale.pesoAttuale += Int(singoloOggetto.oggettoRef!.peso)
+        
+        
+        self.oggettiDaAllocare = oggettiViaggianti
+        
+        
+        while (oggettiDaAllocare.isEmpty == false){
+            
+            var temp = (oggettiDaAllocare.popLast(),false)
+            
+            for valigiaAttuale in tutteLeValigie{
+                if(temp.1 == false){
+                    if((valigiaAttuale.pesoAttuale + Int(temp.0!.oggettoRef!.peso)) < valigiaAttuale.pesoMassimo){
+                        valigiaAttuale.oggettiInseriti.append(temp.0!)
+                        valigiaAttuale.pesoAttuale += Int(temp.0!.oggettoRef!.peso)
+                        temp.1 = true
+                    }
                 }
             }
+            if(temp.1 == false){
+                tutteLeValigie[0].oggettiInseriti.append(temp.0!)
+                temp.1 = true
+            }
+            
         }
+        
     }
 }
 
