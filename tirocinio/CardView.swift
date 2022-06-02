@@ -81,7 +81,7 @@ struct CardView: View {
         }else{
             Text("Loading...")
                 .foregroundColor(Color.red)
-                .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
+                .background(NavigationLink("", destination: EditOggettoView(nomeAgg: oggetto.nome!, lunghezzaAgg: Double(oggetto.lunghezza), larghezzaAgg: Double(oggetto.larghezza), profonditaAgg: Double(oggetto.profondita), pesoAgg: Double(oggetto.peso), oggetto: oggetto), isActive: $editEnable))
                 
         }
         

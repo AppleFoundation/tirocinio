@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EditOggettoView: View {
     
-    @State var nomeAgg: String = ""
-    @State var lunghezzaAgg: Double = 0.0
-    @State var larghezzaAgg: Double = 0.0
-    @State var profonditaAgg: Double = 0.0
-    @State var pesoAgg: Double = 0.0
+    @State var nomeAgg: String
+    @State var lunghezzaAgg: Double
+    @State var larghezzaAgg: Double
+    @State var profonditaAgg: Double
+    @State var pesoAgg: Double
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -22,6 +22,7 @@ struct EditOggettoView: View {
     
     var body: some View {
 
+        
             Form{
                 Section(header: Text("Nome")){
                     TextField("Nuovo nome viaggio", text: $nomeAgg)
@@ -89,6 +90,5 @@ struct EditOggettoView: View {
             }
 
     }
-    
     
 }

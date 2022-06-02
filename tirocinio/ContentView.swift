@@ -9,21 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     //    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
 
 
-    @State private var editEnable = false
+    
 
     
     var body: some View{
         NavigationView{
             
-            //###INIZIO - SEZIONE DI TEST COSE
-            
-            
-            //###FINE - SEZIONE DI TEST COSE
             
             ScrollView{
                 
@@ -48,30 +46,8 @@ struct ContentView: View {
                         ForEach(allViaggi){
                             viaggio in
                             
-                            NavigationLink(destination: DetailTripView(viaggio: viaggio)){
-                                ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
-                            }
-                            .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
-                            .contextMenu{
-                                Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
-                                        {
-                                    HStack{
-                                        Text("Elimina")
-                                        Image(systemName: "trash.fill")
-                                        
-                                    }
-                                    
-                                })
-                                
-                                Button(action: {
-                                    editEnable = true
-                                }, label: {
-                                    HStack {
-                                        Text("Edit")
-                                        Image(systemName: "pencil")
-                                    }
-                                })
-                            }
+                            ActionButtonView(viaggio: viaggio)
+                            
                         }
                         
                     }
@@ -204,27 +180,68 @@ struct ActionButtonView: View{
     
     @Environment(\.colorScheme) var colorScheme
     
-    var systemImage: String
-    var nameButton: String
-    var colorImage: Color
-    var dataViaggio: Date
+    var viaggio: Viaggio
+    
+    @State private var editEnable = false
     
     var body: some View{
         
+        if(editEnable == false){
+            NavigationLink(destination: DetailTripView(viaggio: viaggio)){
+
+                VStack{
+                    Image(systemName: "airplane")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.blue)
+                        .frame(width: 50)
+                        
+                    Text(viaggio.nome ?? "NoWhere")
+                        .font(.title.bold())
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    Text(viaggio.data ?? Date(), style: .date)
+                        .font(.title3)
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
+                }
+                .padding()
+                .frame(minWidth: 175, minHeight: 150, maxHeight: 300)
+                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+
+            }
+//                .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
+                .contextMenu{
+                    Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
+                            {
+                        HStack{
+                            Text("Elimina")
+                            Image(systemName: "trash.fill")
+                            
+                        }
+                    })
+                    Button(action: {
+                        editEnable = true
+                    }, label: {
+                        HStack {
+                            Text("Edit")
+                            Image(systemName: "pencil")
+                        }
+                    })
+                }
+        }else{
             
             VStack{
-                Image(systemName: systemImage)
+                Image(systemName: "clock.arrow.circlepath")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(colorImage)
+                    .foregroundColor(.blue)
                     .frame(width: 50)
                     
-                Text(nameButton)
+                Text("Loading...")
                     .font(.title.bold())
-                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                Text(dataViaggio, style: .date)
-                    .font(.title3)
-                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    .foregroundColor(Color.red)
                 
             }
             .padding()
@@ -232,6 +249,14 @@ struct ActionButtonView: View{
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                .foregroundColor(Color.red)
+                .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
+                
+            
+        }
+        
+        
+            
     }
 }
 

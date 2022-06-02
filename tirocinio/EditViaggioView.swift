@@ -15,20 +15,16 @@ struct EditViaggioView: View {
     
     var viaggio: Viaggio
     
-//    @Binding var allViaggi: [Viaggio]
-//    
-//    init(allViaggi: Binding<[Viaggio]>){
-//        self._allViaggi = allViaggi
-//    }
     var body: some View {
 
             Form{
                 //nome, data
-                Section(header: Text("Vecchio nome: \(viaggio.nome ?? "Vecchio nome")")){
+                Section(header: Text("Nome")){
                     TextField("Nuovo nome viaggio", text: $nomeViaggio)
                     //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
                 }
-                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
+//                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
+                Section(header: Text("Data")){
                     DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
                 }
             }
