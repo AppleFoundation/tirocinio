@@ -191,6 +191,8 @@ struct ActionButtonView: View{
     var body: some View{
         
         if(editEnable == false){
+            
+          
             ZStack{
                 
                 
@@ -216,12 +218,17 @@ struct ActionButtonView: View{
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+ 
                 
                 NavigationLink(destination: DetailTripView(viaggio: viaggio)){
-                    Rectangle().opacity(0.0)
+                    Rectangle()
+                        .background(Color.white)
+                        .opacity(0.1)
+                        .cornerRadius(10)
                 }
                 
             }
+            
 
             
                 .contextMenu(.init(menuItems: {
