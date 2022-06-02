@@ -25,7 +25,7 @@ struct CategoriaScrollView: View{
                 Text(nome)
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.black)
+//                    .foregroundColor(Color.black)
                     .padding()
                 Spacer()
             }

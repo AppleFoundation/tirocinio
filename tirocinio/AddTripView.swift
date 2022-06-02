@@ -22,14 +22,18 @@ struct AddTripView: View {
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
     
     
-    let categories = ["Articoli da bagno",
-                      "Abbigliamento",
-                      "Essenziali",
-                      "Campeggio",
-                      "Spiaggia",
-                      "Sport",
-                      "Informatica ed Elettronica"
-    ]
+//    let categories = ["Articoli da bagno",
+//                      "Abbigliamento",
+//                      "Essenziali",
+//                      "Campeggio",
+//                      "Spiaggia",
+//                      "Sport",
+//                      "Informatica ed Elettronica"
+//    ]
+    
+    let categories = PersistenceManager.shared.loadAllCategorie().sorted()
+    
+    
     
     var viaggio: Viaggio
 
@@ -74,17 +78,17 @@ struct AddTripView: View {
                    
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {
-
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Salva")
-                    })
-
-                }
+//                ToolbarItem(placement: .navigationBarTrailing){
+//                    Button(action: {
+//
+//                        self.presentationMode.wrappedValue.dismiss()
+//                    }, label: {
+//                        Text("Salva")
+//                    })
+//
+//                }
                 
-                ToolbarItem(placement: .navigationBarLeading){
+                ToolbarItem(placement: .principal){
                     
                     Button(action: {
                         PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
@@ -100,9 +104,9 @@ struct AddTripView: View {
 
             }
         
-            .navigationBarBackButtonHidden(true)
+//            .navigationBarBackButtonHidden(true)
             .background{
-                Image("bg1")
+                Image("bg2")
                     .resizable()
                     .ignoresSafeArea()
                     .scaledToFill()

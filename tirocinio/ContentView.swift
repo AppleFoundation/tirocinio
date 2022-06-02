@@ -25,12 +25,14 @@ struct ContentView: View {
             
             ScrollView{
                 
+                
+                
                 Button(action: {
                     inizializzaOggetti()
                     inizializzaValigie()
                     
-                    
                 }, label: {Text("Inizializza")})
+                
                 
                 NavigationLink(destination: AddNuovoOggetto(), label: {
                     Text("Aggiungi nuovo oggetto")
@@ -65,7 +67,7 @@ struct ContentView: View {
             }
             
             .background{
-                Image("bg1")
+                Image("bg2")
                     .resizable()
                     .ignoresSafeArea()
                     .scaledToFill()
@@ -73,6 +75,8 @@ struct ContentView: View {
             .navigationTitle("SmartSuitCase")
         }
     }
+    
+  
     
     func inizializzaOggetti(){
         
@@ -187,7 +191,9 @@ struct ActionButtonView: View{
     var body: some View{
         
         if(editEnable == false){
+
             NavigationLink(destination: DetailTripView(viaggio: viaggio)){
+            
 
                 VStack{
                     Image(systemName: "airplane")
@@ -209,10 +215,8 @@ struct ActionButtonView: View{
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-
             }
-//                .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
-                .contextMenu{
+                .contextMenu(.init(menuItems: {
                     Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
                             {
                         HStack{
@@ -229,7 +233,7 @@ struct ActionButtonView: View{
                             Image(systemName: "pencil")
                         }
                     })
-                }
+                }))
         }else{
             
             VStack{

@@ -23,8 +23,6 @@ struct AddNuovoOggetto: View {
     var body: some View {
         
         Form{
-            
-            
             Section(header: Text("Categoria")){
                 Picker("Categoria", selection: $categoria) {
                     Text("Articoli da bagno")
@@ -35,7 +33,15 @@ struct AddNuovoOggetto: View {
                     Text("Sport")
                     Text("Informatica ed Elettronica")
                 }
+                .pickerStyle(.wheel)
                 
+            }
+            
+            Text("\(categoria)")
+            
+            Section(header: Text("Categoria")){
+                
+                TextField("Nuovo nome viaggio", text: $categoria)
             }
             
             Section(header: Text("Nome")){
@@ -64,6 +70,14 @@ struct AddNuovoOggetto: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
+                        
+                        if(nomeAgg.isEmpty){
+                            nomeAgg = "Oggetto"
+                        }
+                        
+                        if(categoria.isEmpty){
+                            categoria = "Altro"
+                        }
                         
                         if(lunghezzaAgg == 0){
                             lunghezzaAgg = 1

@@ -262,6 +262,8 @@ class PersistenceManager: ObservableObject {
         return array
     }
     
+    
+    
     func loadValigieFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
         let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
         request.returnsObjectsAsFaults = false
@@ -401,6 +403,27 @@ class PersistenceManager: ObservableObject {
         request.returnsObjectsAsFaults = false
     
         return self.loadOggettiFromFetchRequest(request: request)
+    }
+    
+    func loadAllCategorie() -> [String]{
+        let request: NSFetchRequest<Oggetto> = NSFetchRequest(entityName: "Oggetto")
+        request.returnsObjectsAsFaults = false
+        
+        let oggettiDaDB = self.loadOggettiFromFetchRequest(request: request)
+        
+        var categorieLista = Set<String>.init()
+        
+        for oggetto in oggettiDaDB {
+            categorieLista.insert(oggetto.categoria!)
+        }
+        
+        var categorieArray = Array<String>.init()
+        
+        for singolaCat in categorieLista{
+            categorieArray.append(singolaCat)
+        }
+        
+        return categorieArray
     }
     
     func loadAllOggettiViaggianti() -> [OggettoViaggiante]{

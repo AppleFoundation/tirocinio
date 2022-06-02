@@ -10,6 +10,8 @@ import SceneKit
 
 struct CardView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     
     @State private var editEnable = false
     
@@ -54,26 +56,43 @@ struct CardView: View {
                 
             }
             .padding()
-            .background(coloreCard.init(value: value).coloreDellaScheda)
+            .background(coloreScelto())
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
 //            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
             .contextMenu(.init(menuItems: {
-
-                    Text("Lunghezza: \(oggetto.lunghezza)")
-                    Text("Larghezza: \(oggetto.larghezza)")
-                    Text("Profondità: \(oggetto.profondita)")
-                    Text("Volume: \(oggetto.volume)")
-                    Text("Peso: \(oggetto.peso)")
-                    
-                    Button(action: {
-                        editEnable = true
-                    }, label: {
-                        HStack {
-                            Text("Edit")
-                            Image(systemName: "pencil")
-                        }
-                    })
+                
+                Text("Lunghezza: \(oggetto.lunghezza)")
+                Text("Larghezza: \(oggetto.larghezza)")
+                Text("Profondità: \(oggetto.profondita)")
+                Text("Volume: \(oggetto.volume)")
+                Text("Peso: \(oggetto.peso)")
+                
+                Button(action: {
+                    editEnable = true
+                }, label: {
+                    HStack {
+                        Text("Edit")
+                        Image(systemName: "pencil")
+                    }
+                })
+                
+                Button(action: {
+                    PersistenceManager.shared.deleteOggetto(nome: oggetto.nome!, categoria: oggetto.categoria!)
+                    print("ciao")
+                }, label:{
+                    HStack{
+                        Text("Elimina")
+                        Image(systemName: "trash.fill")
+                        
+                    }
+                })
+                
+                
+                
+                
+                
+                
                 
             }))
             
@@ -88,21 +107,41 @@ struct CardView: View {
         
     
     }
+    
+    private func  coloreScelto() -> Color{
         
+        
+        
+
+        
+        var coloreDellaScheda: Color
+        
+        if(String("\(colorScheme)") == "light"){
+            if(value > 0){
+                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 192/255, green: 237/255, blue: 166/255, opacity: 1.0)
+            }else{
+                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
+            }
+        }else if(colorScheme == ColorScheme.dark){
+            if(value > 0){
+                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 30/255, green: 81/255, blue: 40/255, opacity: 1.0)
+            }else{
+                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 45/255, green: 45/255, blue: 45/255, opacity: 1.0)
+                
+            }
+        }else{
+            coloreDellaScheda = Color.white
+        }
+        
+
+        
+        return coloreDellaScheda
+        
+    }
+    
     
 }
 
-struct coloreCard{
-    var coloreDellaScheda:Color = Color.init(Color.RGBColorSpace.sRGB, red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
-    
-    
-    init(value: Int){
-        if(value > 0){
-            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 192/255, green: 237/255, blue: 166/255, opacity: 1.0)
-        }
-    }
-    
-}
 
 
 //struct CardView_Previews: PreviewProvider {
