@@ -11,97 +11,105 @@ struct DetailTripView: View {
     
     var viaggio: Viaggio
     
-    
+    @Environment(\.colorScheme) var colorScheme
     
     
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        ScrollView(.vertical){
-            VStack{
-                
-                let valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
-                let oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
-                
-                let insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
-                
-                HStack{
-                    Spacer()
-                    NavigationLink(destination: AddTripView(viaggio: viaggio)){
-                        VStack{
-                            Text("Aggiungi Oggetti")
-                            Image(systemName: "archivebox.fill")
-                                .padding(.top, 1.0)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                        
-                    }
-                    
-                    Spacer()
-                    
-                    NavigationLink(destination: AddBagView(viaggio: viaggio)){
-                        VStack{
-                            Text("Aggiungi Valigie")
-                            Image(systemName: "suitcase.fill")
-                                .padding(.top, 1.0)
-                        }
-                        .padding()
-                        .background(Color.gray.opacity(0.3))
-                        .cornerRadius(10)
-                    }
-                    Spacer()
-                }
-                
-                
-                ForEach(insiemeDiValigie.tutteLeValigie){
-                    singolaIstanza in
-                    
-                    if(singolaIstanza.oggettiInseriti.isEmpty == false){
-                        Text("")
-                        VStack{
-                            HStack{
-                                Text(singolaIstanza.nomeValigia)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                //                                    .foregroundColor(Color.blue)
-                                
-                                Spacer()
-                                VStack(alignment: .trailing){
-                                    Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
-                                        .font(.caption)
-                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
-                                        .font(.caption)
-                                }
+        VStack{
+            ScrollView(.vertical, showsIndicators: false){
+                VStack{
+                    let valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
+                    let oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+                    let insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
+                    HStack{
+                        Spacer()
+                        NavigationLink(destination: AddTripView(viaggio: viaggio)){
+                            VStack{
+                                Text("Aggiungi Oggetti")
+                                Image(systemName: "archivebox.fill")
+                                    .padding(.top, 1.0)
                             }
-                            .padding(.bottom)
+                            .padding()
+                            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                             
-                            ForEach(singolaIstanza.oggettiInseriti){
-                                singoloOggetto in
-                                
-                                HStack{
-                                    Text("\((singoloOggetto.oggettoRef?.nome)!): \((singoloOggetto.oggettoRef?.peso)!)g")
-                                        .font(.body)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
-                                }
-                                
-                                
-                            }
-                            Spacer()
                         }
-                        .padding()
-                        .background(scegliColore.init(valigia: singolaIstanza).coloreDellaScheda)
-                        .cornerRadius(15)
+                        Spacer()
+                        
+                        NavigationLink(destination: AddBagView(viaggio: viaggio)){
+                            VStack{
+                                Text("Aggiungi Valigie")
+                                Image(systemName: "suitcase.fill")
+                                    .padding(.top, 1.0)
+                            }
+                            .padding()
+                            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+
+                        
+                        }
+                        Spacer()
+                    }
+                    
+                    
+                    ForEach(insiemeDiValigie.tutteLeValigie){
+                        singolaIstanza in
+                        
+                        if(singolaIstanza.oggettiInseriti.isEmpty == false){
+                            Text("")
+                            VStack{
+                                HStack{
+                                    Text(singolaIstanza.nomeValigia)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                    //                                    .foregroundColor(Color.blue)
+                                    
+                                    Spacer()
+                                    VStack(alignment: .trailing){
+                                        Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
+                                            .font(.caption)
+                                        Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                            .font(.caption)
+                                    }
+                                }
+                                .padding(.bottom)
+                                
+                                ForEach(singolaIstanza.oggettiInseriti){
+                                    singoloOggetto in
+                                    
+                                    HStack{
+                                        Text("\((singoloOggetto.oggettoRef?.nome)!): \((singoloOggetto.oggettoRef?.peso)!)g")
+                                            .font(.body)
+                                            .multilineTextAlignment(.leading)
+                                        Spacer()
+                                    }
+                                    
+                                    
+                                }
+                                Spacer()
+                            }
+                            .padding()
+                            .background(scegliColore.init(valigia: singolaIstanza).coloreDellaScheda)
+                            .cornerRadius(10)
+                            
+                        }
                     }
                 }
+                Spacer()
             }
-            Spacer()
         }
-        
         .padding(.horizontal)
         .navigationBarTitleDisplayMode(.large)
+        .background{
+            Image("bg2")
+                .resizable()
+                    .ignoresSafeArea()
+                .scaledToFill()
+        }
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
         
         

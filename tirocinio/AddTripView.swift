@@ -101,8 +101,14 @@ struct AddTripView: View {
             }
         
             .navigationBarBackButtonHidden(true)
+            .background{
+                Image("bg1")
+                    .resizable()
+                    .ignoresSafeArea()
+                    .scaledToFill()
+            }
             
-        .navigationTitle("Aggiungi Oggetti")
+            .navigationTitle("Aggiungi Oggetti")
     }
 }
 

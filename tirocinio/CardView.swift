@@ -28,6 +28,7 @@ struct CardView: View {
             HStack{
                 
                 Text("\(value)")
+                    .font(.headline)
                     .multilineTextAlignment(.trailing)
                 
                 Button(action: {
@@ -55,6 +56,7 @@ struct CardView: View {
             .padding()
             .background(coloreCard.init(value: value).coloreDellaScheda)
             .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
 //            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
             .contextMenu(.init(menuItems: {
 
@@ -96,7 +98,7 @@ struct coloreCard{
     
     init(value: Int){
         if(value > 0){
-            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 232/255, green: 243/255, blue: 255/255, opacity: 1.0)
+            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 192/255, green: 237/255, blue: 166/255, opacity: 1.0)
         }
     }
     

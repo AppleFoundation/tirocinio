@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoriaScrollView: View{
+    
   
     
     var nome: String
@@ -24,12 +25,12 @@ struct CategoriaScrollView: View{
                 Text(nome)
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.orange)
+                    .foregroundColor(Color.black)
                     .padding()
                 Spacer()
             }
             
-            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(50), spacing: 10, alignment: .center), count: 3)
+            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(60), spacing: 5, alignment: .center), count: 3)
  
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{

@@ -11,8 +11,7 @@ struct ContentView: View {
     
     //    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
-    let columns = [GridItem(.fixed(170),spacing: 10),
-                   GridItem(.fixed(170),spacing: 10)]
+    let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
 
 
     @State private var editEnable = false
@@ -43,45 +42,43 @@ struct ContentView: View {
                     Text("Aggiungi nuova valigia")
                 })
                 
-                
-                LazyVGrid(columns: columns) {
-                    
-                    ForEach(allViaggi){
-                        viaggio in
-                        NavigationLink(destination: DetailTripView(viaggio: viaggio)){
-                            ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
+                VStack{
+                    LazyVGrid(columns: columns, alignment: .center) {
+                        
+                        ForEach(allViaggi){
+                            viaggio in
+                            
+                            NavigationLink(destination: DetailTripView(viaggio: viaggio)){
+                                ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
+                            }
+                            .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
+                            .contextMenu{
+                                Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
+                                        {
+                                    HStack{
+                                        Text("Elimina")
+                                        Image(systemName: "trash.fill")
+                                        
+                                    }
+                                    
+                                })
+                                
+                                Button(action: {
+                                    editEnable = true
+                                }, label: {
+                                    HStack {
+                                        Text("Edit")
+                                        Image(systemName: "pencil")
+                                    }
+                                })
+                            }
                         }
                         
-                        .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
-                        .contextMenu
-                        {
-                            Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
-                                    {
-                                HStack{
-                                    Text("Elimina")
-                                    Image(systemName: "trash.fill")
-                                    
-                                }
-                                
-                            })
-                            
-                            Button(action: {
-                                editEnable = true
-                            }, label: {
-                                HStack {
-                                    Text("Edit")
-                                    Image(systemName: "pencil")
-                                }
-                            })
-                        }
                     }
-                    
-                    //
-                    
                 }
+                
             }
             
-            .navigationTitle("SmartSuitCase").multilineTextAlignment(.center)
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink(destination: AddViaggioView()){
@@ -90,6 +87,14 @@ struct ContentView: View {
                     
                 }
             }
+            
+            .background{
+                Image("bg1")
+                    .resizable()
+                    .ignoresSafeArea()
+                    .scaledToFill()
+            }
+            .navigationTitle("SmartSuitCase")
         }
     }
     
@@ -205,35 +210,28 @@ struct ActionButtonView: View{
     var dataViaggio: Date
     
     var body: some View{
-        GeometryReader { reader in
+        
             
-            let fontSize = min(reader.size.width * 0.2, 28)
-            let imageWidth: CGFloat = min(50, reader.size.width * 0.6)
-            
-            VStack(spacing: 5) {
+            VStack{
                 Image(systemName: systemImage)
                     .resizable()
                     .scaledToFit()
                     .foregroundColor(colorImage)
-                    .frame(width: imageWidth)
-                    .padding(.top, -15)
+                    .frame(width: 50)
+                    
                 Text(nameButton)
-                    .font(.system(size: fontSize, weight: .semibold, design: .rounded))
+                    .font(.title.bold())
                     .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                 Text(dataViaggio, style: .date)
                     .font(.title3)
                     .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                 
             }
-            .frame(width: reader.size.width, height: reader.size.height)
+            .padding()
+            .frame(minWidth: 175, minHeight: 150, maxHeight: 300)
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-            
-            
-            
-        }
-        .frame(height: 150)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
     }
 }
 

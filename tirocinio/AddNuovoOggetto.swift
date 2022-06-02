@@ -77,6 +77,10 @@ struct AddNuovoOggetto: View {
                             profonditaAgg = 1
                         }
                         
+                        if(pesoAgg == 0){
+                            pesoAgg = 1
+                        }
+                        
                         PersistenceManager.shared.addOggetto(categoria: categoria, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
                         presentationMode.wrappedValue.dismiss()
                         

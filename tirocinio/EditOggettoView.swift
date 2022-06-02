@@ -64,6 +64,10 @@ struct EditOggettoView: View {
                             profonditaAgg = 1
                         }
                         
+                        if(pesoAgg == 0){
+                            pesoAgg = 1
+                        }
+                        
                         let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
                         
                         
