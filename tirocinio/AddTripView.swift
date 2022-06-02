@@ -51,9 +51,11 @@ struct AddTripView: View {
                             CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategia: cat)
                         }
                     }
+                    
+                    Spacer(minLength: 50)
                   
                 }
-                .padding()
+                
                 
             }
         

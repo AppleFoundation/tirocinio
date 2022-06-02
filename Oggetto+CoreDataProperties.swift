@@ -30,3 +30,13 @@ extension Oggetto {
 extension Oggetto : Identifiable {
 
 }
+
+extension Oggetto: Comparable{
+    
+    public static func < (lhs: Oggetto, rhs: Oggetto) -> Bool {
+        return (lhs.nome! < rhs.nome!)
+    }
+
+    
+    
+}

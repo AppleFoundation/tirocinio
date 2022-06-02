@@ -25,35 +25,33 @@ struct CategoriaScrollView: View{
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(Color.orange)
+                    .padding()
                 Spacer()
             }
             
-            
-            
-            let rows: [GridItem] = Array(repeating: .init(.fixed(60)), count: 3)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: rows, alignment: .top) {
-                    
-                    
-                    ForEach(oggettiCategia){
-                        oggetto in
-                        CardView(oggetto: oggetto, viaggio: viaggio, value: PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count)
+            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(50), spacing: 10, alignment: .center), count: 3)
+ 
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack{
+                        Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
+                        LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
+  
+                            ForEach(oggettiCategia.sorted()){
+                                oggetto in
+                         
+                                CardView(oggetto: oggetto, viaggio: viaggio, value: PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count)
+                
+                                    
+                            }
                             
-                            
-                            
+                        }
+                        Spacer(minLength: 15) //Utile per avere più simmetria
                     }
                     
                     
-                    
+                
                 }
-            }
-            
-        
-            
-            
-            
-            
+
         }
     }
 }

@@ -29,13 +29,21 @@ struct CardView: View {
             
             Text("\(value)")
                 .multilineTextAlignment(.trailing)
+            
+           
         
             Button(action: {
                 value += 1
                 PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
             }, label: {
                 Text(oggetto.nome ?? "Nome")
+                    
             })
+            .frame(minWidth: 130)
+    
+            
+            
+            
             Button(action: {
                 if(value > 0){
                     value -= 1
