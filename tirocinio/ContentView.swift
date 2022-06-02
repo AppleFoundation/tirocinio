@@ -191,20 +191,21 @@ struct ActionButtonView: View{
     var body: some View{
         
         if(editEnable == false){
-
-            NavigationLink(destination: DetailTripView(viaggio: viaggio)){
-            
-
+            ZStack{
+                
+                
+                
                 VStack{
                     Image(systemName: "airplane")
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.blue)
                         .frame(width: 50)
-                        
-                    Text(viaggio.nome ?? "NoWhere")
-                        .font(.title.bold())
-                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
+                        Text(viaggio.nome ?? "NoWhere")
+                            .font(.title.bold())
+                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
                     Text(viaggio.data ?? Date(), style: .date)
                         .font(.title3)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
@@ -215,7 +216,14 @@ struct ActionButtonView: View{
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                
+                NavigationLink(destination: DetailTripView(viaggio: viaggio)){
+                    Rectangle().opacity(0.0)
+                }
+                
             }
+
+            
                 .contextMenu(.init(menuItems: {
                     Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
                             {
