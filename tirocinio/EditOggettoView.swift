@@ -51,10 +51,27 @@ struct EditOggettoView: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
+                        
+                        if(lunghezzaAgg == 0){
+                            lunghezzaAgg = 1
+                        }
+                        
+                        if(larghezzaAgg == 0){
+                            larghezzaAgg = 1
+                        }
+                        
+                        if(profonditaAgg == 0){
+                            profonditaAgg = 1
+                        }
+                        
+                        let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
+                        
+                        
                         oggetto.nome = nomeAgg
                         oggetto.lunghezza = Int32(lunghezzaAgg)
                         oggetto.larghezza = Int32(larghezzaAgg)
                         oggetto.profondita = Int32(profonditaAgg)
+                        oggetto.volume = Int32(volume)
                         oggetto.peso = Int32(pesoAgg)
                         PersistenceManager.shared.saveContext()
                         presentationMode.wrappedValue.dismiss()
@@ -68,4 +85,6 @@ struct EditOggettoView: View {
             }
 
     }
+    
+    
 }

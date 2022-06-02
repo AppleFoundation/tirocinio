@@ -64,7 +64,20 @@ struct AddNuovoOggetto: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
-                        PersistenceManager.shared.addOggetto(categoria: categoria, larghezza: 1, lunghezza: 1, profondita: 1, peso: 1, nome: nomeAgg)
+                        
+                        if(lunghezzaAgg == 0){
+                            lunghezzaAgg = 1
+                        }
+                        
+                        if(larghezzaAgg == 0){
+                            larghezzaAgg = 1
+                        }
+                        
+                        if(profonditaAgg == 0){
+                            profonditaAgg = 1
+                        }
+                        
+                        PersistenceManager.shared.addOggetto(categoria: categoria, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
                         presentationMode.wrappedValue.dismiss()
                         
                     }, label: {Text("Save")})

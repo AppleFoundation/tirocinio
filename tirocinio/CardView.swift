@@ -21,68 +21,73 @@ struct CardView: View {
     let range = 0...50
     
     
+    
     var body: some View {
         
-        
-        
-        HStack{
-            
-            Text("\(value)")
-                .multilineTextAlignment(.trailing)
-            
-           
-        
-            Button(action: {
-                value += 1
-                PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-            }, label: {
-                Text(oggetto.nome ?? "Nome")
-                    
-            })
-            .frame(minWidth: 130)
-    
-            
-            
-            
-            Button(action: {
-                if(value > 0){
-                    value -= 1
-                    PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
-                }
-            }, label: {
-                Image(systemName: "minus.circle.fill")
-                    .resizable()
-                    .frame(width: 18, height: 18)
-            })
-            
-            
-        }
-        .padding()
-        .background(coloreCard.init(value: value).coloreDellaScheda)
-        .cornerRadius(10)
-        .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
-        .contextMenu(.init(menuItems: {
-
-                Text("Lunghezza: \(oggetto.lunghezza)")
-                Text("Larghezza: \(oggetto.larghezza)")
-                Text("Profondità: \(oggetto.profondita)")
-                Text("Volume: \(oggetto.volume)")
-                Text("Peso: \(oggetto.peso)")
+        if (editEnable == false){
+            HStack{
+                
+                Text("\(value)")
+                    .multilineTextAlignment(.trailing)
                 
                 Button(action: {
-                    editEnable = true
+                    value += 1
+                    PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                 }, label: {
-                    HStack {
-                        Text("Edit")
-                        Image(systemName: "pencil")
-                    }
+                    Text(oggetto.nome ?? "Nome")
+                        
                 })
+                .frame(minWidth: 130)
+                
+                Button(action: {
+                    if(value > 0){
+                        value -= 1
+                        PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                    }
+                }, label: {
+                    Image(systemName: "minus.circle.fill")
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                })
+                
+                
+            }
+            .padding()
+            .background(coloreCard.init(value: value).coloreDellaScheda)
+            .cornerRadius(10)
+//            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
+            .contextMenu(.init(menuItems: {
+
+                    Text("Lunghezza: \(oggetto.lunghezza)")
+                    Text("Larghezza: \(oggetto.larghezza)")
+                    Text("Profondità: \(oggetto.profondita)")
+                    Text("Volume: \(oggetto.volume)")
+                    Text("Peso: \(oggetto.peso)")
+                    
+                    Button(action: {
+                        editEnable = true
+                    }, label: {
+                        HStack {
+                            Text("Edit")
+                            Image(systemName: "pencil")
+                        }
+                    })
+                
+            }))
             
-        }))
+            
+        }else{
+            Text("Loading...")
+                .foregroundColor(Color.red)
+                .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
+                
+        }
         
         
-        
+    
     }
+        
+    
 }
 
 struct coloreCard{
