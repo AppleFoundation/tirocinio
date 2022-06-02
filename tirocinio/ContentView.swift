@@ -13,11 +13,10 @@ struct ContentView: View {
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = [GridItem(.fixed(170),spacing: 10),
                    GridItem(.fixed(170),spacing: 10)]
-    
-    @State var showAddViaggioView: Bool = false
-    @State var showEditViaggioView: Bool = false
-    @State private var showEditView = false
-    // @State var viaggioScelto: Viaggio = PersistenceManager.shared.loadAllViaggi()[0]
+
+
+    @State private var editEnable = false
+
     
     var body: some View{
         NavigationView{
@@ -53,7 +52,7 @@ struct ContentView: View {
                             ActionButtonView(systemImage: "airplane", nameButton: viaggio.nome ?? "NoWhere", colorImage: .blue, dataViaggio: viaggio.data ?? Date()).padding(.bottom, 20).padding(.top, 10)
                         }
                         
-                        
+                        .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
                         .contextMenu
                         {
                             Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
@@ -67,23 +66,17 @@ struct ContentView: View {
                             })
                             
                             Button(action: {
-                                self.showEditView = true
-                                //viaggioScelto = viaggio
+                                editEnable = true
                             }, label: {
                                 HStack {
                                     Text("Edit")
                                     Image(systemName: "pencil")
                                 }
                             })
-                            
                         }
-                        
-                        
                     }
                     
-                    //                    NavigationLink(destination: EditViaggioView(viaggio: viaggioScelto), isActive: $showEditView) {
-                    //                        EmptyView()
-                    //                    }
+                    //
                     
                 }
             }
@@ -97,10 +90,6 @@ struct ContentView: View {
                     
                 }
             }
-        }.sheet(isPresented: $showEditViaggioView, onDismiss:{
-            showAddViaggioView = false
-        }){
-            //EditViaggioView( viaggio: PersistenceManager.shared.loadAllViaggi()[0])
         }
     }
     
@@ -328,11 +317,11 @@ struct ActionButtonView: View{
 //}
 
 
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-            .previewDevice("iPhone 11")
-    }
-}
+//
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView()
+//            .previewDevice("iPhone 11")
+//    }
+//}
 

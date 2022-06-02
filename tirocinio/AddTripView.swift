@@ -39,7 +39,7 @@ struct AddTripView: View {
         
         
             
-            ScrollView(.vertical){
+        ScrollView(.vertical, showsIndicators: false){
                 VStack{
                     
                     //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
@@ -56,11 +56,23 @@ struct AddTripView: View {
                 .padding()
                 
             }
+        
+        
+        
             
             .toolbar{
                 
 
-                ToolbarItem(placement: .cancellationAction){
+                
+                ToolbarItem(placement: .navigationBarTrailing){
+                    
+                    NavigationLink(destination: AddNuovoOggetto(), label: {
+                        Image(systemName: "plus")
+                    })
+                   
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
 
                         self.presentationMode.wrappedValue.dismiss()
@@ -70,13 +82,19 @@ struct AddTripView: View {
 
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing){
+                ToolbarItem(placement: .navigationBarLeading){
                     
-                    NavigationLink(destination: AddNuovoOggetto(), label: {
-                        Image(systemName: "plus")
+                    Button(action: {
+                        PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
+                        self.presentationMode.wrappedValue.dismiss()
+                    }, label: {
+                        Text("Reset")
                     })
                    
                 }
+            
+                
+                
 
             }
         

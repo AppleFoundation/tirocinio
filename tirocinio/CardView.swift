@@ -11,85 +11,88 @@ import SceneKit
 struct CardView: View {
     
     
+    @State private var editEnable = false
+    
     var oggetto: Oggetto
     var viaggio: Viaggio
     
     @State var value: Int
-        let step = 1
-        let range = 0...50
+    let step = 1
+    let range = 0...50
     
     
     var body: some View {
         
-        ZStack{
+        
+        
+        HStack{
             
-            if value != 0 {
-                Rectangle()
-                    .opacity(0.15)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-            }else{
-                Rectangle()
-                    .opacity(0.05)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-            }
-            VStack {
+            Text("\(value)")
+                .multilineTextAlignment(.trailing)
+        
+            Button(action: {
+                value += 1
+                PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+            }, label: {
                 Text(oggetto.nome ?? "Nome")
-                Image("\(oggetto.nome ?? "Base")")
-                    .resizable()
-                    .frame(width: 40, height: 40, alignment: .center)
-                    .padding(-10)
-                    
-                HStack{
-                   
-                    Image(systemName: "info.circle.fill")
-                    
-//                    HStack {
-//                                Spacer()
-//                                    Stepper("", value: $value, in: 0...50, step: 1)
-//                                    .frame(width: 100, height: 50)
-//
-//                                Spacer()
-//                            }
-                    HStack {
-                                Spacer()
-                        
-                        Stepper(label: {
-                            Text("")
-                        }, onIncrement: {
-                            value += 1
-                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-                        }, onDecrement: {
-                            if (value > 0){
-                                value -= 1
-                                PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
-                            }
-                        })
-                                    .frame(width: 100, height: 50)
-                                    
-                                Spacer()
-                            }
-                        
-                    Spacer()
-                    Text("\(value)")
-                    
+            })
+            Button(action: {
+                if(value > 0){
+                    value -= 1
+                    PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
                 }
-                
-            }
-            .padding([.top, .leading, .trailing])
-            .frame(width: 180)
-            .cornerRadius(10)
+            }, label: {
+                Image(systemName: "minus.circle.fill")
+                    .resizable()
+                    .frame(width: 18, height: 18)
+            })
+            
             
         }
+        .padding()
+        .background(coloreCard.init(value: value).coloreDellaScheda)
+        .cornerRadius(10)
+        .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
+        .contextMenu(.init(menuItems: {
+
+                Text("Lunghezza: \(oggetto.lunghezza)")
+                Text("Larghezza: \(oggetto.larghezza)")
+                Text("Profondità: \(oggetto.profondita)")
+                Text("Volume: \(oggetto.volume)")
+                Text("Peso: \(oggetto.peso)")
+                
+                Button(action: {
+                    editEnable = true
+                }, label: {
+                    HStack {
+                        Text("Edit")
+                        Image(systemName: "pencil")
+                    }
+                })
+            
+        }))
+        
+        
+        
     }
 }
+
+struct coloreCard{
+    var coloreDellaScheda:Color = Color.init(Color.RGBColorSpace.sRGB, red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
     
     
+    init(value: Int){
+        if(value > 0){
+            coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 232/255, green: 243/255, blue: 255/255, opacity: 1.0)
+        }
+    }
+    
+}
+
 
 //struct CardView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        AddTripView()
+//        AddTripView(viaggio: Viaggio.init(entity: .init(), insertInto: .init(coder: .init())))
 //            .previewDevice("iPhone 11")
 //    }
 //}

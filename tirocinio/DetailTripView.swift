@@ -104,6 +104,9 @@ struct DetailTripView: View {
         .navigationBarTitleDisplayMode(.large)
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
         
+        
+        
+        
     }
     
 }

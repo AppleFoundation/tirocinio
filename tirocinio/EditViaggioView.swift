@@ -25,12 +25,8 @@ struct EditViaggioView: View {
             Form{
                 //nome, data
                 Section(header: Text("Vecchio nome: \(viaggio.nome ?? "Vecchio nome")")){
-                    
                     TextField("Nuovo nome viaggio", text: $nomeViaggio)
-                    
-                    //Inserire un limite di caratteri massimo 30
-                        
-        
+                    //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
                 }
                 Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
                     DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
@@ -41,28 +37,19 @@ struct EditViaggioView: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
-                        //⚠️ DA IMPLEMENTARE UN MECCANISMO PER CAMBIARE IL NOME DEL VIAGGIO SE SI PUÒ
-                        PersistenceManager.shared.deleteViaggio(nome: viaggio.nome!)
-                        PersistenceManager.shared.addViaggio(data: dataViaggio, nome: nomeViaggio)
-                        presentationMode.wrappedValue.dismiss()
+                        viaggio.nome = nomeViaggio
+                        viaggio.data = dataViaggio
+                        PersistenceManager.shared.saveContext()
                         
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {Text("Save")})
                 }
                 ToolbarItem(placement: .navigationBarLeading){
                     Button(action: {
-//                        allViaggi = PersistenceManager.shared.loadAllViaggi()
                         presentationMode.wrappedValue.dismiss()
                     }, label: {Text("Cancel")})
                 }
             }
-            
-        
-        
+
     }
 }
-
-//struct AddViaggioView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EditViaggioView()
-//    }
-//}

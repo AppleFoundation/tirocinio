@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CategoriaScrollView: View{
+  
     
     var nome: String
     
@@ -23,33 +24,42 @@ struct CategoriaScrollView: View{
                 Text(nome)
                     .font(.title)
                     .fontWeight(.bold)
-                    .foregroundColor(Color.blue)
+                    .foregroundColor(Color.orange)
                 Spacer()
             }
             
-            ScrollView(.horizontal){
-                HStack{
+            
+            
+            let rows: [GridItem] = Array(repeating: .init(.fixed(60)), count: 3)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: rows, alignment: .top) {
+                    
                     
                     ForEach(oggettiCategia){
                         oggetto in
                         CardView(oggetto: oggetto, viaggio: viaggio, value: PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count)
+                            
+                            
+                            
                     }
                     
-//                    CardView(nome: "Maglia")
-//                    CardView(nome: "Maglione")
-//                    CardView(nome: "Jeans")
-//                    CardView(nome: "Canottiera")
-//                    CardView(nome: "Camicia")
-//                    CardView(nome: "Guanti")
+                    
+                    
                 }
-                
             }
+            
+        
+            
+            
+            
+            
         }
     }
 }
 
-//struct CategoriaScrollView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoriaScrollView(nome: "Test", viaggio: <#Viaggio#>, oggettiCategia: PersistenceManager.shared.loadAllOggetti())
-//    }
-//}
+struct CategoriaScrollView_Previews: PreviewProvider {
+    static var previews: some View {
+        CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategia: PersistenceManager.shared.loadAllOggetti())
+    }
+}

@@ -469,7 +469,20 @@ class PersistenceManager: ObservableObject {
         }
     }
     
+    func deleteAllOggettoViaggiante(viaggio: Viaggio){
+        let oggettiViaggianti = self.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+        
+        if(oggettiViaggianti.count > 0){
+            
+            for oggetto in oggettiViaggianti{
+                self.context.delete(oggetto)
+               
+            }
+            self.saveContext()
+        }
+    }
+    
     //UPDATE -> Vedremo poi...
-
+   
 
 }
