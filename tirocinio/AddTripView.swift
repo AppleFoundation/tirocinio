@@ -73,7 +73,7 @@ struct AddTripView: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     
                     NavigationLink(destination: AddNuovoOggetto(), label: {
-                        Image(systemName: "plus")
+                        Text("Nuovo oggetto")
                     })
                    
                 }

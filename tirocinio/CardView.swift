@@ -113,28 +113,31 @@ struct CardView: View {
         
         var gradienteScheda: LinearGradient = LinearGradient(colors: [Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
         
+        let inizio = UnitPoint.bottom
+        let fine = UnitPoint.top
+        
         if(String("\(colorScheme)") == "light"){
             if(value > 0){
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 0/255, green: 255/255, blue: 171/255, opacity: 1.0))
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 184/255, green: 241/255, blue: 176/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .top, endPoint: .bottom)
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
                 
             }else{
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 255/255, blue: 255/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .topLeading, endPoint: .bottomTrailing)
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }
         }else{
             if(value > 0){
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 62/255, green: 6/255, blue: 95/255, opacity: 1.0))
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 142/255, green: 5/255, blue: 194/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .top, endPoint: .bottom)
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }else{
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 45/255, green: 45/255, blue: 45/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .topLeading, endPoint: .bottomTrailing)
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }
         }
 
