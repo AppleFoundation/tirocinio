@@ -158,7 +158,8 @@ class PersistenceManager: ObservableObject {
         let entity = NSEntityDescription.entity(forEntityName: "OggettoViaggiante", in: self.context)
         
         //controllo se dati oggetto e valigia viaggiante, vi sia un oggetto viaggiante definito
-        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
+        
+//        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
         
       
             let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
@@ -202,7 +203,7 @@ class PersistenceManager: ObservableObject {
             
             for x in array {
                 let valigia = x
-                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiaRef!.nome))\n Viaggio:\(valigia.valigiaRef?.nome)")
+                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiaRef!.nome))\n Viaggio:\(valigia.valigiaRef?.nome ?? "Nome")")
             }
             
         }catch let errore{
