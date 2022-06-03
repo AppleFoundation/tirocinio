@@ -60,7 +60,7 @@ struct ContentView: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     NavigationLink(destination: AddViaggioView()){
-                        Image(systemName: "plus")
+                        Text("Nuovo viaggio")
                     }
                     
                 }

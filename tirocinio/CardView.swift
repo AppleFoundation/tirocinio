@@ -62,11 +62,11 @@ struct CardView: View {
 //            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
             .contextMenu(.init(menuItems: {
                 
-                Text("Lunghezza: \(oggetto.lunghezza)")
-                Text("Larghezza: \(oggetto.larghezza)")
-                Text("Profondità: \(oggetto.profondita)")
-                Text("Volume: \(oggetto.volume)")
-                Text("Peso: \(oggetto.peso)")
+                Text("Lunghezza: \(oggetto.lunghezza) cm")
+                Text("Larghezza: \(oggetto.larghezza) cm")
+                Text("Profondità: \(oggetto.profondita) cm")
+                Text("Volume: \(String(format: "%.2f", Double(oggetto.volume)/1000)) l")
+                Text("Peso: \(oggetto.peso) g")
                 
                 Button(action: {
                     editEnable = true
@@ -79,7 +79,7 @@ struct CardView: View {
                 
                 Button(action: {
                     PersistenceManager.shared.deleteOggetto(nome: oggetto.nome!, categoria: oggetto.categoria!)
-                    print("ciao")
+//                    print("ciao")
                 }, label:{
                     HStack{
                         Text("Elimina")
@@ -108,34 +108,38 @@ struct CardView: View {
     
     }
     
-    private func  coloreScelto() -> Color{
+    private func  coloreScelto() -> LinearGradient{
         
         
-        
-
-        
-        var coloreDellaScheda: Color
+        var gradienteScheda: LinearGradient = LinearGradient(colors: [Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
         
         if(String("\(colorScheme)") == "light"){
             if(value > 0){
-                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 192/255, green: 237/255, blue: 166/255, opacity: 1.0)
-            }else{
-                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
-            }
-        }else if(colorScheme == ColorScheme.dark){
-            if(value > 0){
-                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 30/255, green: 81/255, blue: 40/255, opacity: 1.0)
-            }else{
-                coloreDellaScheda = Color.init(Color.RGBColorSpace.sRGB, red: 45/255, green: 45/255, blue: 45/255, opacity: 1.0)
+                var coloreArray = Array<Color>.init()
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 0/255, green: 255/255, blue: 171/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 184/255, green: 241/255, blue: 176/255, opacity: 1.0))
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .top, endPoint: .bottom)
                 
+            }else{
+                var coloreArray = Array<Color>.init()
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 255/255, blue: 255/255, opacity: 1.0))
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .topLeading, endPoint: .bottomTrailing)
             }
         }else{
-            coloreDellaScheda = Color.white
+            if(value > 0){
+                var coloreArray = Array<Color>.init()
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 62/255, green: 6/255, blue: 95/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 142/255, green: 5/255, blue: 194/255, opacity: 1.0))
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .top, endPoint: .bottom)
+            }else{
+                var coloreArray = Array<Color>.init()
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 45/255, green: 45/255, blue: 45/255, opacity: 1.0))
+                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: .topLeading, endPoint: .bottomTrailing)
+            }
         }
-        
 
         
-        return coloreDellaScheda
+        return gradienteScheda
         
     }
     
