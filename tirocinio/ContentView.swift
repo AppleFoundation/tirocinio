@@ -14,69 +14,84 @@ struct ContentView: View {
     //    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
-
-
     
-
+    
+    
+    
     
     var body: some View{
         NavigationView{
             
-            
             ScrollView{
-                
-                
-                
-                Button(action: {
-                    inizializzaOggetti()
-                    inizializzaValigie()
-                    
-                }, label: {Text("Inizializza")})
-                
-                
-                NavigationLink(destination: AddNuovoOggetto(), label: {
-                    Text("Aggiungi nuovo oggetto")
-                })
-                
-                NavigationLink(destination: AddNuovaValigia(), label: {
-                    Text("Aggiungi nuova valigia")
-                })
-                
                 VStack{
-                    LazyVGrid(columns: columns, alignment: .center) {
+                    
+                    HStack{
                         
-                        ForEach(allViaggi){
-                            viaggio in
+                        NavigationLink(destination: AddViaggioView()){
                             
-                            ActionButtonView(viaggio: viaggio)
+                            Text("Crea viaggio")
+                                .font(.headline.bold())
+                            Image(systemName: "plus")
+                        }
+                        .frame(width: 130)
+                        .padding()
+                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                    }
+                    .padding()
+                    
+                    Button(action: {
+                        inizializzaOggetti()
+                        inizializzaValigie()
+
+                    }, label: {Text("Inizializza")})
+
+
+                    
+                    VStack{
+                        LazyVGrid(columns: columns, alignment: .center) {
+                            
+                            ForEach(allViaggi){
+                                viaggio in
+                                
+                                ActionButtonView(viaggio: viaggio)
+                                
+                            }
                             
                         }
                         
                     }
+                    
+                    
+                }
+                
+                
+               
+            }
+            .background{
+                if(String("\(colorScheme)") == "light"){
+                    Image("Sfondo App 1Light")
+                        .resizable()
+                    //                        .scaledToFill()
+                        .ignoresSafeArea()
+                }else{
+                    Image("Sfondo App 1Dark")
+                        .resizable()
+                    //                        .scaledToFill()
+                        .ignoresSafeArea()
                 }
                 
             }
+            .navigationViewStyle(.stack)
             
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing){
-                    NavigationLink(destination: AddViaggioView()){
-                        Text("Nuovo viaggio")
-                    }
-                    
-                }
-            }
-            
-            .background{
-                Image("bg2")
-                    .resizable()
-                    .ignoresSafeArea()
-                    .scaledToFill()
-            }
             .navigationTitle("SmartSuitCase")
+            
+            //            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
         }
     }
     
-  
+    
     
     func inizializzaOggetti(){
         
@@ -170,10 +185,8 @@ struct ContentView: View {
     
     func inizializzaValigie(){
         
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Blu", tara: 1000, utilizzato: true)
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Rossa", tara: 1000, utilizzato: true)
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Verde", tara: 1000, utilizzato: true)
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 20, larghezza: 30, profondita: 20, nome: "Viola", tara: 1000, utilizzato: true)
+        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Bagaglio", tara: 1000, utilizzato: false)
+        
         
     }
     
@@ -187,15 +200,14 @@ struct ActionButtonView: View{
     var viaggio: Viaggio
     
     @State private var editEnable = false
+    @State private var showingAlertViaggio = false
     
     var body: some View{
         
         if(editEnable == false){
             
-          
+            
             ZStack{
-                
-                
                 
                 VStack{
                     Image(systemName: "airplane")
@@ -204,9 +216,9 @@ struct ActionButtonView: View{
                         .foregroundColor(.blue)
                         .frame(width: 50)
                     
-                        Text(viaggio.nome ?? "NoWhere")
-                            .font(.title.bold())
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    Text(viaggio.nome ?? "NoWhere")
+                        .font(.title.bold())
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                     
                     Text(viaggio.data ?? Date(), style: .date)
                         .font(.title3)
@@ -218,37 +230,45 @@ struct ActionButtonView: View{
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
- 
+                
                 
                 NavigationLink(destination: DetailTripView(viaggio: viaggio)){
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
+                        
                         .cornerRadius(10)
                 }
                 
             }
             
-
             
-                .contextMenu(.init(menuItems: {
-                    Button(action: { PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")}, label:
-                            {
-                        HStack{
-                            Text("Elimina")
-                            Image(systemName: "trash.fill")
-                            
-                        }
-                    })
-                    Button(action: {
-                        editEnable = true
-                    }, label: {
-                        HStack {
-                            Text("Edit")
-                            Image(systemName: "pencil")
-                        }
-                    })
-                }))
+            
+            .contextMenu(.init(menuItems: {
+                Button(action: {
+                    showingAlertViaggio = true
+                }, label:
+                        {
+                    HStack{
+                        Text("Elimina")
+                        Image(systemName: "trash.fill")
+                        
+                    }
+                })
+                Button(action: {
+                    editEnable = true
+                }, label: {
+                    HStack {
+                        Text("Edit")
+                        Image(systemName: "pencil")
+                    }
+                })
+            }))
+            .confirmationDialog("Vuoi davvero eliminare questo viaggio?", isPresented: $showingAlertViaggio, titleVisibility: .visible){
+                Button("Elimina", role: .destructive){
+                    PersistenceManager.shared.deleteViaggio(nome: viaggio.nome ?? "NoWhere")
+                }
+            }
         }else{
             
             VStack{
@@ -257,7 +277,7 @@ struct ActionButtonView: View{
                     .scaledToFit()
                     .foregroundColor(.blue)
                     .frame(width: 50)
-                    
+                
                 Text("Loading...")
                     .font(.title.bold())
                     .foregroundColor(Color.red)
@@ -268,14 +288,14 @@ struct ActionButtonView: View{
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                .foregroundColor(Color.red)
-                .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
-                
+            .foregroundColor(Color.red)
+            .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
+            
             
         }
         
         
-            
+        
     }
 }
 

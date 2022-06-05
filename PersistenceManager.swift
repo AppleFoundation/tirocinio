@@ -96,24 +96,7 @@ class PersistenceManager: ObservableObject {
         }
     }
     
-    func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
-        let entity = NSEntityDescription.entity(forEntityName: "ValigiaViaggiante", in: self.context)
-        
-        if(loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).isEmpty){
-            let newValigiaViaggiante = ValigiaViaggiante(entity: entity!, insertInto: self.context)
-//            newValigiaViaggiante.oggettiviaggio?.mutableSetValue(forKey: "oggettiviaggio").addObjects(from: oggettiInViaggio)
-//                print(newValigiaViaggiante.oggettiviaggio)//DEBUG
-            
-            newValigiaViaggiante.valigiaRef = valigia
-            newValigiaViaggiante.viaggioRef = viaggio
-            newValigiaViaggiante.id = UUID()
-            valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
-            self.saveContext()
-            print("ValigiaViaggiante salvata!")
-        }else{
-            print("Questa valigia è già presente!")
-        }
-    }
+    
 
     func addViaggio(data: Date, nome: String){
         let entity = NSEntityDescription.entity(forEntityName: "Viaggio", in: self.context)
@@ -159,18 +142,34 @@ class PersistenceManager: ObservableObject {
         
         //controllo se dati oggetto e valigia viaggiante, vi sia un oggetto viaggiante definito
         
-//        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
+        //        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
         
-      
-            let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
-
-            newOggettoViaggiante.id = UUID()
-            newOggettoViaggiante.oggettoRef = oggetto
-            newOggettoViaggiante.viaggioRef = viaggio
+        
+        let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
+        
+        newOggettoViaggiante.id = UUID()
+        newOggettoViaggiante.oggettoRef = oggetto
+        newOggettoViaggiante.viaggioRef = viaggio
         
         
         self.saveContext()
         print("Oggetto viaggiante salvato!")
+    }
+    
+    func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
+        let entity = NSEntityDescription.entity(forEntityName: "ValigiaViaggiante", in: self.context)
+        
+        
+        let newValigiaViaggiante = ValigiaViaggiante(entity: entity!, insertInto: self.context)
+        
+        newValigiaViaggiante.id = UUID()
+        newValigiaViaggiante.valigiaRef = valigia
+        newValigiaViaggiante.viaggioRef = viaggio
+        
+        //valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
+        self.saveContext()
+        print("ValigiaViaggiante salvata!")
+        
     }
     
     //SELECTION
@@ -202,8 +201,9 @@ class PersistenceManager: ObservableObject {
             guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
             
             for x in array {
-                let valigia = x
-                print("Valigia Viaggiante \n Contenitore:\(String(describing: valigia.valigiaRef!.nome))\n Viaggio:\(valigia.valigiaRef?.nome ?? "Nome")")
+                let valigia = x.valigiaRef
+                let viaggio = x.viaggioRef
+                print("Valigia Viaggiante \n Contenitore: \(valigia?.nome ?? "Nome")\n Viaggio: \(viaggio?.nome ?? "Viaggio")")
             }
             
         }catch let errore{
@@ -337,6 +337,18 @@ class PersistenceManager: ObservableObject {
         return oggetti
     }
     
+    func loadValigieViaggiantiFromViaggio(viaggioRef: Viaggio) -> [ValigiaViaggiante]{
+        let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "viaggioRef = %@", viaggioRef)
+        request.predicate = predicate
+        
+        let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
+        
+        return valigie
+    }
+    
     func loadViaggiFromNome(nome: String) -> [Viaggio] {
         let request: NSFetchRequest <Viaggio> = NSFetchRequest(entityName: "Viaggio")
         request.returnsObjectsAsFaults = false
@@ -406,7 +418,7 @@ class PersistenceManager: ObservableObject {
         return self.loadOggettiFromFetchRequest(request: request)
     }
     
-    func loadAllCategorie() -> [String]{
+    func loadAllCategorieOggetti() -> [String]{
         let request: NSFetchRequest<Oggetto> = NSFetchRequest(entityName: "Oggetto")
         request.returnsObjectsAsFaults = false
         
@@ -416,6 +428,27 @@ class PersistenceManager: ObservableObject {
         
         for oggetto in oggettiDaDB {
             categorieLista.insert(oggetto.categoria!)
+        }
+        
+        var categorieArray = Array<String>.init()
+        
+        for singolaCat in categorieLista{
+            categorieArray.append(singolaCat)
+        }
+        
+        return categorieArray
+    }
+    
+    func loadAllCategorieValigie() -> [String]{
+        let request: NSFetchRequest<Valigia> = NSFetchRequest(entityName: "Valigia")
+        request.returnsObjectsAsFaults = false
+        
+        let valieieDaDB = self.loadValigieFromFetchRequest(request: request)
+        
+        var categorieLista = Set<String>.init()
+        
+        for valigia in valieieDaDB {
+            categorieLista.insert(valigia.categoria!)
         }
         
         var categorieArray = Array<String>.init()
@@ -501,6 +534,19 @@ class PersistenceManager: ObservableObject {
             for oggetto in oggettiViaggianti{
                 self.context.delete(oggetto)
                
+            }
+            self.saveContext()
+        }
+    }
+    
+    func deleteAllValigiaViaggiante(viaggio: Viaggio){
+        let valigieViaggianti = self.loadValigieViaggiantiFromViaggio(viaggioRef: viaggio)
+        
+        if(valigieViaggianti.count > 0){
+            
+            for valigia in valigieViaggianti{
+                self.context.delete(valigia)
+                
             }
             self.saveContext()
         }

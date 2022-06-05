@@ -14,114 +14,81 @@ extension String: Identifiable {
 }
 
 struct AddTripView: View {
-    
-    //Qui si deve prendere al DB tutto quello che si ha riguardo agli oggetti
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
-    
-    
-//    let categories = ["Articoli da bagno",
-//                      "Abbigliamento",
-//                      "Essenziali",
-//                      "Campeggio",
-//                      "Spiaggia",
-//                      "Sport",
-//                      "Informatica ed Elettronica"
-//    ]
-    
-    let categories = PersistenceManager.shared.loadAllCategorie().sorted()
-    
-    
-    
+    let categories = PersistenceManager.shared.loadAllCategorieOggetti().sorted()
     var viaggio: Viaggio
-
-    
     var body: some View {
-        
-        
-        
-            
         ScrollView(.vertical, showsIndicators: false){
-                VStack{
-                    
-                    //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
-                   
-                    ForEach(categories){ currentCat in
-                        let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
+            VStack{
+                
+                
+                HStack{
+                    Spacer()
+                    //                        Button(action: {
+                    //                            PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
+                    //                            self.presentationMode.wrappedValue.dismiss()
+                    //                        }, label: {
+                    //                            Text("Togli oggetti")
+                    //                                .font(.headline.bold())
+                    //                            Image(systemName: "trash")
+                    //                        })
+                    //                        .frame(width: 130)
+                    //                        .padding()
+                    //                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                    //                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                    //                        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                    //                        Spacer()
+                    NavigationLink(destination: AddNuovoOggetto()){
                         
-                        if (!cat.isEmpty){
-                            CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategia: cat)
-                        }
+                        Text("Crea viaggio")
+                            .font(.headline.bold())
+                        Image(systemName: "plus")
                     }
+                    .frame(width: 130)
+                    .padding()
+                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                     
-                    Spacer(minLength: 50)
-                  
+                    Spacer()
+                }
+                .padding()
+                //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
+                
+                ForEach(categories){ currentCat in
+                    let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
+                    
+                    if (!cat.isEmpty){
+                        CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategia: cat)
+                    }
                 }
                 
                 
+                Spacer(minLength: 50)
             }
-        
-        
-        
-            
-            .toolbar{
-                
-
-                
-                ToolbarItem(placement: .navigationBarTrailing){
-                    
-                    NavigationLink(destination: AddNuovoOggetto(), label: {
-                        Text("Nuovo oggetto")
-                    })
-                   
-                }
-                
-//                ToolbarItem(placement: .navigationBarTrailing){
-//                    Button(action: {
-//
-//                        self.presentationMode.wrappedValue.dismiss()
-//                    }, label: {
-//                        Text("Salva")
-//                    })
-//
-//                }
-                
-                ToolbarItem(placement: .principal){
-                    
-                    Button(action: {
-                        PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Reset")
-                    })
-                   
-                }
-            
-                
-                
-
-            }
-        
-//            .navigationBarBackButtonHidden(true)
-            .background{
-                Image("bg2")
+        }
+        .navigationTitle("Aggiungi Oggetti")
+        .background{
+            if(String("\(colorScheme)") == "light"){
+                Image("Sfondo App 4Light")
                     .resizable()
+                //                        .scaledToFill()
                     .ignoresSafeArea()
-                    .scaledToFill()
+            }else{
+                Image("Sfondo App 4Dark")
+//                    .resizable()
+                //                        .scaledToFill()
+                    .ignoresSafeArea()
             }
             
-            .navigationTitle("Aggiungi Oggetti")
+        }
+       
+        
     }
 }
 
 
 
 
-//
-//struct AddTripView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddTripView()
-//    }
-//}

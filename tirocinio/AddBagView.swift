@@ -7,43 +7,51 @@
 
 
 import SwiftUI
-
-//extension String: Identifiable {
-//    public var id: String {
-//        self
-//    }
-//}
-
 struct AddBagView: View {
-    
-    //Qui si deve prendere al DB tutto quello che si ha riguardo agli oggetti
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
-    
     @FetchRequest<Valigia>(entity: Valigia.entity(), sortDescriptors: []) var allValigie: FetchedResults<Valigia>
-    
-    
-    
-    
-    let categories = ["Trolley",
-                      "Da stiva",
-                      "Piccola",
-                      "Prova"
-    ]
-    
-    
+    let categories = PersistenceManager.shared.loadAllCategorieValigie().sorted()
     var viaggio: Viaggio
     
     var body: some View {
-        
-        
-        
-            
-            ScrollView(.vertical){
+            ScrollView(.vertical, showsIndicators: false){
                 VStack{
                     
                     //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                    
+                    HStack{
+                        Spacer()
+//                        Button(action: {
+//                            print("Ciao")
+//                            //Creare la funzione per togliere le valigie viaggianti
+//                        }, label: {
+//                            Text("Togli valigie")
+//                                .font(.headline.bold())
+//                            Image(systemName: "trash")
+//                        })
+//                        .frame(width: 130)
+//                        .padding()
+//                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+//                        .clipShape(RoundedRectangle(cornerRadius: 10))
+//                        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+//                        Spacer()
+                        NavigationLink(destination: AddNuovaValigia()){
+                            
+                            Text("Crea valigia")
+                                .font(.headline.bold())
+                            Image(systemName: "plus")
+                        }
+                        .frame(width: 130)
+                        .padding()
+                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    
                     ForEach(categories){ currentCat in
                         let cat = PersistenceManager.shared.loadValigieFromCategoria(categoria: currentCat)
                         
@@ -51,48 +59,27 @@ struct AddBagView: View {
                             BagCategoriaScrollView(nome: currentCat, viaggio: viaggio, valigiaCategoria: cat)
                         }
                     }
-                  
+                    Spacer(minLength: 50)
                 }
                 .padding()
-                
             }
-            
-            .toolbar{
-                
-
-                ToolbarItem(placement: .navigationBarLeading){
-                    Button(action: {
-
-                        self.presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Text("Salva")
-                    })
-
+            .background{
+                if(String("\(colorScheme)") == "light"){
+                    Image("Sfondo App 3Light")
+                        .resizable()
+//                        .scaledToFill()
+                        .ignoresSafeArea()
+                }else{
+                    Image("Sfondo App 3Dark")
+                        .resizable()
+//                        .scaledToFill()
+                        .ignoresSafeArea()
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing){
-                    
-                    NavigationLink(destination: AddNuovaValigia(), label: {
-                        Image(systemName: "plus")
-                    })
-                   
-                }
-
             }
-        
-        .navigationBarBackButtonHidden(true)
         .navigationTitle("Aggiungi Valigie")
     }
 }
 
-
-
-
-
-//struct AddBagView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddTripView()
-//    }
-//}
 
 

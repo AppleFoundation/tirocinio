@@ -34,12 +34,6 @@ struct BagCategoriaScrollView: View{
                         ValigiaCardView(valigia: valigia, viaggio: viaggio, value: PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count)
                     }
                     
-//                    CardView(nome: "Maglia")
-//                    CardView(nome: "Maglione")
-//                    CardView(nome: "Jeans")
-//                    CardView(nome: "Canottiera")
-//                    CardView(nome: "Camicia")
-//                    CardView(nome: "Guanti")
                 }
                 
             }

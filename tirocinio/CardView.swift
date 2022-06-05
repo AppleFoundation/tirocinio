@@ -12,12 +12,13 @@ struct CardView: View {
     
     @Environment(\.colorScheme) var colorScheme
     
-    
+
     @State private var editEnable = false
     
     var oggetto: Oggetto
     var viaggio: Viaggio
     
+    @State var count: Int = 0
     @State var value: Int
     let step = 1
     let range = 0...50
@@ -34,8 +35,8 @@ struct CardView: View {
                     .multilineTextAlignment(.trailing)
                 
                 Button(action: {
+                    count += 1
                     value += 1
-                    PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                 }, label: {
                     Text(oggetto.nome ?? "Nome")
                         
@@ -44,8 +45,8 @@ struct CardView: View {
                 
                 Button(action: {
                     if(value > 0){
+                        count -= 1
                         value -= 1
-                        PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
                     }
                 }, label: {
                     Image(systemName: "minus.circle.fill")
@@ -54,6 +55,23 @@ struct CardView: View {
                 })
                 
                 
+            }
+            
+            .onDisappear(){
+                
+                if (count != 0){
+                    if (count > 0){
+                        for _ in 1...count{
+                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+                        }
+                    }else{
+                        count = count - count - count
+                        for _ in 1...count{
+                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                        }
+                    }
+                }
+               
             }
             .padding()
             .background(coloreScelto())
@@ -87,13 +105,6 @@ struct CardView: View {
                         
                     }
                 })
-                
-                
-                
-                
-                
-                
-                
             }))
             
             
@@ -104,9 +115,10 @@ struct CardView: View {
                 
         }
         
-        
+            
     
     }
+        
     
     private func  coloreScelto() -> LinearGradient{
         
@@ -119,8 +131,8 @@ struct CardView: View {
         if(String("\(colorScheme)") == "light"){
             if(value > 0){
                 var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 0/255, green: 255/255, blue: 171/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 184/255, green: 241/255, blue: 176/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 116/255, green: 116/255, blue: 234/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 157/255, green: 156/255, blue: 240/255, opacity: 1.0))
                 gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
                 
             }else{
