@@ -31,7 +31,7 @@ struct BagCategoriaScrollView: View{
                     
                     ForEach(valigiaCategoria){
                         valigia in
-                        ValigiaCardView(valigia: valigia, viaggio: viaggio, value: PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count)
+                        ValigiaCardView(valigia: valigia, viaggio: viaggio)
                     }
                     
                 }

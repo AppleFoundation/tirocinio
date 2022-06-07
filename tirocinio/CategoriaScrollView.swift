@@ -40,7 +40,7 @@ struct CategoriaScrollView: View{
                             ForEach(oggettiCategia.sorted()){
                                 oggetto in
                          
-                                CardView(oggetto: oggetto, viaggio: viaggio, value: PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count)
+                                CardView(oggetto: oggetto, viaggio: viaggio)
                 
                                     
                             }

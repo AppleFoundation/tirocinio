@@ -98,7 +98,7 @@ struct ValigiaCardView: View {
     
     @State var count: Int = 0
     
-    @State var value: Int
+    @State var value: Int = 0
     
     var body: some View {
         
@@ -133,6 +133,9 @@ struct ValigiaCardView: View {
                     }
                 }
                
+            }
+            .onAppear(){
+                value = PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count
             }
     }
         

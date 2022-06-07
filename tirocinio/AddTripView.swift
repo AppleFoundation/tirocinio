@@ -78,7 +78,7 @@ struct AddTripView: View {
                     .ignoresSafeArea()
             }else{
                 Image("Sfondo App 4Dark")
-//                    .resizable()
+                    .resizable()
                 //                        .scaledToFill()
                     .ignoresSafeArea()
             }

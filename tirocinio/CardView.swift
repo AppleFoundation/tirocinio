@@ -19,7 +19,7 @@ struct CardView: View {
     var viaggio: Viaggio
     
     @State var count: Int = 0
-    @State var value: Int
+    @State var value: Int = 0
     let step = 1
     let range = 0...50
     
@@ -72,6 +72,9 @@ struct CardView: View {
                     }
                 }
                
+            }
+            .onAppear(){
+                value = PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count
             }
             .padding()
             .background(coloreScelto())
