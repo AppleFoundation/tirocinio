@@ -11,7 +11,7 @@ import SceneKit
 struct CardView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    
+
 
     @State private var editEnable = false
     
@@ -37,6 +37,7 @@ struct CardView: View {
                 Button(action: {
                     count += 1
                     value += 1
+                    PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                 }, label: {
                     Text(oggetto.nome ?? "Nome")
                         
@@ -47,6 +48,7 @@ struct CardView: View {
                     if(value > 0){
                         count -= 1
                         value -= 1
+                        PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
                     }
                 }, label: {
                     Image(systemName: "minus.circle.fill")
@@ -57,22 +59,25 @@ struct CardView: View {
                 
             }
             
-            .onDisappear(){
-                
-                if (count != 0){
-                    if (count > 0){
-                        for _ in 1...count{
-                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-                        }
-                    }else{
-                        count = count - count - count
-                        for _ in 1...count{
-                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
-                        }
-                    }
-                }
-               
-            }
+            
+//            .onDisappear(){
+//
+//                if (count != 0){
+//                    if (count > 0){
+//                        for _ in 1...count{
+//                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+//                        }
+//                    }else{
+//                        count = count - count - count
+//                        for _ in 1...count{
+//                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+//                        }
+//                    }
+//                }
+//
+//
+//
+//            }
             .onAppear(){
                 value = PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count
             }

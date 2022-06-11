@@ -2,7 +2,7 @@
 //  ValigiaViaggiante+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Salvatore Apicella on 31/05/22.
+//  Created by Salvatore Apicella on 11/06/22.
 //
 //
 

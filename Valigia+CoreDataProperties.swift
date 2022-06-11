@@ -2,7 +2,7 @@
 //  Valigia+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 31/05/22.
+//  Created by Salvatore Apicella on 11/06/22.
 //
 //
 
@@ -25,24 +25,24 @@ extension Valigia {
     @NSManaged public var tara: Int32
     @NSManaged public var utilizzato: Bool
     @NSManaged public var volume: Int32
-    @NSManaged public var valigiainviaggio: NSSet?
+    @NSManaged public var valigiaInViaggio: NSSet?
 
 }
 
-// MARK: Generated accessors for valigiainviaggio
+// MARK: Generated accessors for valigiaInViaggio
 extension Valigia {
 
-    @objc(addValigiainviaggioObject:)
-    @NSManaged public func addToValigiainviaggio(_ value: ValigiaViaggiante)
+    @objc(addValigiaInViaggioObject:)
+    @NSManaged public func addToValigiaInViaggio(_ value: ValigiaViaggiante)
 
-    @objc(removeValigiainviaggioObject:)
-    @NSManaged public func removeFromValigiainviaggio(_ value: ValigiaViaggiante)
+    @objc(removeValigiaInViaggioObject:)
+    @NSManaged public func removeFromValigiaInViaggio(_ value: ValigiaViaggiante)
 
-    @objc(addValigiainviaggio:)
-    @NSManaged public func addToValigiainviaggio(_ values: NSSet)
+    @objc(addValigiaInViaggio:)
+    @NSManaged public func addToValigiaInViaggio(_ values: NSSet)
 
-    @objc(removeValigiainviaggio:)
-    @NSManaged public func removeFromValigiainviaggio(_ values: NSSet)
+    @objc(removeValigiaInViaggio:)
+    @NSManaged public func removeFromValigiaInViaggio(_ values: NSSet)
 
 }
 

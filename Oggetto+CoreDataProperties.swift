@@ -2,7 +2,7 @@
 //  Oggetto+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 31/05/22.
+//  Created by Salvatore Apicella on 11/06/22.
 //
 //
 
@@ -24,6 +24,24 @@ extension Oggetto {
     @NSManaged public var peso: Int32
     @NSManaged public var profondita: Int32
     @NSManaged public var volume: Int32
+    @NSManaged public var oggettoInViaggio: NSSet?
+
+}
+
+// MARK: Generated accessors for oggettoInViaggio
+extension Oggetto {
+
+    @objc(addOggettoInViaggioObject:)
+    @NSManaged public func addToOggettoInViaggio(_ value: OggettoViaggiante)
+
+    @objc(removeOggettoInViaggioObject:)
+    @NSManaged public func removeFromOggettoInViaggio(_ value: OggettoViaggiante)
+
+    @objc(addOggettoInViaggio:)
+    @NSManaged public func addToOggettoInViaggio(_ values: NSSet)
+
+    @objc(removeOggettoInViaggio:)
+    @NSManaged public func removeFromOggettoInViaggio(_ values: NSSet)
 
 }
 
@@ -31,12 +49,14 @@ extension Oggetto : Identifiable {
 
 }
 
+
+
 extension Oggetto: Comparable{
     
     public static func < (lhs: Oggetto, rhs: Oggetto) -> Bool {
         return (lhs.nome! < rhs.nome!)
     }
-
+    
     
     
 }

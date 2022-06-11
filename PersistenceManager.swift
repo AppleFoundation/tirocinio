@@ -374,6 +374,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func loadOggettiFromCategoria(categoria: String) -> [Oggetto] {
+        
         let request: NSFetchRequest <Oggetto> = NSFetchRequest(entityName: "Oggetto")
         request.returnsObjectsAsFaults = false
         
@@ -388,6 +389,21 @@ class PersistenceManager: ObservableObject {
         return oggetti
     }
     
+    func loadOggettiFromID(ID: String) -> [Oggetto] {
+        
+        let request: NSFetchRequest <Oggetto> = NSFetchRequest(entityName: "Oggetto")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "id = %@", ID)
+        request.predicate = predicate
+        
+        let oggetti = self.loadOggettiFromFetchRequest(request:request)
+        
+        
+        
+        
+        return oggetti
+    }
     
     
     func loadAllViaggi() -> [Viaggio] {
