@@ -19,6 +19,7 @@ struct tirocinioApp: App {
             ContentView().environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
                          .environmentObject(speech)
 //            ContentView().environmentObject(persistence)
+                
         }
     }
 }

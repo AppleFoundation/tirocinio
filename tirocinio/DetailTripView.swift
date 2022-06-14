@@ -293,6 +293,8 @@ struct tastiDiAggiunta: View{
         
         Spacer(minLength: 30)
     
+        Spacer(minLength: 30)
+
         VStack{
             Text("\(speech.text)")
                 .font(.title)
@@ -301,6 +303,7 @@ struct tastiDiAggiunta: View{
         }
         
         Spacer(minLength: 30)
+        
     }
     
 }

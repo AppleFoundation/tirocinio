@@ -379,14 +379,17 @@
 				40C54B6128565C9E0054B614 /* OggettoViaggiante+CoreDataProperties.swift in Sources */,
 				9D513293282B15BB00DA3374 /* AddTripView.swift in Sources */,
 				40C54B6028565C9E0054B614 /* Valigia+CoreDataProperties.swift in Sources */,
+				F220272E2859036B008C4942 /* SpeechToText.swift in Sources */,
 				40C54B6428565C9E0054B614 /* Oggetto+CoreDataProperties.swift in Sources */,
 				40C54B5E28565C9E0054B614 /* Valigia+CoreDataClass.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
 				F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */,
 				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
+				F220272F2859036B008C4942 /* SpeechToTextButton.swift in Sources */,
 				40C54B6528565C9E0054B614 /* OggettoViaggiante+CoreDataClass.swift in Sources */,
 				40C54B5F28565C9E0054B614 /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
 				40C54B6228565C9E0054B614 /* Viaggio+CoreDataProperties.swift in Sources */,
+				F220272D2859036B008C4942 /* DecodeInput.swift in Sources */,
 				9D513291282B158900DA3374 /* AddBagView.swift in Sources */,
 				4012AC3F283AD703002F4776 /* AddViaggioView.swift in Sources */,
 				9D203D7E28469F580091A675 /* OggettoViaggianteClass.swift in Sources */,
@@ -559,6 +562,9 @@
 				DEVELOPMENT_TEAM = K8WJKQA676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -590,6 +596,9 @@
 				DEVELOPMENT_TEAM = K8WJKQA676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
