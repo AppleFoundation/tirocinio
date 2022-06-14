@@ -18,7 +18,6 @@
 		40C54B6328565C9E0054B614 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5828565C9D0054B614 /* PersistenceManager.swift */; };
 		40C54B6428565C9E0054B614 /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */; };
 		40C54B6528565C9E0054B614 /* OggettoViaggiante+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */; };
-		40C54B6628565C9E0054B614 /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */; };
 		40C54B6728565C9E0054B614 /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5C28565C9D0054B614 /* Viaggio+CoreDataClass.swift */; };
 		40FB606F28565B990047E738 /* EditViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606D28565B990047E738 /* EditViaggioView.swift */; };
 		40FB607028565B990047E738 /* EditOggettoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606E28565B990047E738 /* EditOggettoView.swift */; };
@@ -34,9 +33,8 @@
 		9D9EB39628460470008D4341 /* AddNuovoOggetto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9EB39528460470008D4341 /* AddNuovoOggetto.swift */; };
 		9D9EB3982846047A008D4341 /* AddNuovaValigia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9EB3972846047A008D4341 /* AddNuovaValigia.swift */; };
 		9DE99337282A9772009A9330 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE99336282A9772009A9330 /* CardView.swift */; };
-		F220272D2859036B008C4942 /* DecodeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F220272A2859036B008C4942 /* DecodeInput.swift */; };
-		F220272E2859036B008C4942 /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F220272B2859036B008C4942 /* SpeechToText.swift */; };
-		F220272F2859036B008C4942 /* SpeechToTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F220272C2859036B008C4942 /* SpeechToTextButton.swift */; };
+		F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16628565A5E00781EF8 /* SpeechToText.swift */; };
+		F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */; };
 		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
@@ -76,7 +74,6 @@
 		40C54B5828565C9D0054B614 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OggettoViaggiante+CoreDataClass.swift"; sourceTree = "<group>"; };
-		40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40C54B5C28565C9D0054B614 /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40FB606D28565B990047E738 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
 		40FB606E28565B990047E738 /* EditOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOggettoView.swift; sourceTree = "<group>"; };
@@ -92,9 +89,11 @@
 		9D9EB39528460470008D4341 /* AddNuovoOggetto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNuovoOggetto.swift; sourceTree = "<group>"; };
 		9D9EB3972846047A008D4341 /* AddNuovaValigia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNuovaValigia.swift; sourceTree = "<group>"; };
 		9DE99336282A9772009A9330 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		F220272A2859036B008C4942 /* DecodeInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeInput.swift; path = ../../../.Trash/DecodeInput.swift; sourceTree = "<group>"; };
-		F220272B2859036B008C4942 /* SpeechToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToText.swift; path = ../../../.Trash/SpeechToText.swift; sourceTree = "<group>"; };
-		F220272C2859036B008C4942 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToTextButton.swift; path = ../../../.Trash/SpeechToTextButton.swift; sourceTree = "<group>"; };
+		F21AA16628565A5E00781EF8 /* SpeechToText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToText.swift; sourceTree = "<group>"; };
+		F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToTextButton.swift; sourceTree = "<group>"; };
+		F21AA16A285678DC00781EF8 /* DecodeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeInput.swift; sourceTree = "<group>"; };
+		F29C74112856294300CD28F1 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
+		F29C74132856295D00CD28F1 /* EditOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOggettoView.swift; sourceTree = "<group>"; };
 		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -140,12 +139,12 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		F220271E285902A2008C4942 /* SpeechToText */ = {
+		F21AA165285659F600781EF8 /* SpeechToText */ = {
 			isa = PBXGroup;
 			children = (
-				F220272A2859036B008C4942 /* DecodeInput.swift */,
-				F220272B2859036B008C4942 /* SpeechToText.swift */,
-				F220272C2859036B008C4942 /* SpeechToTextButton.swift */,
+				F21AA16628565A5E00781EF8 /* SpeechToText.swift */,
+				F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */,
+				F21AA16A285678DC00781EF8 /* DecodeInput.swift */,
 			);
 			path = SpeechToText;
 			sourceTree = "<group>";
@@ -153,7 +152,7 @@
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
-				F220271E285902A2008C4942 /* SpeechToText */,
+				F21AA165285659F600781EF8 /* SpeechToText */,
 				F29EF2D928154A690013D6F5 /* tirocinio */,
 				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
 				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
@@ -175,7 +174,6 @@
 		F29EF2D928154A690013D6F5 /* tirocinio */ = {
 			isa = PBXGroup;
 			children = (
-				40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */,
 				40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */,
 				40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */,
 				40C54B5628565C9D0054B614 /* OggettoViaggiante+CoreDataProperties.swift */,
@@ -193,6 +191,8 @@
 				9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */,
 				9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */,
 				9DE99336282A9772009A9330 /* CardView.swift */,
+				F29C74132856295D00CD28F1 /* EditOggettoView.swift */,
+				F29C74112856294300CD28F1 /* EditViaggioView.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
 				9D513294282B162F00DA3374 /* DetailTripView.swift */,
 				9D9EB393284602CF008D4341 /* ValigiaCardView.swift */,
@@ -383,6 +383,7 @@
 				40C54B6428565C9E0054B614 /* Oggetto+CoreDataProperties.swift in Sources */,
 				40C54B5E28565C9E0054B614 /* Valigia+CoreDataClass.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
+				F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */,
 				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
 				F220272F2859036B008C4942 /* SpeechToTextButton.swift in Sources */,
 				40C54B6528565C9E0054B614 /* OggettoViaggiante+CoreDataClass.swift in Sources */,
@@ -396,9 +397,9 @@
 				9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */,
 				40C54B5D28565C9E0054B614 /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
-				40C54B6628565C9E0054B614 /* Oggetto+CoreDataClass.swift in Sources */,
 				9D9EB3982846047A008D4341 /* AddNuovaValigia.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
+				F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

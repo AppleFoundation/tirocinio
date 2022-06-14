@@ -15,10 +15,6 @@ struct ContentView: View {
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
     
-    
-    
-    
-    
     var body: some View{
         NavigationView{
             
@@ -38,6 +34,8 @@ struct ContentView: View {
                         .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                        
+
                     }
                     .padding()
                     
@@ -46,8 +44,6 @@ struct ContentView: View {
                         inizializzaValigie()
 
                     }, label: {Text("Inizializza")})
-
-
                     
                     VStack{
                         LazyVGrid(columns: columns, alignment: .center) {
@@ -294,8 +290,6 @@ struct ActionButtonView: View{
             
         }
         
-        
-        
     }
 }
 
@@ -379,11 +373,11 @@ struct ActionButtonView: View{
 //}
 
 
-//
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//            .previewDevice("iPhone 11")
-//    }
-//}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+            .previewDevice("iPhone 11")
+    }
+}
 
