@@ -29,12 +29,56 @@ struct DetailTripView: View {
                     
                     tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio)
                     
-                    ForEach(insiemeDiValigie.tutteLeValigie){
-                        singolaIstanza in
+                    ForEach(valigieDB){
+                        valigia in
                         
-                        singolaValigiaView(singolaIstanza: singolaIstanza)
-                        
+                        VStack{
+                            HStack{
+                                Text(valigia.valigiaRef!.nome ?? "Nome non trovato")
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                
+                                Spacer()
+                                VStack(alignment: .trailing){
+                                    Text("Ingombro Occupato: \(valigia.volumeAttuale/1000)l di \(valigia.volumeMassimo/1000)l")
+                                        .font(.caption)
+                                    Text("Peso Occupato: \(valigia.pesoAttuale)g di \(valigia.pesoMassimo)g")
+                                        .font(.caption)
+                                }
+                            }
+                            .padding(.bottom)
+                            
+                            
+                            
+                            
+                            
+                            VStack(alignment: .leading, spacing: 8){
+                                
+                                
+                                ForEach(valigia.contenuto.array(of: OggettoViaggiante.self)) {
+                                    item in
+                                    Text((item.oggettoRef?.nome)!)
+                                        .font(.headline)
+                                    .padding(8)
+                                    .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
+                                    .cornerRadius(10)
+                                   
+                                }
+                            }
+                            
+                            
+                            
+//                                            }
+                            Spacer()
+                        }
                     }
+//                    ForEach(insiemeDiValigie.tutteLeValigie){
+//                        singolaIstanza in
+//
+//                        singolaValigiaView(singolaIstanza: singolaIstanza)
+//
+//                    }
+                    
                 }
                 Spacer()
             }
@@ -61,7 +105,11 @@ struct DetailTripView: View {
         .onAppear(){
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
-            insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
+            
+            //dovrei controllare quando fare questa cosa, non ad ogni apertura. In questo metodo alloca gli oggetti nelle valigie
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio)
+            
+//            insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
@@ -441,14 +489,18 @@ struct leMieValigie{
             tutteLeValigie.append(valigiaDaRiempire.init(valigiaDaAggiungere: singolaValigia))
         }
         
-        self.oggettiDaAllocare = oggettiViaggianti
+
+        
+        
+        
         
         //Qui andrebbe ordinato il vettore oggettiDaAllocare in ordine di peso o di volume
         
+        self.oggettiDaAllocare = oggettiViaggianti
         while (oggettiDaAllocare.isEmpty == false){
-            
+
             var temp = (oggettiDaAllocare.popLast(),false)
-            
+
             for valigiaAttuale in tutteLeValigie{
                 if(temp.1 == false){
                     //Attualmente l'algoritmo implementato si basa solo ed unicamente sul peso va implementato anche sul volume
@@ -464,8 +516,17 @@ struct leMieValigie{
                 tutteLeValigie[0].pesoAttuale += Int(temp.0!.oggettoRef!.peso)
                 temp.1 = true
             }
-            
+
         }
         
+    }
+}
+
+extension Optional where Wrapped == NSSet {
+    func array<T: Hashable>(of: T.Type) -> [T] {
+        if let set = self as? Set<T> {
+            return Array(set)
+        }
+        return [T]()
     }
 }
