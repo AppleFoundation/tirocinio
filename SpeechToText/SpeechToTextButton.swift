@@ -33,7 +33,7 @@ struct SpeechToTextButton: View {
                         
                         // testo acquisito
                         
-                        if(input.decode(text: speech.text)){
+                        if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
                             print("ok")
                         }else{
                             print("decodifica input non riuscita")
@@ -57,6 +57,7 @@ struct SpeechToTextButton: View {
                 .background(speech.isRecording ? Circle().foregroundColor(.red).frame(width: 85, height: 85) : Circle().foregroundColor(.blue).frame(width: 70, height: 70))
         })
     }
+    
 }
 
 //struct SpeechToTextButton_Previews: PreviewProvider {

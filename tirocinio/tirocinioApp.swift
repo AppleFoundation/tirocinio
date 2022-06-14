@@ -8,8 +8,10 @@
 import SwiftUI
 import CoreData
 
+
 @main
 struct tirocinioApp: App {
+    
     let persistence = PersistenceManager.shared
     var speech = SpeechToText()
     
@@ -18,6 +20,7 @@ struct tirocinioApp: App {
             //Iniettiamo la variabile d'ambiente rappresentante il contesto all'interno dell'applicazione
             ContentView().environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
                          .environmentObject(speech)
+            
 //            ContentView().environmentObject(persistence)
                 
         }

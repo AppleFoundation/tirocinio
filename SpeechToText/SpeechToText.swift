@@ -13,6 +13,7 @@ import Speech
 public class SpeechToText: ObservableObject{
     
     // ATTRIBUTI
+    lazy var viaggioNome : String = ""
     
     private var task: SFSpeechRecognitionTask?
     // task che determina lo stato del task di riconoscimento della voce, cancella un task in corso, o segnala la fine di un task
@@ -63,7 +64,8 @@ public class SpeechToText: ObservableObject{
         
     }
     
-    func getButton() -> SpeechToTextButton{
+    func getButton(viaggioNome: String) -> SpeechToTextButton{
+        self.viaggioNome = viaggioNome
         return button
     }
     

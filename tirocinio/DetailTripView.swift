@@ -140,7 +140,6 @@ struct tastiDiAggiunta: View{
     @State private var showingAlertValigie = false
     @EnvironmentObject var speech : SpeechToText
     
-    
     var body: some View{
         
         
@@ -250,7 +249,7 @@ struct tastiDiAggiunta: View{
             Text("\(speech.text)")
                 .font(.title)
                 .bold()
-            speech.getButton()
+            speech.getButton(viaggioNome: self.viaggio.nome!)
         }
             
         Spacer(minLength: 30)

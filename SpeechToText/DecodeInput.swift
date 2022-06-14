@@ -19,19 +19,17 @@ public class DecodeInput {
         }
     }
     
-    public func decode(text: String) -> Bool {
-        var found = false
+    public func decode(text: String, viaggioNome: String) -> Bool {
         searchIntoCollection()
-        DecodeInput.oggetti.forEach{ item in
+        for item in DecodeInput.oggetti {
             if(text.lowercased() == "aggiungi \(item.name.lowercased())"){
-                PersistenceManager.shared.addOggetto(categoria: item.category, larghezza: 10, lunghezza: 20, profondita: 5, peso: 500, nome: item.name)
                 let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
-                let viaggio = PersistenceManager.shared.loadAllViaggi()[0]
+                let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
                 PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-                found = true
+                return true
             }
         }
-        return found
+        return false
     }
     
 }
