@@ -32,6 +32,11 @@
 		9D9EB39628460470008D4341 /* AddNuovoOggetto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9EB39528460470008D4341 /* AddNuovoOggetto.swift */; };
 		9D9EB3982846047A008D4341 /* AddNuovaValigia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9EB3972846047A008D4341 /* AddNuovaValigia.swift */; };
 		9DE99337282A9772009A9330 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE99336282A9772009A9330 /* CardView.swift */; };
+		F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16628565A5E00781EF8 /* SpeechToText.swift */; };
+		F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */; };
+		F21AA16B285678DC00781EF8 /* DecodeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16A285678DC00781EF8 /* DecodeInput.swift */; };
+		F29C74122856294300CD28F1 /* EditViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29C74112856294300CD28F1 /* EditViaggioView.swift */; };
+		F29C74142856295D00CD28F1 /* EditOggettoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29C74132856295D00CD28F1 /* EditOggettoView.swift */; };
 		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
@@ -85,6 +90,11 @@
 		9D9EB39528460470008D4341 /* AddNuovoOggetto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNuovoOggetto.swift; sourceTree = "<group>"; };
 		9D9EB3972846047A008D4341 /* AddNuovaValigia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNuovaValigia.swift; sourceTree = "<group>"; };
 		9DE99336282A9772009A9330 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F21AA16628565A5E00781EF8 /* SpeechToText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToText.swift; sourceTree = "<group>"; };
+		F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechToTextButton.swift; sourceTree = "<group>"; };
+		F21AA16A285678DC00781EF8 /* DecodeInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeInput.swift; sourceTree = "<group>"; };
+		F29C74112856294300CD28F1 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
+		F29C74132856295D00CD28F1 /* EditOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOggettoView.swift; sourceTree = "<group>"; };
 		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -130,9 +140,20 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		F21AA165285659F600781EF8 /* SpeechToText */ = {
+			isa = PBXGroup;
+			children = (
+				F21AA16628565A5E00781EF8 /* SpeechToText.swift */,
+				F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */,
+				F21AA16A285678DC00781EF8 /* DecodeInput.swift */,
+			);
+			path = SpeechToText;
+			sourceTree = "<group>";
+		};
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
+				F21AA165285659F600781EF8 /* SpeechToText */,
 				9D203D7F2846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift */,
 				9D203D802846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift */,
 				9D203D7B28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift */,
@@ -170,6 +191,8 @@
 				9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */,
 				9D513297282B1A3300DA3374 /* CategoriaScrollView.swift */,
 				9DE99336282A9772009A9330 /* CardView.swift */,
+				F29C74132856295D00CD28F1 /* EditOggettoView.swift */,
+				F29C74112856294300CD28F1 /* EditViaggioView.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
 				9D513294282B162F00DA3374 /* DetailTripView.swift */,
 				9D9EB393284602CF008D4341 /* ValigiaCardView.swift */,
@@ -345,19 +368,23 @@
 			files = (
 				9D513295282B162F00DA3374 /* DetailTripView.swift in Sources */,
 				4012AC3D283AD0A4002F4776 /* ViaggioView.swift in Sources */,
+				F29C74142856295D00CD28F1 /* EditOggettoView.swift in Sources */,
 				9D9EB394284602D0008D4341 /* ValigiaCardView.swift in Sources */,
 				4039D275282323D400908DCF /* Viaggio+CoreDataProperties.swift in Sources */,
 				9D513298282B1A3400DA3374 /* CategoriaScrollView.swift in Sources */,
 				4039D272282323D400908DCF /* Oggetto+CoreDataClass.swift in Sources */,
 				4039D276282323D400908DCF /* Valigia+CoreDataClass.swift in Sources */,
+				F29C74122856294300CD28F1 /* EditViaggioView.swift in Sources */,
 				9D9EB39228460154008D4341 /* BagCategoriaScrollView.swift in Sources */,
 				9D203D822846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift in Sources */,
 				9D51328F282B155900DA3374 /* TripListScroll.swift in Sources */,
 				9D513293282B15BB00DA3374 /* AddTripView.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
 				4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */,
+				F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */,
 				4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
 				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
+				F21AA16B285678DC00781EF8 /* DecodeInput.swift in Sources */,
 				9D513291282B158900DA3374 /* AddBagView.swift in Sources */,
 				4012AC3F283AD703002F4776 /* AddViaggioView.swift in Sources */,
 				9D203D7E28469F580091A675 /* OggettoViaggianteClass.swift in Sources */,
@@ -371,6 +398,7 @@
 				9D203D812846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
 				4039D277282323D400908DCF /* Valigia+CoreDataProperties.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
+				F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

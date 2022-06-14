@@ -13,7 +13,6 @@ struct DetailTripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
     @State var insiemeDiValigie: leMieValigie = leMieValigie.init(valigieViaggianti: [], oggettiViaggianti: [])
@@ -134,114 +133,127 @@ struct tastiDiAggiunta: View{
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
+    @EnvironmentObject var speech : SpeechToText
     
     
     var body: some View{
         
-        
-        HStack{
-            Spacer()
-            ZStack{
-                VStack{
-                    Text("Aggiungi Oggetti")
-                    Text("Oggetti presenti: \(oggettiDB.count)")
-                        .font(.caption)
-                    Image(systemName: "archivebox.fill")
-                        .padding(.top, 1.0)
-                }
-                .padding()
-                .frame(width: 150, height: 80)
-                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                
-                NavigationLink(destination:  AddTripView(viaggio: viaggio)){
-                    Rectangle()
-                        .background(Color.white)
-                        .opacity(0.1)
-                        .frame(width: 150, height: 80)
-                        .cornerRadius(10)
-                }
-                
-            }
-            .contextMenu(.init(menuItems: {
-                
-                
-                
-                Button(action: {
-                    showingAlertOggetti = true
-                }, label: {
-                    HStack {
-                        Text("Togli oggetti")
-                        Image(systemName: "trash")
+        VStack{
+            HStack{
+                Spacer()
+                ZStack{
+                    VStack{
+                        Text("Aggiungi Oggetti")
+                        Text("Oggetti presenti: \(oggettiDB.count)")
+                            .font(.caption)
+                        Image(systemName: "archivebox.fill")
+                            .padding(.top, 1.0)
                     }
-                })
-                
-                
-                
-            }))
-            .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
-                Button("Rimuovi", role: .destructive){
-                    PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
+                    .padding()
+                    .frame(width: 150, height: 80)
+                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                     
-                }
-            }
-            
-            Spacer()
-            
-            
-            ZStack{
-                VStack{
-                    Text("Aggiungi Valigie")
-                    Text("Valigie presenti: \(valigieDB.count)")
-                        .font(.caption)
-                    Image(systemName: "suitcase.fill")
-                        .padding(.top, 1.0)
-                    
-                }
-                .padding()
-                .frame(width: 150, height: 80)
-                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                
-                NavigationLink(destination:  AddBagView(viaggio: viaggio)){
-                    Rectangle()
-                        .background(Color.white)
-                        .opacity(0.1)
-                        .frame(width: 150, height: 80)
-                        .cornerRadius(10)
-                }
-                
-            }
-            .contextMenu(.init(menuItems: {
-                
-                Button(action: {
-                    showingAlertValigie = true
-                }, label: {
-                    HStack {
-                        Text("Togli valigie")
-                        Image(systemName: "trash")
+                    NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+                        Rectangle()
+                            .background(Color.white)
+                            .opacity(0.1)
+                            .frame(width: 150, height: 80)
+                            .cornerRadius(10)
                     }
-                })
-                
-            }))
-            .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
-                Button("Rimuovi", role: .destructive){
-                    PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
                     
                 }
+                .contextMenu(.init(menuItems: {
+                    
+
+                    
+                    Button(action: {
+                        showingAlertOggetti = true
+                    }, label: {
+                        HStack {
+                            Text("Togli oggetti")
+                            Image(systemName: "trash")
+                        }
+                    })
+                    
+                    
+                    
+                }))
+                .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
+                    Button("Rimuovi", role: .destructive){
+                        PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
+                        presentationMode.wrappedValue.dismiss()
+                        
+                    }
+                }
+                
+                Spacer()
+                
+                
+                ZStack{
+                    VStack{
+                        Text("Aggiungi Valigie")
+                        Text("Valigie presenti: \(valigieDB.count)")
+                            .font(.caption)
+                        Image(systemName: "suitcase.fill")
+                            .padding(.top, 1.0)
+                        
+                    }
+                    .padding()
+                    .frame(width: 150, height: 80)
+                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                    
+                    NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+                        Rectangle()
+                            .background(Color.white)
+                            .opacity(0.1)
+                            .frame(width: 150, height: 80)
+                            .cornerRadius(10)
+                    }
+                    
+                }
+                .contextMenu(.init(menuItems: {
+                    
+                    Button(action: {
+                        showingAlertValigie = true
+                    }, label: {
+                        HStack {
+                            Text("Togli valigie")
+                            Image(systemName: "trash")
+                        }
+                    })
+                    
+                }))
+                .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
+                    Button("Rimuovi", role: .destructive){
+                        PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
+                        presentationMode.wrappedValue.dismiss()
+                        
+                    }
+                }
+                
+
+                
+                Spacer()
             }
             
             
-            Spacer()
         }
         
-        
-    }
+        Spacer(minLength: 30)
     
+        VStack{
+            Text("\(speech.text)")
+                .font(.title)
+                .bold()
+            speech.getButton()
+        }
+        
+        Spacer(minLength: 30)
+    }
     
 }
 
@@ -299,8 +311,6 @@ struct singolaValigiaView: View{
                        
                     }
                 }
-                
-                
                 
                 //                }
                 Spacer()
