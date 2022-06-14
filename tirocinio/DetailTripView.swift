@@ -138,6 +138,7 @@ struct tastiDiAggiunta: View{
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
+    @EnvironmentObject var speech : SpeechToText
     
     
     var body: some View{
@@ -243,6 +244,16 @@ struct tastiDiAggiunta: View{
             Spacer()
         }
         
+        Spacer(minLength: 30)
+
+        VStack{
+            Text("\(speech.text)")
+                .font(.title)
+                .bold()
+            speech.getButton()
+        }
+            
+        Spacer(minLength: 30)
         
     }
     
