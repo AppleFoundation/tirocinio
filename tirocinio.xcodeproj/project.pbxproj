@@ -18,7 +18,6 @@
 		40C54B6328565C9E0054B614 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5828565C9D0054B614 /* PersistenceManager.swift */; };
 		40C54B6428565C9E0054B614 /* Oggetto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */; };
 		40C54B6528565C9E0054B614 /* OggettoViaggiante+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */; };
-		40C54B6628565C9E0054B614 /* Oggetto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */; };
 		40C54B6728565C9E0054B614 /* Viaggio+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B5C28565C9D0054B614 /* Viaggio+CoreDataClass.swift */; };
 		40FB606F28565B990047E738 /* EditViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606D28565B990047E738 /* EditViaggioView.swift */; };
 		40FB607028565B990047E738 /* EditOggettoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606E28565B990047E738 /* EditOggettoView.swift */; };
@@ -36,9 +35,6 @@
 		9DE99337282A9772009A9330 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE99336282A9772009A9330 /* CardView.swift */; };
 		F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16628565A5E00781EF8 /* SpeechToText.swift */; };
 		F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16828565A9200781EF8 /* SpeechToTextButton.swift */; };
-		F21AA16B285678DC00781EF8 /* DecodeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21AA16A285678DC00781EF8 /* DecodeInput.swift */; };
-		F29C74122856294300CD28F1 /* EditViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29C74112856294300CD28F1 /* EditViaggioView.swift */; };
-		F29C74142856295D00CD28F1 /* EditOggettoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29C74132856295D00CD28F1 /* EditOggettoView.swift */; };
 		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
@@ -78,7 +74,6 @@
 		40C54B5828565C9D0054B614 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OggettoViaggiante+CoreDataClass.swift"; sourceTree = "<group>"; };
-		40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Oggetto+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40C54B5C28565C9D0054B614 /* Viaggio+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Viaggio+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40FB606D28565B990047E738 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
 		40FB606E28565B990047E738 /* EditOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOggettoView.swift; sourceTree = "<group>"; };
@@ -158,17 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				F21AA165285659F600781EF8 /* SpeechToText */,
-				9D203D7F2846B9000091A675 /* ValigiaViaggiante+CoreDataProperties.swift */,
-				9D203D802846B9000091A675 /* OggettoViaggiante+CoreDataProperties.swift */,
-				9D203D7B28469E8B0091A675 /* OggettoViaggiante+CoreDataClass.swift */,
-				4039D268282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift */,
-				4039D26A282323D400908DCF /* Oggetto+CoreDataClass.swift */,
-				4039D26B282323D400908DCF /* Oggetto+CoreDataProperties.swift */,
-				4039D26C282323D400908DCF /* Viaggio+CoreDataClass.swift */,
-				4039D26D282323D400908DCF /* Viaggio+CoreDataProperties.swift */,
-				4039D26E282323D400908DCF /* Valigia+CoreDataClass.swift */,
-				4039D26F282323D400908DCF /* Valigia+CoreDataProperties.swift */,
-				40925D71281C7ED200F2F223 /* PersistenceManager.swift */,
 				F29EF2D928154A690013D6F5 /* tirocinio */,
 				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
 				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
@@ -190,7 +174,6 @@
 		F29EF2D928154A690013D6F5 /* tirocinio */ = {
 			isa = PBXGroup;
 			children = (
-				40C54B5B28565C9D0054B614 /* Oggetto+CoreDataClass.swift */,
 				40C54B5928565C9D0054B614 /* Oggetto+CoreDataProperties.swift */,
 				40C54B5A28565C9D0054B614 /* OggettoViaggiante+CoreDataClass.swift */,
 				40C54B5628565C9D0054B614 /* OggettoViaggiante+CoreDataProperties.swift */,
@@ -399,9 +382,7 @@
 				40C54B6428565C9E0054B614 /* Oggetto+CoreDataProperties.swift in Sources */,
 				40C54B5E28565C9E0054B614 /* Valigia+CoreDataClass.swift in Sources */,
 				F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */,
-				4039D274282323D400908DCF /* Viaggio+CoreDataClass.swift in Sources */,
 				F21AA16928565A9200781EF8 /* SpeechToTextButton.swift in Sources */,
-				4039D270282323D400908DCF /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
 				9DE99337282A9772009A9330 /* CardView.swift in Sources */,
 				40C54B6528565C9E0054B614 /* OggettoViaggiante+CoreDataClass.swift in Sources */,
 				40C54B5F28565C9E0054B614 /* ValigiaViaggiante+CoreDataProperties.swift in Sources */,
@@ -413,7 +394,6 @@
 				9D51328D282B152A00DA3374 /* BagListScroll.swift in Sources */,
 				40C54B5D28565C9E0054B614 /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
 				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
-				40C54B6628565C9E0054B614 /* Oggetto+CoreDataClass.swift in Sources */,
 				9D9EB3982846047A008D4341 /* AddNuovaValigia.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
 				F21AA16728565A5E00781EF8 /* SpeechToText.swift in Sources */,
@@ -589,7 +569,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.unisa.diem.intership;
+				PRODUCT_BUNDLE_IDENTIFIER = it.unisa.diem.tirocinio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -620,7 +600,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = it.unisa.diem.intership;
+				PRODUCT_BUNDLE_IDENTIFIER = it.unisa.diem.tirocinio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
