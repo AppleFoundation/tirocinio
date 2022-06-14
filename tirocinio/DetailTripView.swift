@@ -13,9 +13,10 @@ struct DetailTripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
+    
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
-    @State var insiemeDiValigie: leMieValigie = leMieValigie.init(valigieViaggianti: [], oggettiViaggianti: [])
+    @State var insiemeDiValigie: [ValigiaViaggiante] = []
     
     var body: some View {
         
@@ -29,56 +30,14 @@ struct DetailTripView: View {
                     
                     tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio)
                     
-                    ForEach(valigieDB){
-                        valigia in
+                    ForEach(insiemeDiValigie){
+                        singolaIstanza in
                         
-                        VStack{
-                            HStack{
-                                Text(valigia.valigiaRef!.nome ?? "Nome non trovato")
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                
-                                Spacer()
-                                VStack(alignment: .trailing){
-                                    Text("Ingombro Occupato: \(valigia.volumeAttuale/1000)l di \(valigia.volumeMassimo/1000)l")
-                                        .font(.caption)
-                                    Text("Peso Occupato: \(valigia.pesoAttuale)g di \(valigia.pesoMassimo)g")
-                                        .font(.caption)
-                                }
-                            }
-                            .padding(.bottom)
-                            
-                            
-                            
-                            
-                            
-                            VStack(alignment: .leading, spacing: 8){
-                                
-                                
-                                ForEach(valigia.contenuto.array(of: OggettoViaggiante.self)) {
-                                    item in
-                                    Text((item.oggettoRef?.nome)!)
-                                        .font(.headline)
-                                    .padding(8)
-                                    .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
-                                    .cornerRadius(10)
-                                   
-                                }
-                            }
-                            
-                            
-                            
-//                                            }
-                            Spacer()
-                        }
+//                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
+                        
+                        singolaValigiaView(singolaIstanza: singolaIstanza)
+                        
                     }
-//                    ForEach(insiemeDiValigie.tutteLeValigie){
-//                        singolaIstanza in
-//
-//                        singolaValigiaView(singolaIstanza: singolaIstanza)
-//
-//                    }
-                    
                 }
                 Spacer()
             }
@@ -105,11 +64,9 @@ struct DetailTripView: View {
         .onAppear(){
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+            insiemeDiValigie = valigieDB
             
-            //dovrei controllare quando fare questa cosa, non ad ogni apertura. In questo metodo alloca gli oggetti nelle valigie
-            PersistenceManager.shared.allocaOggetti(viaggio: viaggio)
-            
-//            insiemeDiValigie = leMieValigie.init(valigieViaggianti: valigieDB, oggettiViaggianti: oggettiDB)
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio)//ANDRA NEL PULSANTE SALVA
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
@@ -181,145 +138,131 @@ struct tastiDiAggiunta: View{
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
-    @EnvironmentObject var speech : SpeechToText
     
     
     var body: some View{
         
-        VStack{
-            HStack{
-                Spacer()
-                ZStack{
-                    VStack{
-                        Text("Aggiungi Oggetti")
-                        Text("Oggetti presenti: \(oggettiDB.count)")
-                            .font(.caption)
-                        Image(systemName: "archivebox.fill")
-                            .padding(.top, 1.0)
-                    }
-                    .padding()
-                    .frame(width: 150, height: 80)
-                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                    
-                    NavigationLink(destination:  AddTripView(viaggio: viaggio)){
-                        Rectangle()
-                            .background(Color.white)
-                            .opacity(0.1)
-                            .frame(width: 150, height: 80)
-                            .cornerRadius(10)
-                    }
-                    
+        
+        HStack{
+            Spacer()
+            ZStack{
+                VStack{
+                    Text("Aggiungi Oggetti")
+                    Text("Oggetti presenti: \(oggettiDB.count)")
+                        .font(.caption)
+                    Image(systemName: "archivebox.fill")
+                        .padding(.top, 1.0)
                 }
-                .contextMenu(.init(menuItems: {
-                    
-
-                    
-                    Button(action: {
-                        showingAlertOggetti = true
-                    }, label: {
-                        HStack {
-                            Text("Togli oggetti")
-                            Image(systemName: "trash")
-                        }
-                    })
-                    
-                    
-                    
-                }))
-                .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
-                    Button("Rimuovi", role: .destructive){
-                        PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-                        presentationMode.wrappedValue.dismiss()
-                        
-                    }
+                .padding()
+                .frame(width: 150, height: 80)
+                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                
+                NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+                    Rectangle()
+                        .background(Color.white)
+                        .opacity(0.1)
+                        .frame(width: 150, height: 80)
+                        .cornerRadius(10)
                 }
                 
-                Spacer()
+            }
+            .contextMenu(.init(menuItems: {
                 
                 
-                ZStack{
-                    VStack{
-                        Text("Aggiungi Valigie")
-                        Text("Valigie presenti: \(valigieDB.count)")
-                            .font(.caption)
-                        Image(systemName: "suitcase.fill")
-                            .padding(.top, 1.0)
-                        
+                
+                Button(action: {
+                    showingAlertOggetti = true
+                }, label: {
+                    HStack {
+                        Text("Togli oggetti")
+                        Image(systemName: "trash")
                     }
-                    .padding()
-                    .frame(width: 150, height: 80)
-                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                    
-                    NavigationLink(destination:  AddBagView(viaggio: viaggio)){
-                        Rectangle()
-                            .background(Color.white)
-                            .opacity(0.1)
-                            .frame(width: 150, height: 80)
-                            .cornerRadius(10)
-                    }
+                })
+                
+                
+                
+            }))
+            .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
+                Button("Rimuovi", role: .destructive){
+                    PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
+                    presentationMode.wrappedValue.dismiss()
                     
                 }
-                .contextMenu(.init(menuItems: {
+            }
+            
+            Spacer()
+            
+            
+            ZStack{
+                VStack{
+                    Text("Aggiungi Valigie")
+                    Text("Valigie presenti: \(valigieDB.count)")
+                        .font(.caption)
+                    Image(systemName: "suitcase.fill")
+                        .padding(.top, 1.0)
                     
-                    Button(action: {
-                        showingAlertValigie = true
-                    }, label: {
-                        HStack {
-                            Text("Togli valigie")
-                            Image(systemName: "trash")
-                        }
-                    })
-                    
-                }))
-                .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
-                    Button("Rimuovi", role: .destructive){
-                        PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
-                        presentationMode.wrappedValue.dismiss()
-                        
-                    }
+                }
+                .padding()
+                .frame(width: 150, height: 80)
+                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                
+                NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+                    Rectangle()
+                        .background(Color.white)
+                        .opacity(0.1)
+                        .frame(width: 150, height: 80)
+                        .cornerRadius(10)
                 }
                 
-
+            }
+            .contextMenu(.init(menuItems: {
                 
-                Spacer()
+                Button(action: {
+                    showingAlertValigie = true
+                }, label: {
+                    HStack {
+                        Text("Togli valigie")
+                        Image(systemName: "trash")
+                    }
+                })
+                
+            }))
+            .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
+                Button("Rimuovi", role: .destructive){
+                    PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
+                    presentationMode.wrappedValue.dismiss()
+                    
+                }
             }
             
             
+            Spacer()
         }
         
-        Spacer(minLength: 30)
-    
-        Spacer(minLength: 30)
-
-        VStack{
-            Text("\(speech.text)")
-                .font(.title)
-                .bold()
-            speech.getButton()
-        }
-        
-        Spacer(minLength: 30)
         
     }
+    
     
 }
 
 
 struct singolaValigiaView: View{
     
-    var singolaIstanza: valigiaDaRiempire
+    var singolaIstanza: ValigiaViaggiante
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View{
-        if(singolaIstanza.oggettiInseriti.isEmpty == false){
+        
+        if(singolaIstanza.contenuto.array(of: OggettoViaggiante.self).isEmpty == false){
+            
             Spacer()
             VStack{
                 HStack{
-                    Text(singolaIstanza.nomeValigia)
+                    Text((singolaIstanza.valigiaRef?.nome)!)
                         .font(.title)
                         .fontWeight(.bold)
                     
@@ -332,36 +275,24 @@ struct singolaValigiaView: View{
                     }
                 }
                 .padding(.bottom)
-                let values = singolaIstanza.oggettiConConto.map{$0.value}.sorted(by: <)
-                
-                //                LazyVGrid(columns: Array(repeating: GridItem.init(.fixed(170), spacing: 10, alignment: .center), count: 2), alignment: .center){
                 
                 
-                
-                VStack(alignment: .leading, spacing: 8){
+                ForEach(singolaIstanza.contenuto.array(of: OggettoViaggiante.self)){
+                    oggetto in
                     
-                    
-                    ForEach(values.indices) {index in
+                    HStack{
+                        Text(oggetto.oggettoRef?.nome ?? "Nome non trovato")
+                        Spacer()
                         
-                        //                    Text("\(values[index].1) pezzi di: \(values[index].0)")
-                        
-                        HStack{
-                            
-                            Text("\(values[index].1)")
-                                .font(.headline)
-//                                .multilineTextAlignment(.trailing)
-                            
-                            Text(values[index].0)
-                            Spacer()
-                        }
-                 
-                        .padding(8)
-                        .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
-                        .cornerRadius(10)
-//                        .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
-                       
                     }
+                    .padding(8)
+                    .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
+                    .cornerRadius(10)
+
+                    
                 }
+                
+                
                 
                 //                }
                 Spacer()
@@ -374,7 +305,7 @@ struct singolaValigiaView: View{
         
     }
     
-    private func  coloreScelto(valigia: valigiaDaRiempire) -> LinearGradient{
+    private func  coloreScelto(valigia: ValigiaViaggiante) -> LinearGradient{
         
         var gradienteScheda: LinearGradient = LinearGradient(colors: [Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
         
@@ -492,18 +423,14 @@ struct leMieValigie{
             tutteLeValigie.append(valigiaDaRiempire.init(valigiaDaAggiungere: singolaValigia))
         }
         
-
-        
-        
-        
+        self.oggettiDaAllocare = oggettiViaggianti
         
         //Qui andrebbe ordinato il vettore oggettiDaAllocare in ordine di peso o di volume
         
-        self.oggettiDaAllocare = oggettiViaggianti
         while (oggettiDaAllocare.isEmpty == false){
-
+            
             var temp = (oggettiDaAllocare.popLast(),false)
-
+            
             for valigiaAttuale in tutteLeValigie{
                 if(temp.1 == false){
                     //Attualmente l'algoritmo implementato si basa solo ed unicamente sul peso va implementato anche sul volume
@@ -519,7 +446,7 @@ struct leMieValigie{
                 tutteLeValigie[0].pesoAttuale += Int(temp.0!.oggettoRef!.peso)
                 temp.1 = true
             }
-
+            
         }
         
     }
