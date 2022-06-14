@@ -15,7 +15,7 @@ struct CategoriaScrollView: View{
     
     var viaggio: Viaggio
     
-    var oggettiCategia: [Oggetto]
+    var oggettiCategoria: [Oggetto]
     
     //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
@@ -37,7 +37,7 @@ struct CategoriaScrollView: View{
                         Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
                         LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
   
-                            ForEach(oggettiCategia.sorted()){
+                            ForEach(oggettiCategoria.sorted()){
                                 oggetto in
                          
                                 CardView(oggetto: oggetto, viaggio: viaggio)
@@ -59,6 +59,6 @@ struct CategoriaScrollView: View{
 
 struct CategoriaScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategia: PersistenceManager.shared.loadAllOggetti())
+        CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategoria: PersistenceManager.shared.loadAllOggetti())
     }
 }

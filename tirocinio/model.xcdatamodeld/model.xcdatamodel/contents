@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Oggetto" representedClassName="Oggetto" syncable="YES">
         <attribute name="categoria" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -12,7 +12,9 @@
         <relationship name="oggettoInViaggio" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OggettoViaggiante" inverseName="oggettoRef" inverseEntity="OggettoViaggiante"/>
     </entity>
     <entity name="OggettoViaggiante" representedClassName="OggettoViaggiante" syncable="YES">
+        <attribute name="allocato" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="contenitore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ValigiaViaggiante" inverseName="contenuto" inverseEntity="ValigiaViaggiante"/>
         <relationship name="oggettoRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Oggetto" inverseName="oggettoInViaggio" inverseEntity="Oggetto"/>
         <relationship name="viaggioRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Viaggio"/>
     </entity>
@@ -30,6 +32,11 @@
     </entity>
     <entity name="ValigiaViaggiante" representedClassName="ValigiaViaggiante" syncable="YES">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="pesoAttuale" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pesoMassimo" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="volumeAttuale" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="volumeMassimo" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="contenuto" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OggettoViaggiante" inverseName="contenitore" inverseEntity="OggettoViaggiante"/>
         <relationship name="valigiaRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Valigia" inverseName="valigiaInViaggio" inverseEntity="Valigia"/>
         <relationship name="viaggioRef" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Viaggio"/>
     </entity>
@@ -40,9 +47,9 @@
     </entity>
     <elements>
         <element name="Oggetto" positionX="-363.0703125" positionY="-540.89453125" width="128" height="178"/>
-        <element name="OggettoViaggiante" positionX="-598.04296875" positionY="-457.42578125" width="128" height="88"/>
+        <element name="OggettoViaggiante" positionX="-598.04296875" positionY="-457.42578125" width="128" height="118"/>
         <element name="Valigia" positionX="-356.6796875" positionY="-320.76171875" width="128" height="193"/>
-        <element name="ValigiaViaggiante" positionX="-599.67578125" positionY="-299.4296875" width="128" height="88"/>
+        <element name="ValigiaViaggiante" positionX="-599.67578125" positionY="-299.4296875" width="128" height="163"/>
         <element name="Viaggio" positionX="-910.82421875" positionY="-392.265625" width="130.578125" height="88"/>
     </elements>
 </model>

@@ -61,7 +61,7 @@ struct AddTripView: View {
                     let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
                     
                     if (!cat.isEmpty){
-                        CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategia: cat)
+                        CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategoria: cat)
                     }
                 }
                 
