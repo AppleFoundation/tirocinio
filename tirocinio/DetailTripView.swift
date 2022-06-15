@@ -140,6 +140,15 @@ struct tastiDiAggiunta: View{
     @State private var showingAlertValigie = false
     @EnvironmentObject var speech : SpeechToText
     
+    func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
+        var sum: Int = 0
+        for i in oggettiviaggianti.map({$0.quantitaInViaggio}){
+            sum += Int(i)
+        }
+        
+        return sum
+    }
+    
     var body: some View{
         
         
@@ -148,7 +157,8 @@ struct tastiDiAggiunta: View{
             ZStack{
                 VStack{
                     Text("Aggiungi Oggetti")
-                    Text("Oggetti presenti: \(oggettiDB.count)")
+//                    Text("Oggetti presenti: \(oggettiDB.count)")
+                    Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
                         .font(.caption)
                     Image(systemName: "archivebox.fill")
                         .padding(.top, 1.0)

@@ -180,7 +180,6 @@ struct ContentView: View {
     }
     
     func inizializzaValigie(){
-        
         PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Bagaglio", tara: 1000, utilizzato: false)
         
         
