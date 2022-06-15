@@ -2,7 +2,7 @@
 //  OggettoViaggiante+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 11/06/22.
+//  Created by Cristian Cerasuolo on 15/06/22.
 //
 //
 
@@ -16,11 +16,12 @@ extension OggettoViaggiante {
         return NSFetchRequest<OggettoViaggiante>(entityName: "OggettoViaggiante")
     }
 
-    @NSManaged public var id: UUID?
     @NSManaged public var allocato: Bool
+    @NSManaged public var id: UUID?
+    @NSManaged public var quantitaInViaggio: Int32
+    @NSManaged public var contenitore: ValigiaViaggiante?
     @NSManaged public var oggettoRef: Oggetto?
     @NSManaged public var viaggioRef: Viaggio?
-    @NSManaged public var contenitore: ValigiaViaggiante?
 
 }
 

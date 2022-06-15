@@ -2,7 +2,7 @@
 //  Valigia+CoreDataClass.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 11/06/22.
+//  Created by Cristian Cerasuolo on 15/06/22.
 //
 //
 

@@ -2,7 +2,7 @@
 //  ValigiaViaggiante+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 11/06/22.
+//  Created by Cristian Cerasuolo on 15/06/22.
 //
 //
 
@@ -17,13 +17,13 @@ extension ValigiaViaggiante {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var volumeAttuale: Int32
     @NSManaged public var pesoAttuale: Int32
     @NSManaged public var pesoMassimo: Int32
+    @NSManaged public var volumeAttuale: Int32
     @NSManaged public var volumeMassimo: Int32
+    @NSManaged public var contenuto: NSSet?
     @NSManaged public var valigiaRef: Valigia?
     @NSManaged public var viaggioRef: Viaggio?
-    @NSManaged public var contenuto: NSSet?
 
 }
 

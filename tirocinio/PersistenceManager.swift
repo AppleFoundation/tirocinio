@@ -140,22 +140,25 @@ class PersistenceManager: ObservableObject {
     func addOggettoViaggiante(oggetto: Oggetto, viaggio: Viaggio){
         let entity = NSEntityDescription.entity(forEntityName: "OggettoViaggiante", in: self.context)
         
-        //controllo se dati oggetto e valigia viaggiante, vi sia un oggetto viaggiante definito
-        
-        //        let oggettoInQuestione = loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
         
         
-        let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
+        //controllo se esiste nel viaggio un oggetto viaggiante che referenzia quell'oggetto
+        if !self.checkExistingOggettoInViaggio(oggetto: oggetto, viaggio: viaggio){
+            let newOggettoViaggiante = OggettoViaggiante(entity: entity!, insertInto: self.context)
+            
+            newOggettoViaggiante.id = UUID()
+            newOggettoViaggiante.oggettoRef = oggetto
+            newOggettoViaggiante.viaggioRef = viaggio
+            newOggettoViaggiante.contenitore = nil //potrebbe non servire
+            newOggettoViaggiante.allocato = false
+            newOggettoViaggiante.quantitaInViaggio = 1
+            
+            
+            self.saveContext()
+            print("Oggetto viaggiante salvato!")
+        }
         
-        newOggettoViaggiante.id = UUID()
-        newOggettoViaggiante.oggettoRef = oggetto
-        newOggettoViaggiante.viaggioRef = viaggio
-        newOggettoViaggiante.contenitore = nil //potrebbe non servire
-        newOggettoViaggiante.allocato = false
-        
-        
-        self.saveContext()
-        print("Oggetto viaggiante salvato!")
+
     }
     
     func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
@@ -627,6 +630,35 @@ class PersistenceManager: ObservableObject {
         }
         
         return state
+    }
+    
+    //funzione che controlla se esiste già un riferiemnto all'oggetto fisico nel viaggio. in tal caso ne aumenta la quantità e ritorna true, altrimenti ritorna false
+    func checkExistingOggettoInViaggio(oggetto: Oggetto, viaggio: Viaggio) -> Bool{
+        let oggettiViaggio = self.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+        var contain: Bool = false
+        contain = oggettiViaggio.contains{
+            oggv in
+            
+            if oggv.oggettoRef?.id == oggetto.id {
+                return true
+            }else{
+                return false
+            }
+            
+        }
+        
+        if contain{
+            //devo trovarlo e aumentare la quantità
+            for ogg in self.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio){
+                if ogg.oggettoRef?.id == oggetto.id{
+                    ogg.quantitaInViaggio = ogg.quantitaInViaggio + 1
+                    self.saveContext()
+                    break
+                }
+            }
+        }
+        
+        return contain
     }
    
 
