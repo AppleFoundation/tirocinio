@@ -69,20 +69,27 @@ struct EditOggettoView: View {
                             pesoAgg = 1
                         }
                         
-//                        let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
                         
-                        nomeAgg = "" + nomeAgg
+                        let caratterePreferiti = Character.init("★")
                         
-                        PersistenceManager.shared.addOggetto(categoria: oggetto.categoria!, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
+                        if (nomeAgg.contains(caratterePreferiti)){
+                            
+                            let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
+                            oggetto.nome = nomeAgg
+                            oggetto.lunghezza = Int32(lunghezzaAgg)
+                            oggetto.larghezza = Int32(larghezzaAgg)
+                            oggetto.profondita = Int32(profonditaAgg)
+                            oggetto.volume = Int32(volume)
+                            oggetto.peso = Int32(pesoAgg)
+                            PersistenceManager.shared.saveContext()
+                        }else{
+                            nomeAgg = nomeAgg + " " + String(caratterePreferiti)
+                            
+                            PersistenceManager.shared.addOggetto(categoria: oggetto.categoria!, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
+                        }
                         
-//
-//                        oggetto.nome = nomeAgg
-//                        oggetto.lunghezza = Int32(lunghezzaAgg)
-//                        oggetto.larghezza = Int32(larghezzaAgg)
-//                        oggetto.profondita = Int32(profonditaAgg)
-//                        oggetto.volume = Int32(volume)
-//                        oggetto.peso = Int32(pesoAgg)
-//                        PersistenceManager.shared.saveContext()
+                        
+                     
                         presentationMode.wrappedValue.dismiss()
                     }, label: {Text("Save")})
                 }
