@@ -752,21 +752,21 @@ class PersistenceManager: ObservableObject {
                     var allocabili = 0
                     
                     if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti li inserisco tutti
-                        
+                        print("Tutta la quantità contenibile")
                         allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
 
                     }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
-                        
+                        print("Solo \(numItemContenibili) contenibili")
                         allocabili = numItemContenibili //alloco il possibile
                         
                     }
-                    
+                    print("numero di item contenibili \(numItemContenibili)")
                     if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
                         item.quantitaAllocata += Int32(allocabili)
                         existing[0].quantitaInValigia += Int32(allocabili)
                     }else{//nesssun oggetto precedentemente allocato
                         let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
-                        newallocazione.quantitaInValigia = item.quantitaInViaggio //li ho allocati tutti
+                        newallocazione.quantitaInValigia = Int32(allocabili)
                         bins[i].addToContenuto(newallocazione)
                         item.quantitaAllocata += Int32(allocabili)
                     }
