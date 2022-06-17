@@ -48,7 +48,12 @@ struct CardView: View {
                     if(value > 0){
                         count -= 1
                         value -= 1
-                        PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                        let ov: OggettoViaggiante  = PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)[0]
+                        ov.quantitaInViaggio -= 1
+                        ov.quantitaAllocata -= 1
+                        if ov.quantitaInViaggio == 0{
+                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                        }
                     }
                 }, label: {
                     Image(systemName: "minus.circle.fill")

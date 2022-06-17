@@ -719,7 +719,7 @@ class PersistenceManager: ObservableObject {
         //carico la valigia dei non allocati per farne una pulizia prima del re-allocamento
         let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "SYSTEM")[0])[0]
         nonallocati.removeFromContenuto(NSSet(array: nonallocati.contenuto.array(of: OggettoViaggiante.self)))
-        
+        nonallocati.volumeAttuale = 0
         
         //definisco l'insieme degli oggetti che sono definiti per quel viaggio. Non prendo solo quelli allocati perchè ritengo più efficiente rifare l'allocazione avendo oggetti diversi e quindi una possibile allocazione totalmente diversa
         var elements: [OggettoViaggiante] = []
@@ -790,8 +790,10 @@ class PersistenceManager: ObservableObject {
             //Se dopo aver girato tutti i bins non ho allocato tutte le occorrenze del mio oggetto sono costretto a metterlo negli oggetti non allocati
             if item.quantitaAllocata < item.quantitaInViaggio{
                 let newallocazione = self.addOggettoInValigia(oggetto: item, valigia: nonallocati, viaggio: viaggio)
-                newallocazione.quantitaInValigia = item.quantitaInViaggio - item.quantitaAllocata //metto nei non allocati la quantità mancante
+                let quantitaMancante: Int = Int(item.quantitaInViaggio - item.quantitaAllocata)
+                newallocazione.quantitaInValigia = Int32(quantitaMancante) //metto nei non allocati la quantità mancante
                 nonallocati.addToContenuto(newallocazione)
+                nonallocati.volumeAttuale += Int32(quantitaMancante) * (item.oggettoRef?.volume ?? 0)
             }
             print("BINS")
             for b in bins{

@@ -289,10 +289,20 @@ struct singolaValigiaView: View{
                     
                     Spacer()
                     VStack(alignment: .trailing){
-                        Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
-                            .font(.caption)
-                        Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
-                            .font(.caption)
+                        //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
+                        if singolaIstanza.valigiaRef?.categoria == "SYSTEM"{
+                            Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l")
+                                .font(.caption)
+                            Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g")
+                                .font(.caption)
+                        }else{
+                            Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
+                                .font(.caption)
+                            Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                .font(.caption)
+                        }
+                        
+                        
                     }
                 }
                 .padding(.bottom)
