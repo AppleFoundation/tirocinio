@@ -79,7 +79,12 @@ struct CardView: View {
 //
 //            }
             .onAppear(){
-                value = PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio).count
+                let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
+                if (oggettiInValigia.isEmpty == false){
+                    value = Int(oggettiInValigia[0].quantitaInValigia)
+                }else{
+                    value = 0
+                }
             }
             .padding()
             .background(coloreScelto())
