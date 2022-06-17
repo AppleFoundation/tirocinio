@@ -304,8 +304,8 @@ struct singolaValigiaView: View{
                     HStack{
                         
                         Text("\(oggetto.quantitaInValigia)")
-                        Spacer()
                         Text(oggetto.oggettoViaggianteRef?.oggettoRef?.nome ?? "Nome non trovato")
+                        Spacer()
                         
                     }
                     .padding(8)
