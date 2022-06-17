@@ -2,7 +2,7 @@
 //  Viaggio+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 15/06/22.
+//  Created by Cristian Cerasuolo on 17/06/22.
 //
 //
 

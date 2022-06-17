@@ -149,8 +149,7 @@ class PersistenceManager: ObservableObject {
             newOggettoViaggiante.id = UUID()
             newOggettoViaggiante.oggettoRef = oggetto
             newOggettoViaggiante.viaggioRef = viaggio
-            newOggettoViaggiante.contenitore = nil //potrebbe non servire
-            newOggettoViaggiante.allocato = false
+            newOggettoViaggiante.quantitaAllocata = 0
             newOggettoViaggiante.quantitaInViaggio = 1
             
             
@@ -159,6 +158,21 @@ class PersistenceManager: ObservableObject {
         }
         
 
+    }
+    
+    func addOggettoInValigia(oggetto: OggettoViaggiante, valigia: ValigiaViaggiante?, viaggio: Viaggio) -> OggettoInValigia{
+        let entity = NSEntityDescription.entity(forEntityName: "OggettoInValigia", in: self.context)
+        
+        let new = OggettoInValigia(entity: entity!, insertInto: self.context)
+        new.id = UUID()
+        new.contenitore = valigia
+        new.oggettoViaggianteRef = oggetto
+        new.quantitaInValigia = 0
+        new.viaggioRef = viaggio
+        
+        self.saveContext()
+        
+        return new
     }
     
     func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
@@ -189,7 +203,9 @@ class PersistenceManager: ObservableObject {
             
             array = try self.context.fetch(request)
         
-            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
             
 //            for x in array {
 //                let viaggio = x
@@ -208,14 +224,16 @@ class PersistenceManager: ObservableObject {
         do{
             array = try self.context.fetch(request)
         
-            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
             
-            for x in array {
-                let valigia = x.valigiaRef
-                let viaggio = x.viaggioRef
-                print("Valigia Viaggiante \n Contenitore: \(valigia?.nome ?? "Nome")\n Viaggio: \(viaggio?.nome ?? "Viaggio")")
-            }
-            
+//            for x in array {
+//                let valigia = x.valigiaRef
+//                let viaggio = x.viaggioRef
+//                print("Valigia Viaggiante \n Contenitore: \(valigia?.nome ?? "Nome")\n Viaggio: \(viaggio?.nome ?? "Viaggio")")
+//            }
+//
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
             print("\(errore)")
@@ -228,12 +246,14 @@ class PersistenceManager: ObservableObject {
         do{
             array = try self.context.fetch(request)
         
-            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
-            
-            for x in array {
-                let oggetto = x
-                print("Oggetto Viaggiante \n OggettoRef:\(String(describing: oggetto.oggettoRef))\n ViaggioRef:\(String(describing: oggetto.viaggioRef))")
-            }
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
+//
+//            for x in array {
+//                let oggetto = x
+//                print("Oggetto Viaggiante \n OggettoRef:\(String(describing: oggetto.oggettoRef))\n ViaggioRef:\(String(describing: oggetto.viaggioRef))")
+//            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -246,7 +266,9 @@ class PersistenceManager: ObservableObject {
         var array = [Valigia] ()
         do{
             array = try self.context.fetch(request)
-            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
             
 //            for x in array {
 //                let valigia = x
@@ -264,7 +286,9 @@ class PersistenceManager: ObservableObject {
         var array = [Oggetto] ()
         do{
             array = try self.context.fetch(request)
-            guard array.count > 0 else {print("Non ci sono elementi da leggere "); return [] }
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -273,6 +297,22 @@ class PersistenceManager: ObservableObject {
         return array
     }
     
+    func loadOggettiInValigiaFromFetchRequest(request: NSFetchRequest<OggettoInValigia>) -> [OggettoInValigia]{
+        var array = [OggettoInValigia]()
+        
+        do{
+            array = try self.context.fetch(request)
+            guard array.count > 0 else {
+//                print("Non ci sono elementi da leggere ")
+                return [] }
+        }catch let errore{
+            print("Problema nella esecuzione della FetchRequest")
+            print("\(errore)")
+        }
+        return array
+        
+        
+    }
     
     
     func loadValigieFromNomeCategoria(nome: String, categoria: String) -> [Valigia] {
@@ -347,11 +387,47 @@ class PersistenceManager: ObservableObject {
         return oggetti
     }
     
+    func loadOggettiInValigiaFromViaggio(viaggio: Viaggio) -> [OggettoInValigia]{
+        let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+            
+        let predicate = NSPredicate(format: "viaggioRef = %@", viaggio)
+        request.predicate = predicate
+        
+        let oggettiinvaligia: [OggettoInValigia] = self.loadOggettiInValigiaFromFetchRequest(request: request)
+        
+        return oggettiinvaligia
+    }
+    
+    func loadOggettiInValigiaFromValigiaOggetto(valigiaV: ValigiaViaggiante, oggettoV: OggettoViaggiante) -> [OggettoInValigia]{
+        let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+            
+        let predicate = NSPredicate(format: "contenitore = %@ AND oggettoViaggianteRef = %@", valigiaV, oggettoV)
+        request.predicate = predicate
+        
+        let oggettiinvaligia: [OggettoInValigia] = self.loadOggettiInValigiaFromFetchRequest(request: request)
+        
+        return oggettiinvaligia
+    }
+    
+    func loadOggettiInValigiaFromValigia(valigia: ValigiaViaggiante) -> [OggettoInValigia]{
+        let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+            
+        let predicate = NSPredicate(format: "contenitore = %@", valigia)
+        request.predicate = predicate
+        
+        let oggettiinvaligia: [OggettoInValigia] = self.loadOggettiInValigiaFromFetchRequest(request: request)
+        
+        return oggettiinvaligia
+    }
+    
     func loadValigieViaggiantiFromViaggio(viaggioRef: Viaggio) -> [ValigiaViaggiante]{
         let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "viaggioRef = %@", viaggioRef)
+        let predicate = NSPredicate(format: "viaggioRef = %@ AND valigiaRef <> %@", viaggioRef, self.loadValigieFromCategoria(categoria: "SYSTEM")[0])
         request.predicate = predicate
         
         let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
@@ -444,6 +520,13 @@ class PersistenceManager: ObservableObject {
         return self.loadOggettiFromFetchRequest(request: request)
     }
     
+    func loadAllOggettiInValigia() -> [OggettoInValigia]{
+        let request: NSFetchRequest<OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+    
+        return self.loadOggettiInValigiaFromFetchRequest(request: request)
+    }
+    
     func loadAllCategorieOggetti() -> [String]{
         let request: NSFetchRequest<Oggetto> = NSFetchRequest(entityName: "Oggetto")
         request.returnsObjectsAsFaults = false
@@ -474,7 +557,9 @@ class PersistenceManager: ObservableObject {
         var categorieLista = Set<String>.init()
         
         for valigia in valieieDaDB {
-            categorieLista.insert(valigia.categoria!)
+            if valigia.categoria != "SYSTEM"{//system è una cateogria che contiene valigie di utilit come la valigia non allocati
+                categorieLista.insert(valigia.categoria!)
+            }
         }
         
         var categorieArray = Array<String>.init()
@@ -507,7 +592,7 @@ class PersistenceManager: ObservableObject {
         if (valigie.count>0){
             self.context.delete(valigie[0])
             // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
-            print("Valigie: \(String(describing: valigie[0].nome))")
+//            print("Valigie: \(String(describing: valigie[0].nome))")
             self.saveContext()
         }
     }
@@ -527,17 +612,30 @@ class PersistenceManager: ObservableObject {
         
         if(viaggi.count > 0){
             self.context.delete(viaggi[0])
-            print("Viaggi: \(String(describing: viaggi[0].nome))")
+//            print("Viaggi: \(String(describing: viaggi[0].nome))")
             self.saveContext()
         }
     }
+    
+    func deleteOggettiInValigia(viaggio: Viaggio){
+        let oggettiinvaligia = self.loadOggettiInValigiaFromViaggio(viaggio: viaggio)
+        
+        if(oggettiinvaligia.count > 0){
+            
+            for oggetto in oggettiinvaligia{
+                self.context.delete(oggetto)
+            }
+            self.saveContext()
+        }
+    }
+
     
     func deleteOggetto(nome: String, categoria: String){
         let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
         
         if(oggetti.count > 0){
             self.context.delete(oggetti[0])
-            print("Oggetti: \(String(describing: oggetti[0].nome))")
+//            print("Oggetti: \(String(describing: oggetti[0].nome))")
             self.saveContext()
         }
     }
@@ -547,7 +645,7 @@ class PersistenceManager: ObservableObject {
         
         if(oggettiViaggianti.count > 0){
             self.context.delete(oggettiViaggianti[0])
-            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
+//            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
             self.saveContext()
         }
     }
@@ -578,58 +676,105 @@ class PersistenceManager: ObservableObject {
         }
     }
     
+    
     //UTILITY
-    func allocaOggetti(viaggio: Viaggio) -> Bool{
-        print("Inizio ad allocare")
-        var state = true //false indica che non è stato trovata una configurazione tale per cui gli item sono conservati in maniera ottimale
-        //dato un viaggio effettua l'allocazione degli oggetti non ancora allocati (o la rifa totalmetne?) nella valigieviaggianti create per quel viaggio
-        //Dovrebbe essere la main function per performare gli algoritmi ancora da definrie :(
-        
+    func allocaOggetti(viaggio: Viaggio){
+        self.deleteOggettiInValigia(viaggio: viaggio) //elimino le precedenti allocazioni di oggetti in valigia
+
         //definisco la lista dei miei contenitore per quel viaggio
         var bins: [ValigiaViaggiante] = []
         
         let allValigie = loadAllValigie()
-        
         for valigiareale in allValigie{
+            if valigiareale.categoria == "SYSTEM"{
+                continue //non aggiungo ai bins la valigia di sistema
+            }
             //per ogni valigia vado a vedere le valigie viaggianti associate per il dato viaggio
             bins.append(contentsOf: loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigiareale))
         }
+
+        //carico la valigia dei non allocati per farne una pulizia prima del re-allocamento
+        let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "SYSTEM")[0])[0]
+        nonallocati.removeFromContenuto(NSSet(array: nonallocati.contenuto.array(of: OggettoViaggiante.self)))
+        
+        
         //definisco l'insieme degli oggetti che sono definiti per quel viaggio. Non prendo solo quelli allocati perchè ritengo più efficiente rifare l'allocazione avendo oggetti diversi e quindi una possibile allocazione totalmente diversa
         var elements: [OggettoViaggiante] = []
-        
         elements.append(contentsOf: loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio))
         
-        //a questo punto ho tutti i bins di volume differente e tutti gli elementi di volume
+        
+        //a questo punto ho tutti i bins di volume differente e tutti gli elementi
         
         //ordino gli oggetti in maniera decrescente di priorità di inserimento. Assumo che la priorità sia dettata dal volume
         //FIRST FIT DECREASING
-        
-        elements.sorted(by: {$0.oggettoRef?.volume ?? 0 > $1.oggettoRef?.volume ?? 0}) //Ordino gli elementi in maniera decrescente
-        
-        
-        for item in elements{
-            item.allocato = false //poichè potrei partire da una situazione in cui ho già fatto una allocazione, imposto a falso il flag
+        let descendingelements: [OggettoViaggiante] = elements.sorted(by: {$0.oggettoRef?.volume ?? 0 > $1.oggettoRef?.volume ?? 0})
+    
+        for b in bins{
+            b.volumeAttuale = 0
+        }
+        for item in descendingelements{
+            item.quantitaAllocata = 0 //reinizializzo
+            print(item.oggettoRef?.nome)
+            
             for i in bins.indices{
-                if bins[i].volumeAttuale + (item.oggettoRef!.volume) < bins[i].volumeMassimo /*&& (bins[i].pesoAttuale + (item.oggettoRef!.peso) < bins[i].pesoMassimo)*/{
-                    item.allocato = true
-                    print("\(item) allocato in \(bins[i].valigiaRef!.nome)")
-                    bins[i].addToContenuto(item)
-                    bins[i].volumeAttuale += item.oggettoRef!.volume
-                    bins[i].pesoAttuale += item.oggettoRef!.peso
-                    //modifico l'array di contenitori in maniera tale da spostare il bin considerato alla fine ed equilibare il carico
-                    bins.append(bins.removeFirst())
-                    
-                    break
-                }
+                //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
+                let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
+                print("MAX: \(bins[i].volumeMassimo), ACTU: \(bins[i].volumeAttuale)")
+                let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 0)))
+                print("Numero di item contenibili: \(numItemContenibili)")
+                if numItemContenibili > 0{//significa che almeno uno lo posso inserire
 
+                    //controllo se nel bin attuale vi è già un oggetto in valigia che si riferisce all'oggetto viaggiante in questione (item)
+                    let existing: [OggettoInValigia] = loadOggettiInValigiaFromValigiaOggetto(valigiaV: bins[i], oggettoV: item)
+                    var allocabili = 0
+                    
+                    if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti li inserisco tutti
+                        
+                        allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
+
+                    }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
+                        
+                        allocabili = numItemContenibili //alloco il possibile
+                        
+                    }
+                    
+                    if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
+                        item.quantitaAllocata += Int32(allocabili)
+                        existing[0].quantitaInValigia += Int32(allocabili)
+                    }else{//nesssun oggetto precedentemente allocato
+                        let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
+                        newallocazione.quantitaInValigia = item.quantitaInViaggio //li ho allocati tutti
+                        bins[i].addToContenuto(newallocazione)
+                        item.quantitaAllocata += Int32(allocabili)
+                    }
+                    bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
+                    break
+                    
+                    
+                    
+                }else{
+                    print("Non posso inserire nessun \(item.oggettoRef?.nome) nella valigia \(bins[i].valigiaRef?.nome)")
+                }//else -> in questo bin non c'è spazio per nessuna quantità di questo item
+                                                                                              
+            }//quando esco dal for potrei aver allocato tutte le quantita dei miei oggetti oppure avere oggetti con quantitallocata<quantitainviaggio
+            
+            
+            //Se dopo aver girato tutti i bins non ho allocato tutte le occorrenze del mio oggetto sono costretto a metterlo negli oggetti non allocati
+            if item.quantitaAllocata < item.quantitaInViaggio{
+                let newallocazione = self.addOggettoInValigia(oggetto: item, valigia: nonallocati, viaggio: viaggio)
+                newallocazione.quantitaInValigia = item.quantitaInViaggio - item.quantitaAllocata //metto nei non allocati la quantità mancante
+                nonallocati.addToContenuto(newallocazione)
             }
-            if !item.allocato{
-                print("Ops l'elemento non entra")
-                state = false
+            print("BINS")
+            for b in bins{
+                print(b.valigiaRef?.nome)
+                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
+                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
             }
+
         }
         
-        return state
+        
     }
     
     //funzione che controlla se esiste già un riferiemnto all'oggetto fisico nel viaggio. in tal caso ne aumenta la quantità e ritorna true, altrimenti ritorna false
@@ -646,9 +791,9 @@ class PersistenceManager: ObservableObject {
             }
             
         }
-        
         if contain{
             //devo trovarlo e aumentare la quantità
+            
             for ogg in self.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio){
                 if ogg.oggettoRef?.id == oggetto.id{
                     ogg.quantitaInViaggio = ogg.quantitaInViaggio + 1

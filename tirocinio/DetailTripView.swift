@@ -207,8 +207,9 @@ struct tastiDiAggiunta: View{
             
             ZStack{
                 VStack{
+                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "SYSTEM").count
                     Text("Aggiungi Valigie")
-                    Text("Valigie presenti: \(valigieDB.count)")
+                    Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
                         .font(.caption)
                     Image(systemName: "suitcase.fill")
                         .padding(.top, 1.0)
@@ -277,7 +278,7 @@ struct singolaValigiaView: View{
     
     var body: some View{
         
-        if(singolaIstanza.contenuto.array(of: OggettoViaggiante.self).isEmpty == false){
+        if(singolaIstanza.contenuto.array(of: OggettoInValigia.self).isEmpty == false){
             
             Spacer()
             VStack{
@@ -297,14 +298,14 @@ struct singolaValigiaView: View{
                 .padding(.bottom)
                 
                 
-                ForEach(singolaIstanza.contenuto.array(of: OggettoViaggiante.self)){
+                ForEach(singolaIstanza.contenuto.array(of: OggettoInValigia.self)){
                     oggetto in
                     
                     HStack{
                         
-                        Text("\(oggetto.quantitaInViaggio)")
+                        Text("\(oggetto.quantitaInValigia)")
                         Spacer()
-                        Text(oggetto.oggettoRef?.nome ?? "Nome non trovato")
+                        Text(oggetto.oggettoViaggianteRef?.oggettoRef?.nome ?? "Nome non trovato")
                         
                     }
                     .padding(8)
