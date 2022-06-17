@@ -399,6 +399,29 @@ class PersistenceManager: ObservableObject {
         return oggettiinvaligia
     }
     
+    func loadOggettiInValigiaFromViaggioOggetto(viaggio: Viaggio, oggetto: Oggetto) -> [OggettoInValigia]{
+        
+        let oggettiViaggianti = self.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)
+        
+        if(oggettiViaggianti.isEmpty == false){
+            let oggettoViaggiante = self.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)[0]
+            
+            let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+            request.returnsObjectsAsFaults = false
+            
+            let predicate = NSPredicate(format: "viaggioRef = %@ AND oggettoViaggianteRef = %@", viaggio, oggettoViaggiante)
+            request.predicate = predicate
+            
+            let oggettiinvaligia: [OggettoInValigia] = self.loadOggettiInValigiaFromFetchRequest(request: request)
+            
+            return oggettiinvaligia
+        }else{
+            return []
+        }
+        
+       
+    }
+    
     func loadOggettiInValigiaFromValigiaOggetto(valigiaV: ValigiaViaggiante, oggettoV: OggettoViaggiante) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
@@ -633,7 +656,7 @@ class PersistenceManager: ObservableObject {
     func deleteOggetto(nome: String, categoria: String){
         let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
         
-        if(oggetti.count > 0){
+        if(!oggetti.isEmpty){
             self.context.delete(oggetti[0])
 //            print("Oggetti: \(String(describing: oggetti[0].nome))")
             self.saveContext()
@@ -720,7 +743,7 @@ class PersistenceManager: ObservableObject {
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
                 print("MAX: \(bins[i].volumeMassimo), ACTU: \(bins[i].volumeAttuale)")
-                let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 0)))
+                let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 1)))
                 print("Numero di item contenibili: \(numItemContenibili)")
                 if numItemContenibili > 0{//significa che almeno uno lo posso inserire
 
@@ -753,7 +776,7 @@ class PersistenceManager: ObservableObject {
                     
                     
                 }else{
-                    print("Non posso inserire nessun \(item.oggettoRef?.nome) nella valigia \(bins[i].valigiaRef?.nome)")
+                    print("Non posso inserire nessun \(item.oggettoRef?.nome ?? "Nome oggetto") nella valigia \(bins[i].valigiaRef?.nome ?? "Nome valigia")")
                 }//else -> in questo bin non c'è spazio per nessuna quantità di questo item
                                                                                               
             }//quando esco dal for potrei aver allocato tutte le quantita dei miei oggetti oppure avere oggetti con quantitallocata<quantitainviaggio
@@ -767,7 +790,7 @@ class PersistenceManager: ObservableObject {
             }
             print("BINS")
             for b in bins{
-                print(b.valigiaRef?.nome)
+                print(b.valigiaRef?.nome ?? "Nome")
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
             }
