@@ -716,7 +716,9 @@ class PersistenceManager: ObservableObject {
             item.quantitaAllocata = 0 //reinizializzo
             print(item.oggettoRef?.nome)
             
+            print("In totale ci sono \(bins.count) valigie")
             for i in bins.indices{
+                print("Guardo nella valigia \(bins[i].valigiaRef?.nome)")
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
                 print("MAX: \(bins[i].volumeMassimo), ACTU: \(bins[i].volumeAttuale)")
@@ -739,6 +741,7 @@ class PersistenceManager: ObservableObject {
                     }
                     print("numero di item contenibili \(numItemContenibili)")
                     if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
+                        print("Elemento già esistente nella valigia")
                         item.quantitaAllocata += Int32(allocabili)
                         existing[0].quantitaInValigia += Int32(allocabili)
                     }else{//nesssun oggetto precedentemente allocato
@@ -748,8 +751,10 @@ class PersistenceManager: ObservableObject {
                         item.quantitaAllocata += Int32(allocabili)
                     }
                     bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
-                    break
                     
+                    if item.quantitaAllocata == item.quantitaInViaggio {//se ho allocato tutta la quantità dell'oggetto allora posso evitre di vedere altre valigie
+                        break
+                    }
                     
                     
                 }else{
