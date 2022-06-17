@@ -30,14 +30,16 @@ struct CategoriaScrollView: View{
                 Spacer()
             }
             
-            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(60), spacing: 5, alignment: .center), count: 3)
+            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(60), spacing: 5, alignment: .center), count: oggettiCategoria.count < 3 ? oggettiCategoria.count : 3)
  
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack{
                         Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
                         LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
   
-                            ForEach(oggettiCategoria.sorted()){
+                            ForEach(oggettiCategoria.sorted(by: { lhs, rhs in
+                                return (lhs.nome! < rhs.nome!)
+                            })){
                                 oggetto in
                          
                                 CardView(oggetto: oggetto, viaggio: viaggio)
