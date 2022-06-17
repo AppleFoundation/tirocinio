@@ -41,6 +41,10 @@ struct AddViaggioView: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button(action: {
                         PersistenceManager.shared.addViaggio(data: dataViaggio, nome: nomeViaggio)
+                        
+                        //non allocati è una valigia di sistema creata per ogni viaggio in grado di contenere gli oggetti non ancora allocati
+                        let nonallocati: Valigia = PersistenceManager.shared.loadValigieFromCategoria(categoria: "SYSTEM")[0]
+                        PersistenceManager.shared.addValigiaViaggiante(valigia: nonallocati, viaggio: PersistenceManager.shared.loadViaggiFromNome(nome: nomeViaggio)[0])
                         presentationMode.wrappedValue.dismiss()
                         
                     }, label: {Text("Save")})
