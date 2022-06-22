@@ -113,8 +113,6 @@ struct EditViaggioView: View {
         .onAppear(){
             switch oldIcon{
                 
-                
-                
             case "airplane":
                 selectedTipo = .aereo
             case "ferry.fill":
