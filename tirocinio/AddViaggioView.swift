@@ -15,7 +15,7 @@ struct AddViaggioView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     enum TipiViaggio: String, CaseIterable, Identifiable {
-        case aereo, nave, sole, natura
+        case aereo, nave, auto, bus, treno, estate, primavera, autunno, inverno, america, europa, asia
         var id: Self { self }
     }
     @State private var selectedTipo: TipiViaggio = .aereo
@@ -40,12 +40,29 @@ struct AddViaggioView: View {
             
             Section(header: Text("Icona")){
                 Picker("Tipo", selection: $selectedTipo) {
-                    Image(systemName: "airplane").tag(TipiViaggio.aereo)
+                    Image(systemName: "car.fill").tag(TipiViaggio.auto)
+                    Image(systemName: "bus.fill").tag(TipiViaggio.bus)
+                    Image(systemName: "tram.fill").tag(TipiViaggio.treno)
                     Image(systemName: "ferry.fill").tag(TipiViaggio.nave)
-                    Image(systemName: "sun.max.fill").tag(TipiViaggio.sole)
-                    Image(systemName: "leaf.fill").tag(TipiViaggio.natura)
+                    Image(systemName: "airplane").tag(TipiViaggio.aereo)
                 }
                 .pickerStyle(.segmented)
+                
+                Picker("Tipo", selection: $selectedTipo) {
+                    Image(systemName: "snowflake").tag(TipiViaggio.inverno)
+                    Image(systemName: "leaf.fill").tag(TipiViaggio.primavera)
+                    Image(systemName: "sun.max.fill").tag(TipiViaggio.estate)
+                    Image(systemName: "drop.fill").tag(TipiViaggio.autunno)
+                }
+                .pickerStyle(.segmented)
+                
+                Picker("Tipo", selection: $selectedTipo) {
+                    Image(systemName: "globe.americas").tag(TipiViaggio.america)
+                    Image(systemName: "globe.europe.africa.fill").tag(TipiViaggio.europa)
+                    Image(systemName: "globe.asia.australia.fill").tag(TipiViaggio.asia)
+                }
+                .pickerStyle(.segmented)
+                
             }
             
             Section(header: Text("Data")){
@@ -75,10 +92,26 @@ struct AddViaggioView: View {
                             return "airplane"
                         case .nave:
                             return "ferry.fill"
-                        case .sole:
+                        case .estate:
                             return "sun.max.fill"
-                        case .natura:
+                        case .primavera:
                             return "leaf.fill"
+                        case .autunno:
+                            return "drop.fill"
+                        case .inverno:
+                            return "snowflake"
+                        case .auto:
+                            return "car.fill"
+                        case .bus:
+                            return "bus.fill"
+                        case .treno:
+                            return "tram.fill"
+                        case .america:
+                            return "globe.americas"
+                        case .europa:
+                            return "globe.europe.africa.fill"
+                        case .asia:
+                            return "globe.asia.australia.fill"
                         }
                     }())
                     
