@@ -59,12 +59,14 @@ struct EditViaggioView: View {
             }
             
             //                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
-            Section(header: Text("Data")){
-                DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
+            Section(header: Text("Data partenza")){
+                DatePicker("", selection: $dataViaggio, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
             }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Modifica viaggio")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {

@@ -172,14 +172,18 @@ struct tastiDiAggiunta: View{
             ZStack{
                 VStack{
                     Text("Aggiungi Oggetti")
+                        .multilineTextAlignment(.center)
+                        
                     //                    Text("Oggetti presenti: \(oggettiDB.count)")
                     Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
                         .font(.caption)
+                        .multilineTextAlignment(.center)
                     Image(systemName: "archivebox.fill")
                         .padding(.top, 1.0)
                 }
                 .padding()
-                .frame(width: 150, height: 80)
+                .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+                
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
@@ -188,7 +192,7 @@ struct tastiDiAggiunta: View{
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-                        .frame(width: 150, height: 80)
+                        .frame(width: 150)
                         .cornerRadius(10)
                 }
                 
@@ -224,14 +228,16 @@ struct tastiDiAggiunta: View{
                 VStack{
                     let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
                     Text("Aggiungi Valigie")
+                        .multilineTextAlignment(.center)
                     Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
                         .font(.caption)
+                        .multilineTextAlignment(.center)
                     Image(systemName: "suitcase.fill")
                         .padding(.top, 1.0)
                     
                 }
                 .padding()
-                .frame(width: 150, height: 80)
+                .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
@@ -240,7 +246,7 @@ struct tastiDiAggiunta: View{
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-                        .frame(width: 150, height: 80)
+                        .frame(width: 150)
                         .cornerRadius(10)
                 }
                 
@@ -291,6 +297,7 @@ struct tastiDiAggiunta: View{
         
 
     }
+        
     
     
 }

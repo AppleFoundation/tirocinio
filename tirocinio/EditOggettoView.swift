@@ -49,6 +49,7 @@ struct EditOggettoView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Modifica viaggio")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {

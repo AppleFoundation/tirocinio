@@ -72,6 +72,7 @@ struct AddNuovaValigia: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Nuova valigia")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {

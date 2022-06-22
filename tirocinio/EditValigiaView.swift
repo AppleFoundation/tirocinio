@@ -49,6 +49,7 @@ struct EditValigiaView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Modifica valigia")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {

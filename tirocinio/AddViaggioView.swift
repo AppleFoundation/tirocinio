@@ -65,13 +65,15 @@ struct AddViaggioView: View {
                 
             }
             
-            Section(header: Text("Data")){
-                DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
+            Section(header: Text("Data partenza")){
+                DatePicker("", selection: $dataViaggio, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
             }
             
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Nuovo viaggio")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {
