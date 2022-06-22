@@ -6,15 +6,43 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     
     @Environment(\.colorScheme) var colorScheme
-    @State var showingWelcomeView: Bool
+    @State var showingWelcomeView: Bool = !UserDefaults.standard.bool(forKey: "firstAccess")
+//    var preferred: ModeEnum = getPreferredColorScheme()
+    @Environment(\.colorScheme) var systemColorScheme
+    @State var myColorScheme: ColorScheme?
+
+    init(){
+        self.myColorScheme = getPreferredColorScheme(system: self.systemColorScheme)
+    }
     
-    //    @State var allViaggi: [Viaggio] = PersistenceManager.shared.loadAllViaggi()
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
+    
+    
+    func getPreferredColorScheme(system: ColorScheme) -> ColorScheme{
+        let preferred: String = UserDefaults.standard.string(forKey: "PreferredColorScheme") ?? "ciao"
+        print("\(preferred)")
+        switch preferred{
+        case "none":
+            print("NONE")
+            return system;
+        case "dark":
+            print("DARK")
+            return ColorScheme.dark;
+        case "light":
+            print("LIGHT")
+            return ColorScheme.light;
+        default:
+            print("NONE")
+            return system;
+        }
+    }
+
     
     var body: some View{
         NavigationView{
@@ -92,16 +120,17 @@ struct ContentView: View {
             //            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: SettingsView()) {
+                    NavigationLink(destination: SettingsView(myColorScheme: $myColorScheme)) {
                         Image(systemName: "gearshape.fill")
                   }
                 }
             }
         }
+//        .preferredColorScheme(preferred == .none ? nil : (preferred == .dark ? ColorScheme.dark : ColorScheme.light))
+        .colorScheme(myColorScheme ?? systemColorScheme)
     }
     
-    
-    
+        
 
 }
 
@@ -218,7 +247,7 @@ struct ActionButtonView: View{
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(showingWelcomeView: true)
+        ContentView()
             .previewDevice("iPhone 11")
     }
 }
