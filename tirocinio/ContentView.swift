@@ -284,7 +284,7 @@ struct ActionButtonView: View{
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
             .foregroundColor(Color.red)
-            .background(NavigationLink("", destination: EditViaggioView(viaggio: viaggio), isActive: $editEnable))
+            .background(NavigationLink("", destination: EditViaggioView(nomeViaggio: viaggio.nome ?? "OldName", dataViaggio: viaggio.data ?? Date.now, oldIcon: viaggio.tipo ?? "questionmark", viaggio: viaggio), isActive: $editEnable))
             
             
         }
