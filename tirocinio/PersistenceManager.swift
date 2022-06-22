@@ -731,7 +731,7 @@ class PersistenceManager: ObservableObject {
         }
         for b in bins{
             b.volumeAttuale = 0
-            b.pesoAttuale = 0
+            b.pesoAttuale = b.valigiaRef?.tara ?? 0
         }
         
         //carico la valigia dei non allocati per farne una pulizia prima del re-allocamento

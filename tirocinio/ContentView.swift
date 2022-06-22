@@ -90,6 +90,13 @@ struct ContentView: View {
             .navigationTitle("SmartSuitCase")
             
             //            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+            .toolbar{
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: SettingsView()) {
+                        Image(systemName: "gearshape.fill")
+                  }
+                }
+            }
         }
     }
     
