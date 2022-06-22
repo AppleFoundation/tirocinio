@@ -71,6 +71,7 @@ struct AddNuovoOggetto: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Nuovo oggetto")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {

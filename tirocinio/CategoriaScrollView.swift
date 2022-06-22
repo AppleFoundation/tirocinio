@@ -30,7 +30,7 @@ struct CategoriaScrollView: View{
                 Spacer()
             }
             
-            let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(60), spacing: 5, alignment: .center), count: oggettiCategoria.count < 3 ? oggettiCategoria.count : 3)
+            let rows: [GridItem] = Array(repeating: GridItem.init(.flexible(minimum: 60, maximum: .infinity), spacing: 5, alignment: .center), count: oggettiCategoria.count < 3 ? oggettiCategoria.count : 3)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack{
@@ -43,16 +43,10 @@ struct CategoriaScrollView: View{
                             oggetto in
                             
                             CardView(oggetto: oggetto, viaggio: viaggio)
-                            
-                            
                         }
-                        
                     }
                     Spacer(minLength: 15) //Utile per avere più simmetria
                 }
-                
-                
-                
             }
             
         }

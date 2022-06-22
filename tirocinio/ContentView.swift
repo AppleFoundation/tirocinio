@@ -30,7 +30,7 @@ struct ContentView: View {
                                 .font(.headline.bold())
                             Image(systemName: "plus")
                         }
-                        .frame(width: 130)
+//                        .frame(width: 130)
                         .padding()
                         .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -126,20 +126,25 @@ struct ActionButtonView: View{
                     Image(systemName: viaggio.tipo ?? "questionmark")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(.blue)
+                        .foregroundColor([.blue, .mint, .orange, .green, .red, .pink, .purple, .yellow].randomElement())
                         .frame(width: 50)
                     
                     Text(viaggio.nome ?? "NoWhere")
+                        .multilineTextAlignment(.center)
                         .font(.title.bold())
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                     
                     Text(viaggio.data ?? Date(), style: .date)
+                        .multilineTextAlignment(.center)
                         .font(.title3)
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                      
                     
                 }
                 .padding()
-                .frame(minWidth: 175, minHeight: 150, maxHeight: 300)
+                .frame(minWidth: 175, minHeight: 150)
                 .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                 .cornerRadius(10)
                 .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
