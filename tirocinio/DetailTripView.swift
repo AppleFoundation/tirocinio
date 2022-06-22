@@ -17,9 +17,8 @@ struct DetailTripView: View {
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
     @State var insiemeDiValigie: [ValigiaViaggiante] = []
-    @State var volumePeso: Bool = false //false -> Volume ; true -> Peso
     @EnvironmentObject var speech : SpeechToText
-
+    
     var body: some View {
         
         
@@ -29,14 +28,14 @@ struct DetailTripView: View {
                 
                 VStack{
                     
-                    tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio, volumePeso: $volumePeso)
+                    tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio)
                     
                     ForEach(insiemeDiValigie){
                         singolaIstanza in
                         
                         //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
                         
-                        singolaValigiaView(singolaIstanza: singolaIstanza, volumePeso: $volumePeso)
+                        singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
                         
                     }
                 }
@@ -81,63 +80,10 @@ struct DetailTripView: View {
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
             insiemeDiValigie = valigieDB
             
-            PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: volumePeso)//ANDRA NEL PULSANTE SALVA
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
-        
-    }
-    
-    private func  coloreScelto(valigia: valigiaDaRiempire) -> LinearGradient{
-        
-        var gradienteScheda: LinearGradient = LinearGradient(colors: [Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
-        
-        let inizio = UnitPoint.bottom
-        let fine = UnitPoint.top
-        
-        if(String("\(colorScheme)") == "light"){
-            if(valigia.pesoAttuale > valigia.pesoMassimo){
-                //Rossa light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 208/255, green: 24/255, blue: 24/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 212/255, green: 105/255, blue: 105/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
-                //Gialla light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 229/255, blue: 138/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else{
-                //Verde light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 67/255, green: 198/255, blue: 33/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 120/255, green: 195/255, blue: 120/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }
-        }else{
-            if(valigia.pesoAttuale > valigia.pesoMassimo){
-                //Rossa dark
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 119/255, green: 17/255, blue: 17/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 161/255, green: 22/255, blue: 22/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
-                //Gialla dark
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 237/255, green: 185/255, blue: 51/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 207/255, green: 174/255, blue: 105/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else{
-                //Verde dark
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 27/255, green: 91/255, blue: 15/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 93/255, green: 143/255, blue: 77/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }
-        }
-        
-        return gradienteScheda
         
     }
 }
@@ -153,7 +99,13 @@ struct tastiDiAggiunta: View{
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
-    @Binding var volumePeso: Bool
+    @State var volumePeso: Bool = false
+    
+    init(valigieDB: [ValigiaViaggiante], oggettiDB: [OggettoViaggiante], viaggio: Viaggio){
+        self.valigieDB = valigieDB
+        self.oggettiDB = oggettiDB
+        self.viaggio = viaggio
+    }
     
     func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
         var sum: Int = 0
@@ -165,7 +117,6 @@ struct tastiDiAggiunta: View{
     }
     
     var body: some View{
-        
         
         HStack{
             Spacer()
@@ -279,6 +230,7 @@ struct tastiDiAggiunta: View{
                 }
             }(), isOn: $volumePeso)
             .onChange(of: volumePeso){ value in
+                viaggio.allocaPer = value
                 PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: value)
             }
             .toggleStyle(.switch)
@@ -286,6 +238,9 @@ struct tastiDiAggiunta: View{
             .padding()
             
             
+        }
+        .onAppear{
+            self.volumePeso = self.viaggio.allocaPer
         }
         
         
@@ -299,7 +254,7 @@ struct tastiDiAggiunta: View{
 struct singolaValigiaView: View{
     
     var singolaIstanza: ValigiaViaggiante
-    @Binding var volumePeso: Bool
+    var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View{
@@ -357,7 +312,7 @@ struct singolaValigiaView: View{
                 Spacer()
             }
             .padding()
-            .background(coloreScelto(valigia: singolaIstanza, volumeOPeso: volumePeso))
+            .background(coloreScelto(valigia: singolaIstanza, volumeOPeso: viaggio.allocaPer))
             .cornerRadius(10)
             
         }
@@ -471,95 +426,9 @@ struct singolaValigiaView: View{
     }
 }
 
-class valigiaDaRiempire: Identifiable{
-    var id: UUID
-    var nomeValigia: String
-    var volumeAttuale: Int
-    var volumeMassimo: Int
-    var pesoAttuale: Int
-    var pesoMassimo: Int
-    var oggettiInseriti: [OggettoViaggiante]
-    var oggettiConConto: Dictionary<String,(String, Int)>
-    
-    
-    init(valigiaDaAggiungere: ValigiaViaggiante){
-        self.id = UUID()
-        self.nomeValigia = (valigiaDaAggiungere.valigiaRef?.nome)!
-        self.volumeAttuale = 0
-        self.volumeMassimo = Int(valigiaDaAggiungere.valigiaRef!.volume)
-        self.pesoAttuale = 0
-        self.pesoMassimo = Int(valigiaDaAggiungere.valigiaRef!.tara) //qui ci dovrà andare peso
-        self.oggettiInseriti = []
-        self.oggettiConConto = [:]
-    }
-    
-    init(nomeValigiaExtra: String){
-        self.id = UUID()
-        self.nomeValigia = nomeValigiaExtra
-        self.volumeAttuale = 0
-        self.volumeMassimo = 0
-        self.pesoAttuale = 0
-        self.pesoMassimo = 0
-        self.oggettiInseriti = []
-        self.oggettiConConto = [:]
-    }
-    
-    func aggiungiOggettoAValigia(oggettoSingolo: OggettoViaggiante){
-        self.oggettiInseriti.append(oggettoSingolo)
-        var oldValue = self.oggettiConConto.updateValue((oggettoSingolo.oggettoRef!.nome! ,1), forKey: oggettoSingolo.oggettoRef!.nome!)
-        if (oldValue != nil){
-            oldValue!.1 += 1
-            self.oggettiConConto.updateValue(oldValue!, forKey: oggettoSingolo.oggettoRef!.nome!)
-        }else{
-            oldValue?.1 = 1
-        }
-        print("Ci sono \(oldValue ?? ("",-1)) pezzi di \(oggettoSingolo.oggettoRef!.nome ?? "Nome")")
-    }
-}
 
 
 
-struct leMieValigie{
-    
-    var oggettiDaAllocare: [OggettoViaggiante]
-    
-    var tutteLeValigie: [valigiaDaRiempire]
-    
-    init(valigieViaggianti: [ValigiaViaggiante], oggettiViaggianti: [OggettoViaggiante]){
-        self.tutteLeValigie = []
-        self.tutteLeValigie.append(valigiaDaRiempire.init(nomeValigiaExtra: "Non allocati"))
-        for singolaValigia in valigieViaggianti{
-            tutteLeValigie.append(valigiaDaRiempire.init(valigiaDaAggiungere: singolaValigia))
-        }
-        
-        self.oggettiDaAllocare = oggettiViaggianti
-        
-        //Qui andrebbe ordinato il vettore oggettiDaAllocare in ordine di peso o di volume
-        
-        while (oggettiDaAllocare.isEmpty == false){
-            
-            var temp = (oggettiDaAllocare.popLast(),false)
-            
-            for valigiaAttuale in tutteLeValigie{
-                if(temp.1 == false){
-                    //Attualmente l'algoritmo implementato si basa solo ed unicamente sul peso va implementato anche sul volume
-                    if((valigiaAttuale.pesoAttuale + Int(temp.0!.oggettoRef!.peso)) <= valigiaAttuale.pesoMassimo){
-                        valigiaAttuale.aggiungiOggettoAValigia(oggettoSingolo: temp.0!)
-                        valigiaAttuale.pesoAttuale += Int(temp.0!.oggettoRef!.peso)
-                        temp.1 = true
-                    }
-                }
-            }
-            if(temp.1 == false){
-                tutteLeValigie[0].aggiungiOggettoAValigia(oggettoSingolo: temp.0!)
-                tutteLeValigie[0].pesoAttuale += Int(temp.0!.oggettoRef!.peso)
-                temp.1 = true
-            }
-            
-        }
-        
-    }
-}
 
 extension Optional where Wrapped == NSSet {
     func array<T: Hashable>(of: T.Type) -> [T] {

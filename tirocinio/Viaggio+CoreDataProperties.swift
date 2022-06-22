@@ -20,6 +20,7 @@ extension Viaggio {
     @NSManaged public var id: UUID?
     @NSManaged public var nome: String?
     @NSManaged public var tipo: String?
+    @NSManaged public var allocaPer: Bool
     
 }
 

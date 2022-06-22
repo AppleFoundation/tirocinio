@@ -23,19 +23,22 @@ struct IntroductionView: View {
 
                 InformationContainerView()
 
-                Spacer(minLength: 30)
-
-                Button(action: {
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success)
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("Continue")
-                        .customButton()
-                }
-                .padding(.horizontal)
-            
+                            
             }
+
+
+        }
+        Spacer()
+        VStack{
+            Button(action: {
+                let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.success)
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Continue")
+                    .customButton()
+            }
+            .padding(.horizontal)
         }
     }
 }
@@ -52,7 +55,7 @@ struct TitleView: View {
             Text("Welcome to")
                 .customTitleText()
 
-            Text("Off-Site")
+            Text("SuitCases")
                 .customTitleText()
                 .foregroundColor(.blue)
         }
@@ -62,11 +65,11 @@ struct TitleView: View {
 struct InformationContainerView: View {
     var body: some View {
         VStack(alignment: .leading) {
-            InformationDetailView(title: "Move", subTitle: "Reach the campus easily", imageName: "figure.walk")
+            InformationDetailView(title: "Packing", subTitle: "Porta con te tutto il necessario senza perdetere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
 
-            InformationDetailView(title: "Find", subTitle: "To get what you need", imageName: "dot.viewfinder")
+//            InformationDetailView(title: "Find", subTitle: "To get what you need", imageName: "dot.viewfinder")
 
-            InformationDetailView(title: "Survive", subTitle: "To live away from home", imageName: "waveform.path.ecg")
+//            InformationDetailView(title: "Survive", subTitle: "To live away from home", imageName: "waveform.path.ecg")
         }
         .padding(.horizontal)
     }

@@ -108,6 +108,7 @@ class PersistenceManager: ObservableObject {
             newViaggio.id = UUID()
             newViaggio.data = data
             newViaggio.tipo = tipo
+            newViaggio.allocaPer = false //volume
             
             self.saveContext()
             print("Viaggio salvato!")
