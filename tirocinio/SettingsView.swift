@@ -11,7 +11,6 @@ struct SettingsView: View {
     @State var showAlertOggettiPersonalizzati: Bool = false
     @State var showAlertReset: Bool = false
     @State var showAlertViaggi: Bool = false
-//    @State var selectedMode: ModeEnum = getPreferredColorScheme()
     @State var selected: String = "none"
     @Binding var myColorScheme: ColorScheme?
     
@@ -54,6 +53,8 @@ struct SettingsView: View {
                         case .dark:
                             selected = "dark"
                             break
+                        case nil:
+                            selected = "none"
                         default:
                             break
                         }
@@ -63,12 +64,15 @@ struct SettingsView: View {
                         case "none":
                             //print("System Default")
                         myColorScheme = nil
+                        UserDefaults.standard.set(value, forKey: "PreferredColorScheme")
                         case "light":
                             //print("Light")
                         myColorScheme = .light
+                        UserDefaults.standard.set(value, forKey: "PreferredColorScheme")
                         case "dark":
                             //print("Dark")
                         myColorScheme = .dark
+                        UserDefaults.standard.set(value, forKey: "PreferredColorScheme")
                         default:
                             break
                     }

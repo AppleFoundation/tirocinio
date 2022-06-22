@@ -16,21 +16,21 @@ struct ContentView: View {
     @Environment(\.colorScheme) var systemColorScheme
     @State var myColorScheme: ColorScheme?
 
-    init(){
-        self.myColorScheme = getPreferredColorScheme(system: self.systemColorScheme)
-    }
+    
+    
+    
     
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)
     
     
-    func getPreferredColorScheme(system: ColorScheme) -> ColorScheme{
-        let preferred: String = UserDefaults.standard.string(forKey: "PreferredColorScheme") ?? "ciao"
+    func getPreferredColorScheme(system: ColorScheme) -> ColorScheme?{
+        let preferred: String = UserDefaults.standard.string(forKey: "PreferredColorScheme") ?? "none"
         print("\(preferred)")
         switch preferred{
         case "none":
             print("NONE")
-            return system;
+            return nil;
         case "dark":
             print("DARK")
             return ColorScheme.dark;
@@ -68,11 +68,6 @@ struct ContentView: View {
                     }
                     .padding()
                     
-//                    Button(action: {
-//                        inizializzaOggetti()
-//                        inizializzaValigie()
-//
-//                    }, label: {Text("Inizializza")})
                     
                     VStack{
                         LazyVGrid(columns: columns, alignment: .center) {
@@ -126,7 +121,9 @@ struct ContentView: View {
                 }
             }
         }
-//        .preferredColorScheme(preferred == .none ? nil : (preferred == .dark ? ColorScheme.dark : ColorScheme.light))
+        .onAppear{
+            self.myColorScheme = getPreferredColorScheme(system: self.systemColorScheme)
+        }
         .colorScheme(myColorScheme ?? systemColorScheme)
     }
     
