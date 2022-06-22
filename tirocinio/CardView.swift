@@ -11,8 +11,8 @@ import SceneKit
 struct CardView: View {
     
     @Environment(\.colorScheme) var colorScheme
-
-
+    
+    
     @State private var editEnable = false
     
     var oggetto: Oggetto
@@ -40,7 +40,7 @@ struct CardView: View {
                     PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                 }, label: {
                     Text(oggetto.nome ?? "Nome")
-                        
+                    
                 })
                 .frame(minWidth: 130)
                 
@@ -65,24 +65,24 @@ struct CardView: View {
             }
             
             
-//            .onDisappear(){
-//
-//                if (count != 0){
-//                    if (count > 0){
-//                        for _ in 1...count{
-//                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-//                        }
-//                    }else{
-//                        count = count - count - count
-//                        for _ in 1...count{
-//                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
-//                        }
-//                    }
-//                }
-//
-//
-//
-//            }
+            //            .onDisappear(){
+            //
+            //                if (count != 0){
+            //                    if (count > 0){
+            //                        for _ in 1...count{
+            //                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+            //                        }
+            //                    }else{
+            //                        count = count - count - count
+            //                        for _ in 1...count{
+            //                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+            //                        }
+            //                    }
+            //                }
+            //
+            //
+            //
+            //            }
             .onAppear(){
                 let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
                 if (oggettiInValigia.isEmpty == false){
@@ -95,7 +95,7 @@ struct CardView: View {
             .background(coloreScelto())
             .cornerRadius(10)
             .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
-//            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
+            //            .background(NavigationLink("", destination: EditOggettoView(oggetto: oggetto), isActive: $editEnable))
             .contextMenu(.init(menuItems: {
                 
                 Text("Lunghezza: \(oggetto.lunghezza) cm")
@@ -115,7 +115,7 @@ struct CardView: View {
                 
                 Button(action: {
                     PersistenceManager.shared.deleteOggetto(nome: oggetto.nome!, categoria: oggetto.categoria!)
-//                    print("ciao")
+                    //                    print("ciao")
                 }, label:{
                     HStack{
                         Text("Elimina")
@@ -130,13 +130,13 @@ struct CardView: View {
             Text("Loading...")
                 .foregroundColor(Color.red)
                 .background(NavigationLink("", destination: EditOggettoView(nomeAgg: oggetto.nome!, lunghezzaAgg: Double(oggetto.lunghezza), larghezzaAgg: Double(oggetto.larghezza), profonditaAgg: Double(oggetto.profondita), pesoAgg: Double(oggetto.peso), oggetto: oggetto), isActive: $editEnable))
-                
+            
         }
         
-            
-    
-    }
         
+        
+    }
+    
     
     private func  coloreScelto() -> LinearGradient{
         
@@ -170,7 +170,7 @@ struct CardView: View {
                 gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }
         }
-
+        
         
         return gradienteScheda
         

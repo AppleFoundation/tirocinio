@@ -15,7 +15,7 @@ struct BagListScroll: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(Color.blue)
-                
+            
             HStack{
                 
                 
@@ -29,7 +29,7 @@ struct BagListScroll: View {
                     .resizable()
                     .frame(width: 45, height: 45)
                 
-            
+                
                 
                 NavigationLink(destination: EmptyView(), label: {
                     VStack{
@@ -46,7 +46,7 @@ struct BagListScroll: View {
         }
         
         
-       
+        
     }
 }
 

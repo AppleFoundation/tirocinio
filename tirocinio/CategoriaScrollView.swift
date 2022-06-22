@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CategoriaScrollView: View{
     
-  
+    
     
     var nome: String
     
@@ -25,36 +25,36 @@ struct CategoriaScrollView: View{
                 Text(nome)
                     .font(.title)
                     .fontWeight(.bold)
-//                    .foregroundColor(Color.gray)
+                //                    .foregroundColor(Color.gray)
                     .padding()
                 Spacer()
             }
             
             let rows: [GridItem] = Array(repeating: GridItem.init(.fixed(60), spacing: 5, alignment: .center), count: oggettiCategoria.count < 3 ? oggettiCategoria.count : 3)
- 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack{
-                        Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
-                        LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
-  
-                            ForEach(oggettiCategoria.sorted(by: { lhs, rhs in
-                                return (lhs.nome! < rhs.nome!)
-                            })){
-                                oggetto in
-                         
-                                CardView(oggetto: oggetto, viaggio: viaggio)
-                
-                                    
-                            }
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack{
+                    Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
+                    LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
+                        
+                        ForEach(oggettiCategoria.sorted(by: { lhs, rhs in
+                            return (lhs.nome! < rhs.nome!)
+                        })){
+                            oggetto in
+                            
+                            CardView(oggetto: oggetto, viaggio: viaggio)
+                            
                             
                         }
-                        Spacer(minLength: 15) //Utile per avere più simmetria
+                        
                     }
-                    
-                    
-                
+                    Spacer(minLength: 15) //Utile per avere più simmetria
                 }
-
+                
+                
+                
+            }
+            
         }
     }
 }

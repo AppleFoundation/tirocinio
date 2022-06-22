@@ -12,14 +12,14 @@ struct DetailTripView: View {
     var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
+    
     
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
     @State var insiemeDiValigie: [ValigiaViaggiante] = []
+    @State var volumePeso: Bool = false
     
     var body: some View {
-        
         
         
         
@@ -28,14 +28,14 @@ struct DetailTripView: View {
                 
                 VStack{
                     
-                    tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio)
+                    tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio, volumePeso: $volumePeso)
                     
                     ForEach(insiemeDiValigie){
                         singolaIstanza in
                         
-//                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
+                        //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
                         
-                        singolaValigiaView(singolaIstanza: singolaIstanza)
+                        singolaValigiaView(singolaIstanza: singolaIstanza, volumePeso: $volumePeso)
                         
                     }
                 }
@@ -60,9 +60,11 @@ struct DetailTripView: View {
             }
             
         }
-      
+        
         .onAppear(){
-            valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
+            valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
+                return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
+            })
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
             insiemeDiValigie = valigieDB
             
@@ -138,6 +140,7 @@ struct tastiDiAggiunta: View{
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
+    @Binding var volumePeso: Bool
     @EnvironmentObject var speech : SpeechToText
     
     func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
@@ -157,7 +160,7 @@ struct tastiDiAggiunta: View{
             ZStack{
                 VStack{
                     Text("Aggiungi Oggetti")
-//                    Text("Oggetti presenti: \(oggettiDB.count)")
+                    //                    Text("Oggetti presenti: \(oggettiDB.count)")
                     Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
                         .font(.caption)
                     Image(systemName: "archivebox.fill")
@@ -207,7 +210,7 @@ struct tastiDiAggiunta: View{
             
             ZStack{
                 VStack{
-                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "SYSTEM").count
+                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
                     Text("Aggiungi Valigie")
                     Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
                         .font(.caption)
@@ -254,15 +257,32 @@ struct tastiDiAggiunta: View{
             Spacer()
         }
         
+        
+        HStack{
+            Toggle({
+                if (volumePeso == false){
+                    return "Riempi valigie per: Volume"
+                }else{
+                    return "Riempi valigie per: Peso"
+                }
+            }(), isOn: $volumePeso)
+            .toggleStyle(.switch)
+            .tint(.mint)
+            .padding()
+            
+            
+        }
+        
+        
         Spacer(minLength: 30)
-
+        
         VStack{
             Text("\(speech.text)")
                 .font(.title)
                 .bold()
             speech.getButton(viaggioNome: self.viaggio.nome!)
         }
-            
+        
         Spacer(minLength: 30)
         
     }
@@ -274,6 +294,7 @@ struct tastiDiAggiunta: View{
 struct singolaValigiaView: View{
     
     var singolaIstanza: ValigiaViaggiante
+    @Binding var volumePeso: Bool
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View{
@@ -290,7 +311,7 @@ struct singolaValigiaView: View{
                     Spacer()
                     VStack(alignment: .trailing){
                         //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
-                        if singolaIstanza.valigiaRef?.categoria == "SYSTEM"{
+                        if singolaIstanza.valigiaRef?.categoria == "0SYSTEM"{
                             Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l")
                                 .font(.caption)
                             Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g")
@@ -321,7 +342,7 @@ struct singolaValigiaView: View{
                     .padding(8)
                     .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
                     .cornerRadius(10)
-
+                    
                     
                 }
                 
@@ -331,64 +352,114 @@ struct singolaValigiaView: View{
                 Spacer()
             }
             .padding()
-            .background(coloreScelto(valigia: singolaIstanza))
+            .background(coloreScelto(valigia: singolaIstanza, volumeOPeso: volumePeso))
             .cornerRadius(10)
             
         }
         
     }
     
-    private func  coloreScelto(valigia: ValigiaViaggiante) -> LinearGradient{
+    private func  coloreScelto(valigia: ValigiaViaggiante, volumeOPeso: Bool) -> LinearGradient{
         
         var gradienteScheda: LinearGradient = LinearGradient(colors: [Color.white], startPoint: .topLeading, endPoint: .bottomTrailing)
         
         let inizio = UnitPoint.bottom
         let fine = UnitPoint.top
         
-        if(String("\(colorScheme)") == "light"){
-            if(valigia.pesoAttuale > valigia.pesoMassimo){
-                //Rossa light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 208/255, green: 24/255, blue: 24/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 212/255, green: 105/255, blue: 105/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
-                //Gialla light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 229/255, blue: 138/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+        if (volumeOPeso == false){ //Caso di ordinare per volume
+            if(String("\(colorScheme)") == "light"){
+                if(valigia.volumeAttuale > valigia.volumeMassimo){
+                    //Rossa light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 208/255, green: 24/255, blue: 24/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 212/255, green: 105/255, blue: 105/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else if(Double(valigia.volumeAttuale) > Double(valigia.volumeMassimo) * 0.9){
+                    //Gialla light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 229/255, blue: 138/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else{
+                    //Verde light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 67/255, green: 198/255, blue: 33/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 120/255, green: 195/255, blue: 120/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }
             }else{
-                //Verde light
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 67/255, green: 198/255, blue: 33/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 120/255, green: 195/255, blue: 120/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                if(valigia.volumeAttuale > valigia.volumeMassimo){
+                    //Rossa dark
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 119/255, green: 17/255, blue: 17/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 161/255, green: 22/255, blue: 22/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else if(Double(valigia.volumeAttuale) > Double(valigia.volumeMassimo) * 0.9){
+                    //Gialla dark
+                    var coloreArray = Array<Color>.init()
+                    //                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 237/255, green: 185/255, blue: 51/255, opacity: 1.0))
+                    //                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 207/255, green: 174/255, blue: 105/255, opacity: 1.0))
+                    
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 154/255, green: 93/255, blue: 0/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 245/255, green: 197/255, blue: 0/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else{
+                    //Verde dark
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 27/255, green: 91/255, blue: 15/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 93/255, green: 143/255, blue: 77/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }
             }
-        }else{
-            if(valigia.pesoAttuale > valigia.pesoMassimo){
-                //Rossa dark
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 119/255, green: 17/255, blue: 17/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 161/255, green: 22/255, blue: 22/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-            }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
-                //Gialla dark
-                var coloreArray = Array<Color>.init()
-//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 237/255, green: 185/255, blue: 51/255, opacity: 1.0))
-//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 207/255, green: 174/255, blue: 105/255, opacity: 1.0))
-                
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 154/255, green: 93/255, blue: 0/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 245/255, green: 197/255, blue: 0/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+        }else{ //Caso di ordinare per peso
+            if(String("\(colorScheme)") == "light"){
+                if(valigia.pesoAttuale > valigia.pesoMassimo){
+                    //Rossa light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 208/255, green: 24/255, blue: 24/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 212/255, green: 105/255, blue: 105/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
+                    //Gialla light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 229/255, blue: 138/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else{
+                    //Verde light
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 67/255, green: 198/255, blue: 33/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 120/255, green: 195/255, blue: 120/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }
             }else{
-                //Verde dark
-                var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 27/255, green: 91/255, blue: 15/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 93/255, green: 143/255, blue: 77/255, opacity: 1.0))
-                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                if(valigia.pesoAttuale > valigia.pesoMassimo){
+                    //Rossa dark
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 119/255, green: 17/255, blue: 17/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 161/255, green: 22/255, blue: 22/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
+                    //Gialla dark
+                    var coloreArray = Array<Color>.init()
+                    //                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 237/255, green: 185/255, blue: 51/255, opacity: 1.0))
+                    //                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 207/255, green: 174/255, blue: 105/255, opacity: 1.0))
+                    
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 154/255, green: 93/255, blue: 0/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 245/255, green: 197/255, blue: 0/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }else{
+                    //Verde dark
+                    var coloreArray = Array<Color>.init()
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 27/255, green: 91/255, blue: 15/255, opacity: 1.0))
+                    coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 93/255, green: 143/255, blue: 77/255, opacity: 1.0))
+                    gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                }
             }
         }
+        
+        
+        
         
         return gradienteScheda
         

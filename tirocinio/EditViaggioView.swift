@@ -16,36 +16,36 @@ struct EditViaggioView: View {
     var viaggio: Viaggio
     
     var body: some View {
-
-            Form{
-                //nome, data
-                Section(header: Text("Nome")){
-                    TextField("Nuovo nome viaggio", text: $nomeViaggio)
-                    //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
-                }
-//                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
-                Section(header: Text("Data")){
-                    DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
-                }
+        
+        Form{
+            //nome, data
+            Section(header: Text("Nome")){
+                TextField("Nuovo nome viaggio", text: $nomeViaggio)
+                //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationTitle("Modifica viaggio")
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {
-                        viaggio.nome = nomeViaggio
-                        viaggio.data = dataViaggio
-                        PersistenceManager.shared.saveContext()
-                        
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {Text("Save")})
-                }
-                ToolbarItem(placement: .navigationBarLeading){
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {Text("Cancel")})
-                }
+            //                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
+            Section(header: Text("Data")){
+                DatePicker("Data Partenza", selection: $dataViaggio, displayedComponents: .date)
             }
-
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Modifica viaggio")
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing){
+                Button(action: {
+                    viaggio.nome = nomeViaggio
+                    viaggio.data = dataViaggio
+                    PersistenceManager.shared.saveContext()
+                    
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Save")})
+            }
+            ToolbarItem(placement: .navigationBarLeading){
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Cancel")})
+            }
+        }
+        
     }
 }

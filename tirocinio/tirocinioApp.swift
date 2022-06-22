@@ -19,10 +19,10 @@ struct tirocinioApp: App {
         WindowGroup {
             //Iniettiamo la variabile d'ambiente rappresentante il contesto all'interno dell'applicazione
             ContentView().environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
-                         .environmentObject(speech)
+                .environmentObject(speech)
             
-//            ContentView().environmentObject(persistence)
-                
+            //            ContentView().environmentObject(persistence)
+            
         }
     }
 }

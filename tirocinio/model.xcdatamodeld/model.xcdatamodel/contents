@@ -52,6 +52,7 @@
         <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nome" optional="YES" attributeType="String"/>
+        <attribute name="tipo" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="Oggetto" positionX="-235.2890625" positionY="-556.0625" width="128" height="178"/>
@@ -59,6 +60,6 @@
         <element name="OggettoViaggiante" positionX="-635.96875" positionY="-496.27734375" width="128" height="133"/>
         <element name="Valigia" positionX="-249.8203125" positionY="-177.81640625" width="128" height="193"/>
         <element name="ValigiaViaggiante" positionX="-623.546875" positionY="-132.4609375" width="128" height="163"/>
-        <element name="Viaggio" positionX="-991.61328125" positionY="-415.62890625" width="130.578125" height="88"/>
+        <element name="Viaggio" positionX="-991.61328125" positionY="-415.62890625" width="130.578125" height="103"/>
     </elements>
 </model>

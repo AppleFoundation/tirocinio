@@ -35,14 +35,14 @@ struct ContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                         
-
+                        
                     }
                     .padding()
                     
                     Button(action: {
                         inizializzaOggetti()
                         inizializzaValigie()
-
+                        
                     }, label: {Text("Inizializza")})
                     
                     VStack{
@@ -63,7 +63,7 @@ struct ContentView: View {
                 }
                 
                 
-               
+                
             }
             .background{
                 if(String("\(colorScheme)") == "light"){
@@ -182,7 +182,7 @@ struct ContentView: View {
     func inizializzaValigie(){
         PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Bagaglio", tara: 1000, utilizzato: false)
         
-        PersistenceManager.shared.addValigia(categoria: "SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false)
+        PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false)
     }
     
 }
@@ -205,7 +205,7 @@ struct ActionButtonView: View{
             ZStack{
                 
                 VStack{
-                    Image(systemName: "airplane")
+                    Image(systemName: viaggio.tipo ?? "questionmark")
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.blue)
@@ -231,7 +231,7 @@ struct ActionButtonView: View{
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-                        
+                    
                         .cornerRadius(10)
                 }
                 
@@ -366,7 +366,7 @@ struct ActionButtonView: View{
 //                    Text("Delete Oggetto")
 //                })
 //            }
-//            
+//
 //        }
 //    }
 //}

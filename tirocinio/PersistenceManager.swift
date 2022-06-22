@@ -14,7 +14,7 @@ class PersistenceManager: ObservableObject {
     static let shared: PersistenceManager = PersistenceManager()
     
     private var context : NSManagedObjectContext
-
+    
     // An instance of NSPersistentContainer includes all objects needed to represent a functioning Core Data stack, and provides convenience methods and properties for common patterns.
     let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer (name: "model")
@@ -27,7 +27,7 @@ class PersistenceManager: ObservableObject {
         })
         return container
     }()
-
+    
     private init(){
         let center = NotificationCenter.default
         let notification = UIApplication.willResignActiveNotification
@@ -49,21 +49,21 @@ class PersistenceManager: ObservableObject {
     
     //     for later usage
     func saveContext() {
-      // ViewContext is a special mangaed object context which is designated for use only on the main thread. Tou'll use this one to save any unsaved data.
-      let context = persistentContainer.viewContext
-      // 2
-      if context.hasChanges {
-        do {
-          // 3
-          try context.save()
-        } catch {
-          // 4
-          // The context couldn't be saved.
-          // You should add your own error handling here.
-          let nserror = error as NSError
-          fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        // ViewContext is a special mangaed object context which is designated for use only on the main thread. Tou'll use this one to save any unsaved data.
+        let context = persistentContainer.viewContext
+        // 2
+        if context.hasChanges {
+            do {
+                // 3
+                try context.save()
+            } catch {
+                // 4
+                // The context couldn't be saved.
+                // You should add your own error handling here.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
         }
-      }
     }
     
     //Instructs the app to call the save method you previously added when the app goes into the background
@@ -97,8 +97,8 @@ class PersistenceManager: ObservableObject {
     }
     
     
-
-    func addViaggio(data: Date, nome: String){
+    
+    func addViaggio(data: Date, nome: String, tipo: String){
         let entity = NSEntityDescription.entity(forEntityName: "Viaggio", in: self.context)
         
         if(loadViaggiFromNome(nome: nome).isEmpty){
@@ -107,6 +107,7 @@ class PersistenceManager: ObservableObject {
             newViaggio.nome = nome
             newViaggio.id = UUID()
             newViaggio.data = data
+            newViaggio.tipo = tipo
             
             self.saveContext()
             print("Viaggio salvato!")
@@ -157,7 +158,7 @@ class PersistenceManager: ObservableObject {
             print("Oggetto viaggiante salvato!")
         }
         
-
+        
     }
     
     func addOggettoInValigia(oggetto: OggettoViaggiante, valigia: ValigiaViaggiante?, viaggio: Viaggio) -> OggettoInValigia{
@@ -175,7 +176,7 @@ class PersistenceManager: ObservableObject {
         return new
     }
     
-    func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio){
+    func addValigiaViaggiante(valigia: Valigia, viaggio: Viaggio, pesoMassimo: Int){
         let entity = NSEntityDescription.entity(forEntityName: "ValigiaViaggiante", in: self.context)
         
         
@@ -184,16 +185,27 @@ class PersistenceManager: ObservableObject {
         newValigiaViaggiante.id = UUID()
         newValigiaViaggiante.valigiaRef = valigia
         newValigiaViaggiante.viaggioRef = viaggio
-        newValigiaViaggiante.pesoMassimo = 0 //a cosa serve? Forse per i limiti di peso
+        newValigiaViaggiante.pesoMassimo = Int32(pesoMassimo) //a cosa serve? Forse per i limiti di peso
         newValigiaViaggiante.pesoAttuale = 0//come lo determino?
         newValigiaViaggiante.volumeAttuale = 0 //volume occupato internamente. 0 inizialmente
         newValigiaViaggiante.volumeMassimo = valigia.volume //il volume massimo è rappresentato dal volume massimo della valigia a cui si riferisce questa istanza
         newValigiaViaggiante.addToContenuto([])//nessun contenuto inizialmente
         
         valigia.utilizzato = true //se usiamo la valigia allora la mettiamo come utilizzata
+        
+        aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo)
+        
         self.saveContext()
         print("ValigiaViaggiante salvata!")
         
+    }
+    
+    func aggiornaPesoMassimoValigieViaggianti(valigia: Valigia, viaggio: Viaggio, pesoMassimo: Int){
+        let valigieFinOra = loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia)
+        for valigiaOra in valigieFinOra {
+            valigiaOra.pesoMassimo = Int32(pesoMassimo)
+        }
+        self.saveContext()
     }
     
     //SELECTION
@@ -202,15 +214,15 @@ class PersistenceManager: ObservableObject {
         do{
             
             array = try self.context.fetch(request)
-        
+            
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
             
-//            for x in array {
-//                let viaggio = x
-//                print("Viaggio \(viaggio.nome!), data \(String(describing: viaggio.data)), id \(String(describing: viaggio.id))")
-//            }
+            //            for x in array {
+            //                let viaggio = x
+            //                print("Viaggio \(viaggio.nome!), data \(String(describing: viaggio.data)), id \(String(describing: viaggio.id))")
+            //            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -223,17 +235,17 @@ class PersistenceManager: ObservableObject {
         var array = [ValigiaViaggiante]()
         do{
             array = try self.context.fetch(request)
-        
+            
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
             
-//            for x in array {
-//                let valigia = x.valigiaRef
-//                let viaggio = x.viaggioRef
-//                print("Valigia Viaggiante \n Contenitore: \(valigia?.nome ?? "Nome")\n Viaggio: \(viaggio?.nome ?? "Viaggio")")
-//            }
-//
+            //            for x in array {
+            //                let valigia = x.valigiaRef
+            //                let viaggio = x.viaggioRef
+            //                print("Valigia Viaggiante \n Contenitore: \(valigia?.nome ?? "Nome")\n Viaggio: \(viaggio?.nome ?? "Viaggio")")
+            //            }
+            //
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
             print("\(errore)")
@@ -245,15 +257,15 @@ class PersistenceManager: ObservableObject {
         var array = [OggettoViaggiante]()
         do{
             array = try self.context.fetch(request)
-        
+            
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
-//
-//            for x in array {
-//                let oggetto = x
-//                print("Oggetto Viaggiante \n OggettoRef:\(String(describing: oggetto.oggettoRef))\n ViaggioRef:\(String(describing: oggetto.viaggioRef))")
-//            }
+            //
+            //            for x in array {
+            //                let oggetto = x
+            //                print("Oggetto Viaggiante \n OggettoRef:\(String(describing: oggetto.oggettoRef))\n ViaggioRef:\(String(describing: oggetto.viaggioRef))")
+            //            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -267,13 +279,13 @@ class PersistenceManager: ObservableObject {
         do{
             array = try self.context.fetch(request)
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
             
-//            for x in array {
-//                let valigia = x
-//                print("Valigia \(valigia.nome!), volume \(valigia.volume)")
-//            }
+            //            for x in array {
+            //                let valigia = x
+            //                print("Valigia \(valigia.nome!), volume \(valigia.volume)")
+            //            }
             
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -287,7 +299,7 @@ class PersistenceManager: ObservableObject {
         do{
             array = try self.context.fetch(request)
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
             
         }catch let errore{
@@ -303,7 +315,7 @@ class PersistenceManager: ObservableObject {
         do{
             array = try self.context.fetch(request)
             guard array.count > 0 else {
-//                print("Non ci sono elementi da leggere ")
+                //                print("Non ci sono elementi da leggere ")
                 return [] }
         }catch let errore{
             print("Problema nella esecuzione della FetchRequest")
@@ -390,7 +402,7 @@ class PersistenceManager: ObservableObject {
     func loadOggettiInValigiaFromViaggio(viaggio: Viaggio) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
-            
+        
         let predicate = NSPredicate(format: "viaggioRef = %@", viaggio)
         request.predicate = predicate
         
@@ -419,13 +431,13 @@ class PersistenceManager: ObservableObject {
             return []
         }
         
-       
+        
     }
     
     func loadOggettiInValigiaFromValigiaOggetto(valigiaV: ValigiaViaggiante, oggettoV: OggettoViaggiante) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
-            
+        
         let predicate = NSPredicate(format: "contenitore = %@ AND oggettoViaggianteRef = %@", valigiaV, oggettoV)
         request.predicate = predicate
         
@@ -437,7 +449,7 @@ class PersistenceManager: ObservableObject {
     func loadOggettiInValigiaFromValigia(valigia: ValigiaViaggiante) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
-            
+        
         let predicate = NSPredicate(format: "contenitore = %@", valigia)
         request.predicate = predicate
         
@@ -450,7 +462,7 @@ class PersistenceManager: ObservableObject {
         let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "viaggioRef = %@ AND valigiaRef <> %@", viaggioRef, self.loadValigieFromCategoria(categoria: "SYSTEM")[0])
+        let predicate = NSPredicate(format: "viaggioRef = %@ AND valigiaRef <> %@", viaggioRef, self.loadValigieFromCategoria(categoria: "0SYSTEM")[0])
         request.predicate = predicate
         
         let valigie = self.loadValigieViaggiantiFromFetchRequest(request:request)
@@ -526,27 +538,27 @@ class PersistenceManager: ObservableObject {
         
         let request: NSFetchRequest<Valigia> = NSFetchRequest(entityName: "Valigia")
         // Questa proprietà, che di default è true, permette di recuperare gli oggetti in maniera non completa. Questo ti permette di ottimizzare i tempi di recupero degli oggetti nel caso in cui il context sia composto da più di 1k managed object.
-                
+        
         //  In pratica, con la proprietà uguale a true, vengono recuperati gli oggetti ma i valori delle loro proprietà vengono mantenuti in cache e recuperati solo quando d’effettivo bisogno (cioè quando ci accedi).
-                
+        
         //  Nel nostro caso, dato che stiamo leggendo i valori degli oggetti, questa proprietà risulterebbe inutile dato che vogliamo leggere immediatamente i valori. Quindi, a valore = false, significa che gli oggetti vengono recuperati per interi.
         request.returnsObjectsAsFaults = false
         
-//        /*let valigie = */self.loadValigieFromFetchRequest(request: request)
+        //        /*let valigie = */self.loadValigieFromFetchRequest(request: request)
         return self.loadValigieFromFetchRequest(request: request)
     }
     
     func loadAllOggetti() -> [Oggetto]{
         let request: NSFetchRequest<Oggetto> = NSFetchRequest(entityName: "Oggetto")
         request.returnsObjectsAsFaults = false
-    
+        
         return self.loadOggettiFromFetchRequest(request: request)
     }
     
     func loadAllOggettiInValigia() -> [OggettoInValigia]{
         let request: NSFetchRequest<OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
-    
+        
         return self.loadOggettiInValigiaFromFetchRequest(request: request)
     }
     
@@ -580,7 +592,7 @@ class PersistenceManager: ObservableObject {
         var categorieLista = Set<String>.init()
         
         for valigia in valieieDaDB {
-            if valigia.categoria != "SYSTEM"{//system è una cateogria che contiene valigie di utilit come la valigia non allocati
+            if valigia.categoria != "0SYSTEM"{//system è una cateogria che contiene valigie di utilit come la valigia non allocati
                 categorieLista.insert(valigia.categoria!)
             }
         }
@@ -597,7 +609,7 @@ class PersistenceManager: ObservableObject {
     func loadAllOggettiViaggianti() -> [OggettoViaggiante]{
         let request: NSFetchRequest<OggettoViaggiante> = NSFetchRequest(entityName: "OggettoViaggiante")
         request.returnsObjectsAsFaults = false
-    
+        
         return self.loadOggettiViaggiantiFromFetchRequest(request: request)
     }
     
@@ -615,7 +627,7 @@ class PersistenceManager: ObservableObject {
         if (valigie.count>0){
             self.context.delete(valigie[0])
             // per ipotesi nome e categoria sono le chiavi, per cui non ci possono essere duplicati su questi attributi, dunque l'array sarà composto da un unico valore
-//            print("Valigie: \(String(describing: valigie[0].nome))")
+            //            print("Valigie: \(String(describing: valigie[0].nome))")
             self.saveContext()
         }
     }
@@ -625,7 +637,7 @@ class PersistenceManager: ObservableObject {
         
         if(valigieviaggianti.count > 0){
             self.context.delete(valigieviaggianti[0])
-            
+            valigia.utilizzato = false
             self.saveContext()
         }
     }
@@ -635,7 +647,7 @@ class PersistenceManager: ObservableObject {
         
         if(viaggi.count > 0){
             self.context.delete(viaggi[0])
-//            print("Viaggi: \(String(describing: viaggi[0].nome))")
+            //            print("Viaggi: \(String(describing: viaggi[0].nome))")
             self.saveContext()
         }
     }
@@ -651,14 +663,14 @@ class PersistenceManager: ObservableObject {
             self.saveContext()
         }
     }
-
+    
     
     func deleteOggetto(nome: String, categoria: String){
         let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
         
         if(!oggetti.isEmpty){
             self.context.delete(oggetti[0])
-//            print("Oggetti: \(String(describing: oggetti[0].nome))")
+            //            print("Oggetti: \(String(describing: oggetti[0].nome))")
             self.saveContext()
         }
     }
@@ -668,7 +680,7 @@ class PersistenceManager: ObservableObject {
         
         if(oggettiViaggianti.count > 0){
             self.context.delete(oggettiViaggianti[0])
-//            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
+            //            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
             self.saveContext()
         }
     }
@@ -680,7 +692,7 @@ class PersistenceManager: ObservableObject {
             
             for oggetto in oggettiViaggianti{
                 self.context.delete(oggetto)
-               
+                
             }
             self.saveContext()
         }
@@ -703,21 +715,21 @@ class PersistenceManager: ObservableObject {
     //UTILITY
     func allocaOggetti(viaggio: Viaggio){
         self.deleteOggettiInValigia(viaggio: viaggio) //elimino le precedenti allocazioni di oggetti in valigia
-
+        
         //definisco la lista dei miei contenitore per quel viaggio
         var bins: [ValigiaViaggiante] = []
         
         let allValigie = loadAllValigie()
         for valigiareale in allValigie{
-            if valigiareale.categoria == "SYSTEM"{
+            if valigiareale.categoria == "0SYSTEM"{
                 continue //non aggiungo ai bins la valigia di sistema
             }
             //per ogni valigia vado a vedere le valigie viaggianti associate per il dato viaggio
             bins.append(contentsOf: loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigiareale))
         }
-
+        
         //carico la valigia dei non allocati per farne una pulizia prima del re-allocamento
-        let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "SYSTEM")[0])[0]
+        let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "0SYSTEM")[0])[0]
         nonallocati.removeFromContenuto(NSSet(array: nonallocati.contenuto.array(of: OggettoViaggiante.self)))
         nonallocati.volumeAttuale = 0
         
@@ -731,24 +743,24 @@ class PersistenceManager: ObservableObject {
         //ordino gli oggetti in maniera decrescente di priorità di inserimento. Assumo che la priorità sia dettata dal volume
         //FIRST FIT DECREASING
         let descendingelements: [OggettoViaggiante] = elements.sorted(by: {$0.oggettoRef?.volume ?? 0 > $1.oggettoRef?.volume ?? 0})
-    
+        
         for b in bins{
             b.volumeAttuale = 0
         }
         for item in descendingelements{
             item.quantitaAllocata = 0 //reinizializzo
-            print(item.oggettoRef?.nome)
+            print(item.oggettoRef?.nome ?? "Nome")
             
             print("In totale ci sono \(bins.count) valigie")
             for i in bins.indices{
-                print("Guardo nella valigia \(bins[i].valigiaRef?.nome)")
+                print("Guardo nella valigia \(bins[i].valigiaRef?.nome ?? "nome")")
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
                 print("MAX: \(bins[i].volumeMassimo), ACTU: \(bins[i].volumeAttuale)")
                 let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 1)))
                 print("Numero di item contenibili: \(numItemContenibili)")
                 if numItemContenibili > 0{//significa che almeno uno lo posso inserire
-
+                    
                     //controllo se nel bin attuale vi è già un oggetto in valigia che si riferisce all'oggetto viaggiante in questione (item)
                     let existing: [OggettoInValigia] = loadOggettiInValigiaFromValigiaOggetto(valigiaV: bins[i], oggettoV: item)
                     var allocabili = 0
@@ -756,7 +768,7 @@ class PersistenceManager: ObservableObject {
                     if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti li inserisco tutti
                         print("Tutta la quantità contenibile")
                         allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
-
+                        
                     }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
                         print("Solo \(numItemContenibili) contenibili")
                         allocabili = numItemContenibili //alloco il possibile
@@ -783,7 +795,7 @@ class PersistenceManager: ObservableObject {
                 }else{
                     print("Non posso inserire nessun \(item.oggettoRef?.nome ?? "Nome oggetto") nella valigia \(bins[i].valigiaRef?.nome ?? "Nome valigia")")
                 }//else -> in questo bin non c'è spazio per nessuna quantità di questo item
-                                                                                              
+                
             }//quando esco dal for potrei aver allocato tutte le quantita dei miei oggetti oppure avere oggetti con quantitallocata<quantitainviaggio
             
             
@@ -801,7 +813,7 @@ class PersistenceManager: ObservableObject {
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
             }
-
+            
         }
         
         
@@ -835,6 +847,6 @@ class PersistenceManager: ObservableObject {
         
         return contain
     }
-   
-
+    
+    
 }

@@ -14,7 +14,7 @@ public class OggettoViaggianteClass{
     var oggetto: Oggetto
     var quantita: Int
     
-
+    
     init(oggettoTem: Oggetto){
         self.oggetto = oggettoTem
         self.quantita = 0

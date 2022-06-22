@@ -2,7 +2,7 @@
 //  Viaggio+CoreDataProperties.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 17/06/22.
+//  Created by Salvatore Apicella on 21/06/22.
 //
 //
 
@@ -11,17 +11,18 @@ import CoreData
 
 
 extension Viaggio {
-
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<Viaggio> {
         return NSFetchRequest<Viaggio>(entityName: "Viaggio")
     }
-
+    
     @NSManaged public var data: Date?
     @NSManaged public var id: UUID?
     @NSManaged public var nome: String?
-
+    @NSManaged public var tipo: String?
+    
 }
 
 extension Viaggio : Identifiable {
-
+    
 }
