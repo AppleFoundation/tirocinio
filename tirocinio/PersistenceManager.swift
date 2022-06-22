@@ -108,6 +108,7 @@ class PersistenceManager: ObservableObject {
             newViaggio.id = UUID()
             newViaggio.data = data
             newViaggio.tipo = tipo
+            newViaggio.allocaPer = false //volume
             
             self.saveContext()
             print("Viaggio salvato!")
@@ -737,6 +738,7 @@ class PersistenceManager: ObservableObject {
         let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "0SYSTEM")[0])[0]
         nonallocati.removeFromContenuto(NSSet(array: nonallocati.contenuto.array(of: OggettoViaggiante.self)))
         nonallocati.volumeAttuale = 0
+        nonallocati.pesoAttuale = 0
         
         //definisco l'insieme degli oggetti che sono definiti per quel viaggio. Non prendo solo quelli allocati perchè ritengo più efficiente rifare l'allocazione avendo oggetti diversi e quindi una possibile allocazione totalmente diversa
         var elements: [OggettoViaggiante] = []
@@ -833,6 +835,7 @@ class PersistenceManager: ObservableObject {
                 let quantitaMancante: Int = Int(item.quantitaInViaggio - item.quantitaAllocata)
                 newallocazione.quantitaInValigia = Int32(quantitaMancante) //metto nei non allocati la quantità mancante
                 nonallocati.addToContenuto(newallocazione)
+                nonallocati.volumeAttuale += Int32(quantitaMancante) * (item.oggettoRef?.volume ?? 0)
                 nonallocati.pesoAttuale += Int32(quantitaMancante) * (item.oggettoRef?.peso ?? 0)
             }
             print("BINS")
@@ -915,6 +918,7 @@ class PersistenceManager: ObservableObject {
                 newallocazione.quantitaInValigia = Int32(quantitaMancante) //metto nei non allocati la quantità mancante
                 nonallocati.addToContenuto(newallocazione)
                 nonallocati.volumeAttuale += Int32(quantitaMancante) * (item.oggettoRef?.volume ?? 0)
+                nonallocati.pesoAttuale += Int32(quantitaMancante) * (item.oggettoRef?.peso ?? 0)
             }
             print("BINS")
             for b in bins{
