@@ -2,14 +2,14 @@
 //  ValigiaViaggiante+CoreDataClass.swift
 //  tirocinio
 //
-//  Created by Cristian Cerasuolo on 11/06/22.
+//  Created by Cristian Cerasuolo on 17/06/22.
 //
 //
 
 import Foundation
 import CoreData
 
-@objc(ValigiaViaggiante)
-public class ValigiaViaggiante: NSManagedObject {
 
+public class ValigiaViaggiante: NSManagedObject {
+    
 }

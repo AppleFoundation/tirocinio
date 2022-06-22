@@ -23,38 +23,23 @@ struct AddTripView: View {
         ScrollView(.vertical, showsIndicators: false){
             VStack{
                 
-                
-                HStack{
+                HStack{ //Questo HStack serve solo per far adattare bene lo sfondo ai bordi laterali grazie agli spacer
                     Spacer()
-//                        Button(action: {
-//                            PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-//                            self.presentationMode.wrappedValue.dismiss()
-//                        }, label: {
-//                            Text("Togli oggetti")
-//                                .font(.headline.bold())
-//                            Image(systemName: "trash")
-//                        })
-//                        .frame(width: 130)
-//                        .padding()
-//                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-//                        .clipShape(RoundedRectangle(cornerRadius: 10))
-//                        .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-//                        Spacer()
                     NavigationLink(destination: AddNuovoOggetto()){
                         
                         Text("Crea oggetto")
                             .font(.headline.bold())
                         Image(systemName: "plus")
                     }
-                    .frame(width: 130)
                     .padding()
                     .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                    
                     Spacer()
                 }
-                .padding()
+                
+                
+                
                 //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
                 
                 ForEach(categories){ currentCat in
@@ -84,7 +69,7 @@ struct AddTripView: View {
             }
             
         }
-       
+        
         
     }
 }

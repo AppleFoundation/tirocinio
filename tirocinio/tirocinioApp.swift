@@ -18,11 +18,11 @@ struct tirocinioApp: App {
     var body: some Scene {
         WindowGroup {
             //Iniettiamo la variabile d'ambiente rappresentante il contesto all'interno dell'applicazione
-            ContentView().environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
-                         .environmentObject(speech)
+            ContentView(showingWelcomeView: !UserDefaults.standard.bool(forKey: "firstAccess")).environment(\.managedObjectContext, persistence.persistentContainer.viewContext)
+                .environmentObject(speech)
             
-//            ContentView().environmentObject(persistence)
-                
+            //            ContentView().environmentObject(persistence)
+            
         }
     }
 }

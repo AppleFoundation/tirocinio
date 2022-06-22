@@ -9,7 +9,14 @@ import SwiftUI
 
 struct AddNuovoOggetto: View {
     
-    @State var categoria: String = ""
+    
+    enum CategorieOggetto: String, CaseIterable, Identifiable {
+        case articoliDaBagno, abbigliamento, essenziali, campeggio, spiaggia, sport, informaticaElettronica, altro
+        var id: Self { self }
+    }
+    
+    @State private var selectedCategoria: CategorieOggetto = .altro
+    
     @State var nomeAgg: String = ""
     @State var lunghezzaAgg: Double = 0.0
     @State var larghezzaAgg: Double = 0.0
@@ -19,34 +26,31 @@ struct AddNuovoOggetto: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     
-//
+    //
     var body: some View {
         
         Form{
-            Section(header: Text("Categoria")){
-                Picker("Categoria", selection: $categoria) {
-                    Text("Articoli da bagno")
-                    Text("Abbigliamento")
-                    Text("Essenziali")
-                    Text("Campeggio")
-                    Text("Spiaggia")
-                    Text("Sport")
-                    Text("Informatica ed Elettronica")
-                }
-                .pickerStyle(.wheel)
-                
-            }
             
-            Text("\(categoria)")
             
-            Section(header: Text("Categoria")){
-                
-                TextField("Nuovo nome viaggio", text: $categoria)
-            }
             
             Section(header: Text("Nome")){
                 TextField("Nuovo nome viaggio", text: $nomeAgg)
                 //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
+            }
+            
+            Section(header: Text("Categoria")){
+                Picker("Categoria", selection: $selectedCategoria) {
+                    Text("Altro").tag(CategorieOggetto.altro)
+                    Text("Articoli da bagno").tag(CategorieOggetto.articoliDaBagno)
+                    Text("Abbigliamento").tag(CategorieOggetto.abbigliamento)
+                    Text("Essenziali").tag(CategorieOggetto.essenziali)
+                    Text("Campeggio").tag(CategorieOggetto.campeggio)
+                    Text("Spiaggia").tag(CategorieOggetto.spiaggia)
+                    Text("Sport").tag(CategorieOggetto.sport)
+                    Text("Informatica ed Elettronica").tag(CategorieOggetto.informaticaElettronica)
+                }
+                .pickerStyle(.menu)
+                
             }
             
             Section(header: Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")){
@@ -65,49 +69,68 @@ struct AddNuovoOggetto: View {
             }
             
         }
-            .navigationBarBackButtonHidden(true)
-            .navigationTitle("Nuovo oggetto")
-            .toolbar{
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Button(action: {
-                        
-                        if(nomeAgg.isEmpty){
-                            nomeAgg = "Oggetto"
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Nuovo oggetto")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing){
+                Button(action: {
+                    
+                    if(nomeAgg.isEmpty){
+                        nomeAgg = "Oggetto"
+                    }
+                    
+                    
+                    
+                    if(lunghezzaAgg == 0){
+                        lunghezzaAgg = 1
+                    }
+                    
+                    if(larghezzaAgg == 0){
+                        larghezzaAgg = 1
+                    }
+                    
+                    if(profonditaAgg == 0){
+                        profonditaAgg = 1
+                    }
+                    
+                    if(pesoAgg == 0){
+                        pesoAgg = 1
+                    }
+                    
+                    PersistenceManager.shared.addOggetto(categoria: {
+                        switch selectedCategoria {
+                        case .articoliDaBagno:
+                            return "Articoli da bagno"
+                        case .abbigliamento:
+                            return "Abbigliamento"
+                        case .essenziali:
+                            return "Essenziali"
+                        case .campeggio:
+                            return "Campeggio"
+                        case .spiaggia:
+                            return "Spiaggia"
+                        case .sport:
+                            return "Sport"
+                        case .informaticaElettronica:
+                            return "Informatica ed elettronica"
+                        case .altro:
+                            return "Altro"
                         }
                         
-                        if(categoria.isEmpty){
-                            categoria = "Altro"
-                        }
-                        
-                        if(lunghezzaAgg == 0){
-                            lunghezzaAgg = 1
-                        }
-                        
-                        if(larghezzaAgg == 0){
-                            larghezzaAgg = 1
-                        }
-                        
-                        if(profonditaAgg == 0){
-                            profonditaAgg = 1
-                        }
-                        
-                        if(pesoAgg == 0){
-                            pesoAgg = 1
-                        }
-                        
-                        PersistenceManager.shared.addOggetto(categoria: categoria, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
-                        presentationMode.wrappedValue.dismiss()
-                        
-                    }, label: {Text("Save")})
-                }
-                ToolbarItem(placement: .navigationBarLeading){
-                    Button(action: {
-//                        allViaggi = PersistenceManager.shared.loadAllViaggi()
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {Text("Cancel")})
-                }
+                    }(), larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
+                    presentationMode.wrappedValue.dismiss()
+                    
+                }, label: {Text("Save")})
             }
-            
+            ToolbarItem(placement: .navigationBarLeading){
+                Button(action: {
+                    //                        allViaggi = PersistenceManager.shared.loadAllViaggi()
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {Text("Cancel")})
+            }
+        }
+        
         
     }
 }

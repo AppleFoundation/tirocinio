@@ -15,21 +15,21 @@ struct TripListScroll: View {
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(Color.blue)
-                
-                
-                
-                Image(systemName: "airplane")
-                    .resizable()
-                    .frame(width: 45, height: 45)
-                Image(systemName: "airplane")
-                    .resizable()
-                    .frame(width: 45, height: 45)
-                Image(systemName: "airplane")
-                    .resizable()
-                    .frame(width: 45, height: 45)
+            
+            
+            
+            Image(systemName: "airplane")
+                .resizable()
+                .frame(width: 45, height: 45)
+            Image(systemName: "airplane")
+                .resizable()
+                .frame(width: 45, height: 45)
+            Image(systemName: "airplane")
+                .resizable()
+                .frame(width: 45, height: 45)
             
             Spacer()
-                
+            
             HStack{
                 
                 Spacer()
@@ -43,9 +43,9 @@ struct TripListScroll: View {
                     }
                 })
             }
-                
-                
-               
+            
+            
+            
             
             
             

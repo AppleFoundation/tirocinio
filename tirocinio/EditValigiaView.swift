@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditOggettoView: View {
+struct EditValigiaView: View {
     
     @State var nomeAgg: String
     @State var lunghezzaAgg: Double
@@ -17,7 +17,7 @@ struct EditOggettoView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    var oggetto: Oggetto
+    var valigia: Valigia
     
     
     var body: some View {
@@ -42,13 +42,13 @@ struct EditOggettoView: View {
             Section(header: Text("Profondita (centimetri): \(Int(profonditaAgg))")){
                 Slider(value: $profonditaAgg, in: 0...60, step: 1.0)
             }
-            Section(header: Text("Peso (grammi): \(Int(pesoAgg))")){
+            Section(header: Text("Tara (grammi): \(Int(pesoAgg))")){
                 Slider(value: $pesoAgg, in: 0...3000, step: 50.0)
             }
             
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("Modifica viaggio")
+        .navigationTitle("Modifica valigia")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
@@ -71,23 +71,32 @@ struct EditOggettoView: View {
                     }
                     
                     
-                    let caratterePreferiti = Character.init("★")
+                    //                    let caratterePreferiti = Character.init("★")
+                    //
+                    //                    if (nomeAgg.contains(caratterePreferiti)){
+                    //
+                    //                        let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
+                    //                        valigia.nome = nomeAgg
+                    //                        valigia.lunghezza = Int32(lunghezzaAgg)
+                    //                        valigia.larghezza = Int32(larghezzaAgg)
+                    //                        valigia.profondita = Int32(profonditaAgg)
+                    //                        valigia.volume = Int32(volume)
+                    //                        valigia.tara = Int32(pesoAgg)
+                    //                        PersistenceManager.shared.saveContext()
+                    //                    }else{
+                    //                        nomeAgg = nomeAgg + " " + String(caratterePreferiti)
+                    //
+                    //                        PersistenceManager.shared.addValigia(categoria: valigia.categoria!, lunghezza: Int(lunghezzaAgg), larghezza: Int(larghezzaAgg), profondita: Int(profonditaAgg), nome: nomeAgg, tara: Int(pesoAgg), utilizzato: false)
+                    //                    }
                     
-                    if (nomeAgg.contains(caratterePreferiti)){
-                        
-                        let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
-                        oggetto.nome = nomeAgg
-                        oggetto.lunghezza = Int32(lunghezzaAgg)
-                        oggetto.larghezza = Int32(larghezzaAgg)
-                        oggetto.profondita = Int32(profonditaAgg)
-                        oggetto.volume = Int32(volume)
-                        oggetto.peso = Int32(pesoAgg)
-                        PersistenceManager.shared.saveContext()
-                    }else{
-                        nomeAgg = nomeAgg + " " + String(caratterePreferiti)
-                        
-                        PersistenceManager.shared.addOggetto(categoria: oggetto.categoria!, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
-                    }
+                    let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
+                    valigia.nome = nomeAgg
+                    valigia.lunghezza = Int32(lunghezzaAgg)
+                    valigia.larghezza = Int32(larghezzaAgg)
+                    valigia.profondita = Int32(profonditaAgg)
+                    valigia.volume = Int32(volume)
+                    valigia.tara = Int32(pesoAgg)
+                    PersistenceManager.shared.saveContext()
                     
                     
                     

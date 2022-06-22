@@ -32,7 +32,7 @@ struct ObjectView: View{
                     //FINE LAYOUT ORIZZONTALE
                 } else {
                     //INIZIO LAYOUT VERTICALE
-                   
+                    
                     VStack{
                         HStack{
                             Text("Ciao In Verticale")
