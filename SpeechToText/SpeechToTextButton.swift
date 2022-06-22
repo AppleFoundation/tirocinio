@@ -10,6 +10,7 @@ import SwiftUI
 struct SpeechToTextButton: View {
     
     @EnvironmentObject var speech : SpeechToText
+    @State private var message = ""
     
     var input = DecodeInput()
     
@@ -42,8 +43,8 @@ struct SpeechToTextButton: View {
                         DispatchQueue.main.async {
                             
                             // ritorno sul main dalla queue per aggiornare l'interfaccia
-                            
                             print("sono sull'interfaccia principale")
+                            
                         }
                     }
                     

@@ -21,15 +21,56 @@ public class DecodeInput {
     
     public func decode(text: String, viaggioNome: String) -> Bool {
         searchIntoCollection()
-        for item in DecodeInput.oggetti {
-            if(text.lowercased() == "aggiungi \(item.name.lowercased())"){
-                let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
-                let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
-                PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-                return true
+        // permette di splittare una stringa ed inserire le parole di cui è composta
+        // in un array
+        let testoInserito : [String] = text.components(separatedBy: " ")
+        var done = false
+        switch testoInserito[0].lowercased() {
+        case "aggiungi":
+            for item in DecodeInput.oggetti {
+                var i = 0
+                for str in testoInserito {
+                    if (i != 0){
+                        if(str.lowercased() == item.name.lowercased()){
+                            let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+                            let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
+                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+                            done = true
+                        }
+                    }
+                    i += 1
+                }
             }
+        case "rimuovi":
+            for item in DecodeInput.oggetti {
+                var i = 0
+                for str in testoInserito {
+                    if (i != 0){
+                        if(str.lowercased() == item.name.lowercased()){
+                            let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+                            let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
+                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                            done = true
+                        }
+                    }
+                    i += 1
+                }
+            }
+        default:
+            print("oggetto non identificato")
+            done = false
         }
-        return false
+        
+//        // vecchia versione
+//        for item in DecodeInput.oggetti {
+//            if(text.lowercased() == "aggiungi \(item.name.lowercased())"){
+//                let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+//                let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
+//                PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+//                return true
+//            }
+//        }
+        return done
     }
     
 }
