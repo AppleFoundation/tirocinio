@@ -55,7 +55,7 @@ struct TitleView: View {
             Text("Welcome to")
                 .customTitleText()
 
-            Text("SuitCases")
+            Text("Smart SuitCases")
                 .customTitleText()
                 .foregroundColor(.blue)
         }
@@ -65,7 +65,9 @@ struct TitleView: View {
 struct InformationContainerView: View {
     var body: some View {
         VStack(alignment: .leading) {
-            InformationDetailView(title: "Packing", subTitle: "Porta con te tutto il necessario senza perdetere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
+            InformationDetailView(title: "Packing", subTitle: "Porta con te tutto il necessario senza perdere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
+            InformationDetailView(title: "Money saving", subTitle: "Evita di pagare per gli eccessi di peso, con quest'app saprai sempre quanto pesa la tua valigia!", imageName: "creditcard.fill")
+            InformationDetailView(title: "Smart list", subTitle: "Prepara la tua valigia in forma digitale in modo da non dimenticare nulla!", imageName: "checklist")
 
 //            InformationDetailView(title: "Find", subTitle: "To get what you need", imageName: "dot.viewfinder")
 
