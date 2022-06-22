@@ -713,7 +713,8 @@ class PersistenceManager: ObservableObject {
     
     
     //UTILITY
-    func allocaOggetti(viaggio: Viaggio){
+    func allocaOggetti(viaggio: Viaggio, ordinamento: Bool){
+        ///FIRST FIT DECREASING
         self.deleteOggettiInValigia(viaggio: viaggio) //elimino le precedenti allocazioni di oggetti in valigia
         
         //definisco la lista dei miei contenitore per quel viaggio
@@ -727,6 +728,10 @@ class PersistenceManager: ObservableObject {
             //per ogni valigia vado a vedere le valigie viaggianti associate per il dato viaggio
             bins.append(contentsOf: loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigiareale))
         }
+        for b in bins{
+            b.volumeAttuale = 0
+            b.pesoAttuale = 0
+        }
         
         //carico la valigia dei non allocati per farne una pulizia prima del re-allocamento
         let nonallocati: ValigiaViaggiante = self.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: self.loadValigieFromCategoria(categoria: "0SYSTEM")[0])[0]
@@ -737,16 +742,117 @@ class PersistenceManager: ObservableObject {
         var elements: [OggettoViaggiante] = []
         elements.append(contentsOf: loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio))
         
+        ///a questo punto ho tutti i bins di volume differente e tutti gli elementi
         
-        //a questo punto ho tutti i bins di volume differente e tutti gli elementi
+        switch ordinamento{
+        case false:
+            print("ALLOCO PER VOLUME")
+            allocaPerVolume(bins: bins, elements: elements, nonallocati: nonallocati, viaggio: viaggio)
+            break
+        case true:
+            print("ALLOCO PER PESO")
+            allocaPerPeso(bins: bins, elements: elements, nonallocati: nonallocati, viaggio: viaggio)
+            break
+        }
         
+    }
+    
+    //funzione di supporto alla allocazione per peso
+    func allocaPerPeso(bins: [ValigiaViaggiante], elements: [OggettoViaggiante], nonallocati: ValigiaViaggiante, viaggio: Viaggio){
         //ordino gli oggetti in maniera decrescente di priorità di inserimento. Assumo che la priorità sia dettata dal volume
-        //FIRST FIT DECREASING
+        let descendingelements: [OggettoViaggiante] = elements.sorted(by: {$0.oggettoRef?.peso ?? 0 > $1.oggettoRef?.peso ?? 0})
+        
+        //Calcolo secondo peso ma devo comunque non superare il volume massimo
+        for item in descendingelements{
+            item.quantitaAllocata = 0 //reinizializzo
+            print(item.oggettoRef?.nome ?? "Nome")
+            
+            print("In totale ci sono \(bins.count) valigie")
+            for i in bins.indices{
+                print("Guardo nella valigia \(bins[i].valigiaRef?.nome ?? "nome")")
+                //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
+                let pesodisponibile = Int(bins[i].pesoMassimo - bins[i].pesoAttuale)
+                let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
+                print("MAX: \(bins[i].pesoMassimo), ACTU: \(bins[i].pesoAttuale)")
+                
+                var numItemContenibili = Int(pesodisponibile/Int((item.oggettoRef?.peso ?? 0)))
+                let numItemContenibiliPerVolume = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 0)))
+                print("Numero di item contenibili secondo il peso: \(numItemContenibili)")
+                
+                if numItemContenibili > 0{//significa che almeno uno lo posso inserire
+                    
+                    
+                    
+                    //controllo se nel bin attuale vi è già un oggetto in valigia che si riferisce all'oggetto viaggiante in questione (item)
+                    let existing: [OggettoInValigia] = loadOggettiInValigiaFromValigiaOggetto(valigiaV: bins[i], oggettoV: item)
+                    var allocabili = 0
+                    if numItemContenibili >= numItemContenibiliPerVolume {
+                        numItemContenibili = numItemContenibiliPerVolume
+                    }
+                    if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti senza oltrepassare il peso massimo
+                        
+                        print("Tutta la quantità contenibile")
+                        allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
+                        
+                    }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
+                        
+                        print("Solo \(numItemContenibili) contenibili")
+                        allocabili = numItemContenibili //alloco il possibile
+                        
+                    }
+                    
+                    print("numero di item contenibili \(numItemContenibili)")
+                    if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
+                        print("Elemento già esistente nella valigia")
+                        item.quantitaAllocata += Int32(allocabili)
+                        existing[0].quantitaInValigia += Int32(allocabili)
+                    }else{//nesssun oggetto precedentemente allocato
+                        let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
+                        newallocazione.quantitaInValigia = Int32(allocabili)
+                        bins[i].addToContenuto(newallocazione)
+                        item.quantitaAllocata += Int32(allocabili)
+                    }
+                    bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
+                    bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
+                    
+                    if item.quantitaAllocata == item.quantitaInViaggio {//se ho allocato tutta la quantità dell'oggetto allora posso evitre di vedere altre valigie
+                        break
+                    }
+                    
+                    
+                }else{
+                    print("Non posso inserire nessun \(item.oggettoRef?.nome ?? "Nome oggetto") nella valigia \(bins[i].valigiaRef?.nome ?? "Nome valigia")")
+                }//else -> in questo bin non c'è spazio per nessuna quantità di questo item
+                
+            }//quando esco dal for potrei aver allocato tutte le quantita dei miei oggetti oppure avere oggetti con quantitallocata<quantitainviaggio
+            
+            
+            //Se dopo aver girato tutti i bins non ho allocato tutte le occorrenze del mio oggetto sono costretto a metterlo negli oggetti non allocati
+            if item.quantitaAllocata < item.quantitaInViaggio{
+                let newallocazione = self.addOggettoInValigia(oggetto: item, valigia: nonallocati, viaggio: viaggio)
+                let quantitaMancante: Int = Int(item.quantitaInViaggio - item.quantitaAllocata)
+                newallocazione.quantitaInValigia = Int32(quantitaMancante) //metto nei non allocati la quantità mancante
+                nonallocati.addToContenuto(newallocazione)
+                nonallocati.pesoAttuale += Int32(quantitaMancante) * (item.oggettoRef?.peso ?? 0)
+            }
+            print("BINS")
+            for b in bins{
+                print(b.valigiaRef?.nome ?? "Nome")
+                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
+                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
+            }
+            
+        }
+        
+    }
+    
+    
+    //funzione si supporto alla allocazione per volume
+    func allocaPerVolume(bins: [ValigiaViaggiante], elements: [OggettoViaggiante], nonallocati: ValigiaViaggiante, viaggio: Viaggio){
+        //ordino gli oggetti in maniera decrescente di priorità di inserimento. Assumo che la priorità sia dettata dal volume
         let descendingelements: [OggettoViaggiante] = elements.sorted(by: {$0.oggettoRef?.volume ?? 0 > $1.oggettoRef?.volume ?? 0})
         
-        for b in bins{
-            b.volumeAttuale = 0
-        }
+        //Calcolo secondo volume
         for item in descendingelements{
             item.quantitaAllocata = 0 //reinizializzo
             print(item.oggettoRef?.nome ?? "Nome")
@@ -765,9 +871,11 @@ class PersistenceManager: ObservableObject {
                     let existing: [OggettoInValigia] = loadOggettiInValigiaFromValigiaOggetto(valigiaV: bins[i], oggettoV: item)
                     var allocabili = 0
                     
-                    if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti li inserisco tutti
+                    if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){
+                        //li posso inserire tutti li inserisco tutti
                         print("Tutta la quantità contenibile")
                         allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
+                        print("Ne andrò ad allocare \(allocabili)")
                         
                     }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
                         print("Solo \(numItemContenibili) contenibili")
@@ -786,7 +894,8 @@ class PersistenceManager: ObservableObject {
                         item.quantitaAllocata += Int32(allocabili)
                     }
                     bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
-                    
+                    bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
+
                     if item.quantitaAllocata == item.quantitaInViaggio {//se ho allocato tutta la quantità dell'oggetto allora posso evitre di vedere altre valigie
                         break
                     }
@@ -810,6 +919,9 @@ class PersistenceManager: ObservableObject {
             print("BINS")
             for b in bins{
                 print(b.valigiaRef?.nome ?? "Nome")
+                print("VOLUME")
+                print(b.volumeAttuale)
+                print("FINE VOLUME")
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
                 print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
             }

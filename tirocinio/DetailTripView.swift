@@ -17,8 +17,9 @@ struct DetailTripView: View {
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
     @State var insiemeDiValigie: [ValigiaViaggiante] = []
-    @State var volumePeso: Bool = false
-    
+    @State var volumePeso: Bool = false //false -> Volume ; true -> Peso
+    @EnvironmentObject var speech : SpeechToText
+
     var body: some View {
         
         
@@ -40,7 +41,19 @@ struct DetailTripView: View {
                     }
                 }
                 Spacer()
+//                Spacer(minLength: 30)
+                
+
+                
             }
+            VStack{
+                Text("\(speech.text)")
+                    .font(.title)
+                    .bold()
+                speech.getButton(viaggioNome: self.viaggio.nome!)
+            }
+            
+            Spacer(minLength: 30)
         }
         
         
@@ -68,7 +81,7 @@ struct DetailTripView: View {
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
             insiemeDiValigie = valigieDB
             
-            PersistenceManager.shared.allocaOggetti(viaggio: viaggio)//ANDRA NEL PULSANTE SALVA
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: volumePeso)//ANDRA NEL PULSANTE SALVA
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
@@ -141,7 +154,6 @@ struct tastiDiAggiunta: View{
     @State private var showingAlertOggetti = false
     @State private var showingAlertValigie = false
     @Binding var volumePeso: Bool
-    @EnvironmentObject var speech : SpeechToText
     
     func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
         var sum: Int = 0
@@ -266,6 +278,9 @@ struct tastiDiAggiunta: View{
                     return "Riempi valigie per: Peso"
                 }
             }(), isOn: $volumePeso)
+            .onChange(of: volumePeso){ value in
+                PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: value)
+            }
             .toggleStyle(.switch)
             .tint(.mint)
             .padding()
@@ -274,17 +289,7 @@ struct tastiDiAggiunta: View{
         }
         
         
-        Spacer(minLength: 30)
-        
-        VStack{
-            Text("\(speech.text)")
-                .font(.title)
-                .bold()
-            speech.getButton(viaggioNome: self.viaggio.nome!)
-        }
-        
-        Spacer(minLength: 30)
-        
+
     }
     
     
