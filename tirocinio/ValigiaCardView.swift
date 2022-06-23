@@ -76,9 +76,17 @@ struct ValigiaCardView: View {
                     }
                     Spacer()
                     VStack{
-                        Image(systemName: "bag.fill")
-                            .resizable()
-                            .frame(width: 100, height: 100, alignment: .center)
+                        if(colorScheme == .light){
+                            Image(valigia.categoria ?? "altro")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                        }else{
+                            Image(valigia.categoria ?? "altro")
+                                .resizable()
+                                .frame(width: 100, height: 100, alignment: .center)
+                                .colorInvert()
+                        }
+                       
                     }
                     Spacer()
                 }

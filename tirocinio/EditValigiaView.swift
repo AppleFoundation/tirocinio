@@ -31,17 +31,17 @@ struct EditValigiaView: View {
             
             
             
-            Section(header: Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")){
-                Slider(value: $lunghezzaAgg, in: 0...60, step: 1.0)
+            Section(header: Text("Dimensioni")){
+                Text("Volume (litri): \(String(format: "%.3f", lunghezzaAgg*larghezzaAgg*profonditaAgg/1000))")
+                Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")
+                Slider(value: $lunghezzaAgg, in: 1...60, step: 1.0)
+                Text("Larghezza (centimetri): \(Int(larghezzaAgg))")
+                Slider(value: $larghezzaAgg, in: 1...60, step: 1.0)
+                Text("Profondita (centimetri): \(Int(profonditaAgg))")
+                Slider(value: $profonditaAgg, in: 1...60, step: 1.0)
+                
             }
             
-            Section(header: Text("Larghezza (centimetri): \(Int(larghezzaAgg))")){
-                Slider(value: $larghezzaAgg, in: 0...60, step: 1.0)
-            }
-            
-            Section(header: Text("Profondita (centimetri): \(Int(profonditaAgg))")){
-                Slider(value: $profonditaAgg, in: 0...60, step: 1.0)
-            }
             Section(header: Text("Tara (grammi): \(Int(pesoAgg))")){
                 Slider(value: $pesoAgg, in: 0...3000, step: 50.0)
             }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State var showAlertOggettiPersonalizzati: Bool = false
     @State var showAlertReset: Bool = false
     @State var showAlertViaggi: Bool = false
@@ -53,8 +54,8 @@ struct SettingsView: View {
                         case .dark:
                             selected = "dark"
                             break
-                        case nil:
-                            selected = "none"
+//                        case nil:
+//                            selected = "none"
                         default:
                             break
                         }

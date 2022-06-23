@@ -56,7 +56,19 @@ struct ContentView: View {
                         }
 //                        .frame(width: 130)
                         .padding()
-                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                        .background({ () -> Color in
+                            if (myColorScheme == .dark){
+                                return Color.init(white: 0.2)
+                            }else if(myColorScheme == .light){
+                                return Color.white
+                            }else{
+                                if(colorScheme == .dark){
+                                    return Color.init(white: 0.2)
+                                }else{
+                                    return Color.white
+                                }
+                            }
+                        }())
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                         
@@ -91,16 +103,28 @@ struct ContentView: View {
                 IntroductionView(showingWelcomeView: $showingWelcomeView)
             }
             .background{
-                if(String("\(colorScheme)") == "light"){
+                if(myColorScheme == .light){
                     Image("Sfondo App 1Light")
                         .resizable()
                     //                        .scaledToFill()
                         .ignoresSafeArea()
-                }else{
+                }else if(myColorScheme == .dark){
                     Image("Sfondo App 1Dark")
                         .resizable()
                     //                        .scaledToFill()
                         .ignoresSafeArea()
+                }else{
+                    if(colorScheme == .light){
+                        Image("Sfondo App 1Light")
+                            .resizable()
+                        //                        .scaledToFill()
+                            .ignoresSafeArea()
+                    }else{
+                        Image("Sfondo App 1Dark")
+                            .resizable()
+                        //                        .scaledToFill()
+                            .ignoresSafeArea()
+                    }
                 }
                 
             }
@@ -142,36 +166,35 @@ struct ActionButtonView: View{
 
             
             VStack{
-                ZStack{
+              
                     
-                    VStack{
-                        Image(systemName: viaggio.tipo ?? "questionmark")
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor([.blue, .mint, .orange, .green, .red, .pink, .purple, .yellow].randomElement())
-                            .frame(width: 50)
-                        
-                        Text(viaggio.nome ?? "NoWhere")
-                            .multilineTextAlignment(.center)
-                            .font(.title.bold())
-                            .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                        
-                        Text(viaggio.data ?? Date(), style: .date)
-                            .multilineTextAlignment(.center)
-                            .font(.title3)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                        
-                        
-                    }
-                    .padding()
-                    .frame(minWidth: 175, minHeight: 150)
-                    .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                    .cornerRadius(10)
-                    .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                VStack{
+                    Image(systemName: viaggio.tipo ?? "questionmark")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor([.blue, .mint, .orange, .green, .red, .pink, .purple, .yellow].randomElement())
+                        .frame(width: 50)
+                    
+                    Text(viaggio.nome ?? "NoWhere")
+                        .multilineTextAlignment(.center)
+                        .font(.title.bold())
+                        .fixedSize(horizontal: false, vertical: true)
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
+                    Text(viaggio.data ?? Date(), style: .date)
+                        .multilineTextAlignment(.center)
+                        .font(.title3)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
                     
                     
+                }
+                .padding()
+                .frame(minWidth: 175, minHeight: 150)
+                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+                .overlay(){
                     NavigationLink(destination: DetailTripView(viaggio: viaggio)){
                         Rectangle()
                             .background(Color.white)
@@ -179,8 +202,11 @@ struct ActionButtonView: View{
                         
                             .cornerRadius(10)
                     }
-                    
                 }
+                    
+                    
+                    
+                
                 .contextMenu(.init(menuItems: {
                     Button(action: {
                         showingAlertViaggio = true

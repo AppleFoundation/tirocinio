@@ -10,11 +10,7 @@ import SwiftUI
 struct AddBagView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @FetchRequest<Valigia>(entity: Valigia.entity(), sortDescriptors: []) var allValigie: FetchedResults<Valigia>
-    let categories = PersistenceManager.shared.loadAllCategorieValigie().sorted()
-    let valigie = PersistenceManager.shared.loadAllValigie().sorted { lhs, rhs in
-        return lhs.nome! < rhs.nome!
-    }
+    @FetchRequest<Valigia>(entity: Valigia.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Valigia.nome, ascending: true)]) var allValigie: FetchedResults<Valigia>
     var viaggio: Viaggio
     
     var body: some View {
@@ -38,7 +34,7 @@ struct AddBagView: View {
                 
                 Spacer(minLength: 20)
                 
-                ForEach(valigie){
+                ForEach(allValigie){
                     valigiaAttuale in
                     if (valigiaAttuale.categoria != nil){
                         if (valigiaAttuale.categoria! != "0SYSTEM"){

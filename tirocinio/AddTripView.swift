@@ -17,7 +17,6 @@ struct AddTripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
-    let categories = PersistenceManager.shared.loadAllCategorieOggetti().sorted()
     var viaggio: Viaggio
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
@@ -41,8 +40,25 @@ struct AddTripView: View {
                 
                 
                 //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
+               
                 
-                ForEach(categories){ currentCat in
+                
+                ForEach({ () -> Array<String> in
+                    var categorieLista = Set<String>.init()
+                    
+                    for oggetto in allOggetti {
+                        categorieLista.insert(oggetto.categoria!)
+                    }
+                    
+                    var categorieArray = Array<String>.init()
+                    
+                    for singolaCat in categorieLista{
+                        categorieArray.append(singolaCat)
+                    }
+                    
+                    return categorieArray.sorted()
+                    
+                }()){ currentCat in
                     let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
                     
                     if (!cat.isEmpty){
