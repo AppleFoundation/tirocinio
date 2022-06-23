@@ -82,11 +82,11 @@ struct AddViaggioView: View {
                             return nomeViaggio
                         }else{
                             var i = 1
-                            while (!PersistenceManager.shared.loadViaggiFromNome(nome: "Viaggio" + "\(i)").isEmpty){
+                            while (!PersistenceManager.shared.loadViaggiFromNome(nome: "Viaggio " + "\(i)").isEmpty){
                                 i += 1
                             }
-                            nomeViaggio = "Viaggio" + "\(i)"
-                            return "Viaggio" + "\(i)"
+                            nomeViaggio = "Viaggio " + "\(i)"
+                            return "Viaggio " + "\(i)"
                         }
                     }(), tipo: {
                         switch selectedTipo {
