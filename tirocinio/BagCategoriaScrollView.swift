@@ -10,7 +10,7 @@ import SwiftUI
 struct BagCategoriaScrollView: View{
     
     var nome: String
-    var viaggio: Viaggio
+    @ObservedObject var viaggio: Viaggio
     
     var valigiaCategoria: [Valigia]
     

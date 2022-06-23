@@ -20,7 +20,7 @@ struct EditViaggioView: View {
     @State var oldIcon: String
     @State var selectedTipo: TipiViaggio = .aereo
     
-    var viaggio: Viaggio
+    @ObservedObject var viaggio: Viaggio
     
     var body: some View {
         

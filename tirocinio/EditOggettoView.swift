@@ -17,7 +17,7 @@ struct EditOggettoView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    var oggetto: Oggetto
+    @ObservedObject var oggetto: Oggetto
     
     
     var body: some View {

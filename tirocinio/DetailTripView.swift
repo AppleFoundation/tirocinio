@@ -95,7 +95,7 @@ struct tastiDiAggiunta: View{
     
     var valigieDB: [ValigiaViaggiante]
     var oggettiDB: [OggettoViaggiante]
-    var viaggio: Viaggio
+    @ObservedObject var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -169,7 +169,7 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
+//                    presentationMode.wrappedValue.dismiss()
                     
                 }
             }
@@ -219,7 +219,7 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
+//                    presentationMode.wrappedValue.dismiss()
                     
                 }
             }
@@ -262,8 +262,8 @@ struct tastiDiAggiunta: View{
 
 struct singolaValigiaView: View{
     
-    var singolaIstanza: ValigiaViaggiante
-    var viaggio: Viaggio
+    @ObservedObject var singolaIstanza: ValigiaViaggiante
+    @ObservedObject var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View{
