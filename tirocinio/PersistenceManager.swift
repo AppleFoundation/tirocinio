@@ -459,7 +459,7 @@ class PersistenceManager: ObservableObject {
         return oggettiinvaligia
     }
     
-    func loadValigieViaggiantiFromViaggio(viaggioRef: Viaggio) -> [ValigiaViaggiante]{
+    func loadValigieViaggiantiFromViaggioWithout0SYSTEM(viaggioRef: Viaggio) -> [ValigiaViaggiante]{
         let request: NSFetchRequest <ValigiaViaggiante> = NSFetchRequest(entityName: "ValigiaViaggiante")
         request.returnsObjectsAsFaults = false
         
@@ -712,7 +712,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func deleteAllValigiaViaggiante(viaggio: Viaggio){
-        let valigieViaggianti = self.loadValigieViaggiantiFromViaggio(viaggioRef: viaggio)
+        let valigieViaggianti = self.loadValigieViaggiantiFromViaggioWithout0SYSTEM(viaggioRef: viaggio)
         
         if(valigieViaggianti.count > 0){
             

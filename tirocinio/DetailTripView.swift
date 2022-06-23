@@ -28,7 +28,7 @@ struct DetailTripView: View {
                 
                 VStack{
                     
-                    tastiDiAggiunta(valigieDB: valigieDB, oggettiDB: oggettiDB, viaggio: viaggio)
+                    tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
                     
                     ForEach(insiemeDiValigie){
                         singolaIstanza in
@@ -92,8 +92,8 @@ struct DetailTripView: View {
 
 struct tastiDiAggiunta: View{
     
-    var valigieDB: [ValigiaViaggiante]
-    var oggettiDB: [OggettoViaggiante]
+    @Binding var valigieDB: [ValigiaViaggiante]
+    @Binding var oggettiDB: [OggettoViaggiante]
     var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
@@ -102,9 +102,9 @@ struct tastiDiAggiunta: View{
     @State private var showingAlertValigie = false
     @State var volumePeso: Bool = false
     
-    init(valigieDB: [ValigiaViaggiante], oggettiDB: [OggettoViaggiante], viaggio: Viaggio){
-        self.valigieDB = valigieDB
-        self.oggettiDB = oggettiDB
+    init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
+        self._valigieDB = valigieDB
+        self._oggettiDB = oggettiDB
         self.viaggio = viaggio
     }
     
@@ -220,6 +220,8 @@ struct tastiDiAggiunta: View{
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
 //                    presentationMode.wrappedValue.dismiss()
+                    valigieDB.removeAll()
+                    valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non 
                     
                 }
             }
