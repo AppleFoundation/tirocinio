@@ -29,24 +29,31 @@ struct SpeechToTextButton: View {
                 }else{
                     self.speech.stopRecording()
                     
-                    let queueSpeech = DispatchQueue.init(label: "it.unisa.diem.tirocinio.queueSpeech", qos: .userInitiated)
-                    queueSpeech.async {
-                        
-                        // testo acquisito
-                        
-                        if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
-                            print("ok")
-                        }else{
-                            print("decodifica input non riuscita")
-                        }
-                        
-                        DispatchQueue.main.async {
-                            
-                            // ritorno sul main dalla queue per aggiornare l'interfaccia
-                            print("sono sull'interfaccia principale")
-                            
-                        }
+                    if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
+                        print("ok")
+                    }else{
+                        print("decodifica input non riuscita")
                     }
+                    
+                    
+//                    let queueSpeech = DispatchQueue.init(label: "it.unisa.diem.tirocinio.queueSpeech", qos: .userInitiated)
+//                    queueSpeech.async {
+//
+//                        // testo acquisito
+//
+//                        if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
+//                            print("ok")
+//                        }else{
+//                            print("decodifica input non riuscita")
+//                        }
+//
+//                        DispatchQueue.main.async {
+//
+//                            // ritorno sul main dalla queue per aggiornare l'interfaccia
+//                            print("sono sull'interfaccia principale")
+//
+//                        }
+//                    }
                     
                 }
             }
