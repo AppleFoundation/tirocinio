@@ -13,7 +13,7 @@ struct ValigiaCardView: View {
     @State private var editEnable = false
     @Environment(\.colorScheme) var colorScheme
     
-    @ObservedObject var valigia: Valigia
+    @State var valigia: Valigia
     var viaggio: Viaggio
     @State var pesoMassimo: Double = 0
     @State var inserito = false

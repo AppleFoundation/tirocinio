@@ -298,7 +298,9 @@ struct singolaValigiaView: View{
                 .padding(.bottom)
                 
                 
-                ForEach(singolaIstanza.contenuto.array(of: OggettoInValigia.self)){
+                ForEach(singolaIstanza.contenuto.array(of: OggettoInValigia.self).sorted(by: { rhs, lhs in
+                    return rhs.oggettoViaggianteRef!.oggettoRef!.nome! < lhs.oggettoViaggianteRef!.oggettoRef!.nome!    
+                })){
                     oggetto in
                     
                     HStack{
