@@ -76,12 +76,7 @@ struct AddNuovoOggetto: View {
             ToolbarItem(placement: .navigationBarTrailing){
                 Button(action: {
                     
-                    if(nomeAgg.isEmpty){
-                        nomeAgg = "Oggetto"
-                    }
-                    
-                    
-                    
+
                     if(lunghezzaAgg == 0){
                         lunghezzaAgg = 1
                     }
@@ -97,6 +92,8 @@ struct AddNuovoOggetto: View {
                     if(pesoAgg == 0){
                         pesoAgg = 1
                     }
+                    
+                    
                     
                     PersistenceManager.shared.addOggetto(categoria: {
                         switch selectedCategoria {
@@ -118,7 +115,38 @@ struct AddNuovoOggetto: View {
                             return "Altro"
                         }
                         
-                    }(), larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
+                    }(), larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: {
+                        if(!nomeAgg.isEmpty){
+                            return nomeAgg
+                        }else{
+                            var i = 1
+                            while (!PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: "Oggetto " + "\(i)", categoria: {
+                                switch selectedCategoria {
+                                case .articoliDaBagno:
+                                    return "Articoli da bagno"
+                                case .abbigliamento:
+                                    return "Abbigliamento"
+                                case .essenziali:
+                                    return "Essenziali"
+                                case .campeggio:
+                                    return "Campeggio"
+                                case .spiaggia:
+                                    return "Spiaggia"
+                                case .sport:
+                                    return "Sport"
+                                case .informaticaElettronica:
+                                    return "Informatica ed elettronica"
+                                case .altro:
+                                    return "Altro"
+                                }
+                                
+                            }()).isEmpty){
+                                i += 1
+                            }
+                            nomeAgg = "Oggetto " + "\(i)"
+                            return "Oggetto " + "\(i)"
+                        }
+                    }())
                     presentationMode.wrappedValue.dismiss()
                     
                 }, label: {Text("Save")})

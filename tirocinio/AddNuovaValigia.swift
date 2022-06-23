@@ -89,7 +89,31 @@ struct AddNuovaValigia: View {
                         case .zaino:
                             return "Zaino"
                         }
-                    }(), lunghezza: Int(lunghezza), larghezza: Int(larghezza), profondita: Int(profondita), nome: nome, tara: Int(tara), utilizzato: true)
+                    }(), lunghezza: Int(lunghezza), larghezza: Int(larghezza), profondita: Int(profondita), nome: {
+                        if(!nome.isEmpty){
+                            return nome
+                        }else{
+                            var i = 1
+                            while (!PersistenceManager.shared.loadValigieFromNomeCategoria(nome: "Valigia " + "\(i)", categoria: {
+                                switch selectedCategoria {
+                                case .altro:
+                                    return "Altro"
+                                case .trolley:
+                                    return "Trolley"
+                                case .bagaglioStiva:
+                                    return "Bagaglio da stiva"
+                                case .piccola:
+                                    return "Piccola"
+                                case .zaino:
+                                    return "Zaino"
+                                }
+                            }()).isEmpty){
+                                i += 1
+                            }
+                            nome = "Valigia " + "\(i)"
+                            return "Valigia " + "\(i)"
+                        }
+                    }(), tara: Int(tara), utilizzato: true)
                     presentationMode.wrappedValue.dismiss()
                     
                 }, label: {Text("Save")})
