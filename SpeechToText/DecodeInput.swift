@@ -90,8 +90,10 @@ public class DecodeInput {
                     if(text.lowercased().contains(c.name.lowercased())){
                         let valigiaViagg = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
                         for val in valigiaViagg{
-                            if(val.valigiaRef!.nome?.lowercased() == c.name.lowercased()){
+                            if(val.valigiaRef!.nome!.lowercased() == c.name.lowercased()){
                                 PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)
+                                done = true
+                                break
                             }
                         }
                     }
