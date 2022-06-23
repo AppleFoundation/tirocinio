@@ -81,6 +81,8 @@ struct DetailTripView: View {
             insiemeDiValigie = valigieDB
             
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
+            
+            speech.text = ""
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")

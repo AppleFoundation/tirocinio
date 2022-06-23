@@ -15,7 +15,7 @@ struct ContentView: View {
 //    var preferred: ModeEnum = getPreferredColorScheme()
     @Environment(\.colorScheme) var systemColorScheme
     @State var myColorScheme: ColorScheme?
-
+    @EnvironmentObject var speech : SpeechToText
     
     
     
