@@ -16,6 +16,7 @@ struct CategoriaScrollView: View{
     var viaggio: Viaggio
     
     var oggettiCategoria: [Oggetto]
+
     
     //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
@@ -42,7 +43,14 @@ struct CategoriaScrollView: View{
                         })){
                             oggetto in
                             
-                            CardView(oggetto: oggetto, viaggio: viaggio)
+                            
+                            let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
+                            if (oggettiInValigia.isEmpty == false){
+                                CardView(oggetto: oggetto, viaggio: viaggio, value: Int(oggettiInValigia[0].quantitaInValigia))
+                            }else{
+                                CardView(oggetto: oggetto, viaggio: viaggio, value: 0)
+                            }
+                            
                         }
                     }
                     Spacer(minLength: 15) //Utile per avere più simmetria

@@ -18,8 +18,9 @@ struct CardView: View {
     @ObservedObject var oggetto: Oggetto
     var viaggio: Viaggio
     
+
     @State var count: Int = 0
-    @State var value: Int = 0
+    @State var value: Int
     let step = 1
     let range = 0...50
     
@@ -29,6 +30,7 @@ struct CardView: View {
         
 
             HStack{
+                
                 
                 Text("\(value)")
                     .font(.headline)
@@ -83,14 +85,7 @@ struct CardView: View {
             //
             //
             //            }
-            .onAppear(){
-                let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
-                if (oggettiInValigia.isEmpty == false){
-                    value = Int(oggettiInValigia[0].quantitaInValigia)
-                }else{
-                    value = 0
-                }
-            }
+
             .padding()
             .background(coloreScelto())
             .cornerRadius(10)
