@@ -170,7 +170,6 @@ struct tastiDiAggiunta: View{
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
 //                    presentationMode.wrappedValue.dismiss()
-                    
                 }
             }
             
@@ -222,7 +221,8 @@ struct tastiDiAggiunta: View{
 //                    presentationMode.wrappedValue.dismiss()
                     valigieDB.removeAll()
                     valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non 
-                    
+                    PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
+
                 }
             }
             
