@@ -18,9 +18,9 @@ struct AddNuovoOggetto: View {
     @State private var selectedCategoria: CategorieOggetto = .altro
     
     @State var nomeAgg: String = ""
-    @State var lunghezzaAgg: Double = 0.0
-    @State var larghezzaAgg: Double = 0.0
-    @State var profonditaAgg: Double = 0.0
+    @State var lunghezzaAgg: Double = 1.0
+    @State var larghezzaAgg: Double = 1.0
+    @State var profonditaAgg: Double = 1.0
     @State var pesoAgg: Double = 0.0
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
@@ -40,30 +40,30 @@ struct AddNuovoOggetto: View {
             
             Section(header: Text("Categoria")){
                 Picker("Categoria", selection: $selectedCategoria) {
+                    Text("Abbigliamento").tag(CategorieOggetto.abbigliamento)
                     Text("Altro").tag(CategorieOggetto.altro)
                     Text("Articoli da bagno").tag(CategorieOggetto.articoliDaBagno)
-                    Text("Abbigliamento").tag(CategorieOggetto.abbigliamento)
-                    Text("Essenziali").tag(CategorieOggetto.essenziali)
                     Text("Campeggio").tag(CategorieOggetto.campeggio)
-                    Text("Spiaggia").tag(CategorieOggetto.spiaggia)
-                    Text("Sport").tag(CategorieOggetto.sport)
+                    Text("Essenziali").tag(CategorieOggetto.essenziali)
                     Text("Informatica ed Elettronica").tag(CategorieOggetto.informaticaElettronica)
+                    Text("Spiaggia").tag(CategorieOggetto.spiaggia)
+                    Text("Sport").tag(CategorieOggetto.sport) 
                 }
                 .pickerStyle(.menu)
                 
             }
             
-            Section(header: Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")){
-                Slider(value: $lunghezzaAgg, in: 0...60, step: 1.0)
+            Section(header: Text("Dimensioni")){
+                Text("Volume (litri): \(String(format: "%.3f", lunghezzaAgg*larghezzaAgg*profonditaAgg/1000))")
+                Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")
+                Slider(value: $lunghezzaAgg, in: 1...60, step: 1.0)
+                Text("Larghezza (centimetri): \(Int(larghezzaAgg))")
+                Slider(value: $larghezzaAgg, in: 1...60, step: 1.0)
+                Text("Profondita (centimetri): \(Int(profonditaAgg))")
+                Slider(value: $profonditaAgg, in: 1...60, step: 1.0)
+                
             }
             
-            Section(header: Text("Larghezza (centimetri): \(Int(larghezzaAgg))")){
-                Slider(value: $larghezzaAgg, in: 0...60, step: 1.0)
-            }
-            
-            Section(header: Text("Profondita (centimetri): \(Int(profonditaAgg))")){
-                Slider(value: $profonditaAgg, in: 0...60, step: 1.0)
-            }
             Section(header: Text("Peso (grammi): \(Int(pesoAgg))")){
                 Slider(value: $pesoAgg, in: 0...3000, step: 50.0)
             }

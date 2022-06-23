@@ -9,8 +9,10 @@ import SwiftUI
 
 struct AddNuovaValigia: View {
     
+    
+    
     enum CategorieValigie: String, CaseIterable, Identifiable {
-        case altro, trolley, bagaglioStiva, piccola, zaino
+        case altro, bagaglioAMano, bagaglioDaStiva, borsone, valigiaGrande, valigiaMedia, valigiaPiccola, trolley, zaino
         var id: Self { self }
     }
     @State private var selectedCategoria: CategorieValigie = .altro
@@ -19,9 +21,9 @@ struct AddNuovaValigia: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State var nome: String = ""
     
-    @State var lunghezza: Double = 0.0
-    @State var larghezza: Double = 0.0
-    @State var profondita: Double = 0.0
+    @State var lunghezza: Double = 1.0
+    @State var larghezza: Double = 1.0
+    @State var profondita: Double = 1.0
     @State var tara: Double = 0.0
     
     
@@ -43,26 +45,31 @@ struct AddNuovaValigia: View {
             Section(header: Text("Categoria")){
                 Picker("Categoria", selection: $selectedCategoria) {
                     Text("Altro").tag(CategorieValigie.altro)
+                    Text("Bagaglio a mano").tag(CategorieValigie.bagaglioAMano)
+                    Text("Bagaglio da stiva").tag(CategorieValigie.bagaglioDaStiva)
+                    Text("Borsone").tag(CategorieValigie.borsone)
+                    Text("Valigia grande").tag(CategorieValigie.valigiaGrande)
+                    Text("Valigia media").tag(CategorieValigie.valigiaMedia)
+                    Text("Valigia piccola").tag(CategorieValigie.valigiaPiccola)
                     Text("Trolley").tag(CategorieValigie.trolley)
-                    Text("Bagaglio da stiva").tag(CategorieValigie.bagaglioStiva)
-                    Text("Piccola").tag(CategorieValigie.piccola)
                     Text("Zaino").tag(CategorieValigie.zaino)
+                    
                 }
                 .pickerStyle(.menu)
                 
             }
             
-            Section(header: Text("Lunghezza (centimetri): \(Int(lunghezza)) ")){
-                Slider(value: $lunghezza, in: 0...60, step: 1.0)
+            Section(header: Text("Dimensioni")){
+                Text("Volume (litri): \(String(format: "%.3f", lunghezza*larghezza*profondita/1000))")
+                Text("Lunghezza (centimetri): \(Int(lunghezza)) ")
+                Slider(value: $lunghezza, in: 1...60, step: 1.0)
+                Text("Larghezza (centimetri): \(Int(larghezza))")
+                Slider(value: $larghezza, in: 1...60, step: 1.0)
+                Text("Profondita (centimetri): \(Int(profondita))")
+                Slider(value: $profondita, in: 1...60, step: 1.0)
+
             }
             
-            Section(header: Text("Larghezza (centimetri): \(Int(larghezza))")){
-                Slider(value: $larghezza, in: 0...60, step: 1.0)
-            }
-            
-            Section(header: Text("Profondita (centimetri): \(Int(profondita))")){
-                Slider(value: $profondita, in: 0...60, step: 1.0)
-            }
             
             
             Section(header: Text("Tara (grammi): \(Int(tara))")){
@@ -80,12 +87,20 @@ struct AddNuovaValigia: View {
                         switch selectedCategoria {
                         case .altro:
                             return "Altro"
+                        case .bagaglioAMano:
+                            return "Bagaglio a mano"
+                        case .bagaglioDaStiva:
+                            return "Bagaglio da stiva"
+                        case .borsone:
+                            return "Borsone"
+                        case .valigiaGrande:
+                            return "Valigia grande"
+                        case .valigiaMedia:
+                            return "Valigia media"
+                        case .valigiaPiccola:
+                            return "Valigia piccola"
                         case .trolley:
                             return "Trolley"
-                        case .bagaglioStiva:
-                            return "Bagaglio da stiva"
-                        case .piccola:
-                            return "Piccola"
                         case .zaino:
                             return "Zaino"
                         }
@@ -94,16 +109,24 @@ struct AddNuovaValigia: View {
                             return nome
                         }else{
                             var i = 1
-                            while (!PersistenceManager.shared.loadValigieFromNomeCategoria(nome: "Valigia " + "\(i)", categoria: {
+                            while (!PersistenceManager.shared.loadValigieFromNomeCategoria(nome: "Valigia " + " \(i)", categoria: {
                                 switch selectedCategoria {
                                 case .altro:
                                     return "Altro"
+                                case .bagaglioAMano:
+                                    return "Bagaglio a mano"
+                                case .bagaglioDaStiva:
+                                    return "Bagaglio da stiva"
+                                case .borsone:
+                                    return "Borsone"
+                                case .valigiaGrande:
+                                    return "Valigia grande"
+                                case .valigiaMedia:
+                                    return "Valigia media"
+                                case .valigiaPiccola:
+                                    return "Valigia piccola"
                                 case .trolley:
                                     return "Trolley"
-                                case .bagaglioStiva:
-                                    return "Bagaglio da stiva"
-                                case .piccola:
-                                    return "Piccola"
                                 case .zaino:
                                     return "Zaino"
                                 }
