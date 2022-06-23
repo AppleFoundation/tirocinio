@@ -95,7 +95,7 @@ struct tastiDiAggiunta: View{
     
     var valigieDB: [ValigiaViaggiante]
     var oggettiDB: [OggettoViaggiante]
-    @ObservedObject var viaggio: Viaggio
+    var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
@@ -117,6 +117,7 @@ struct tastiDiAggiunta: View{
         
         return sum
     }
+    
     
     var body: some View{
         
@@ -263,7 +264,7 @@ struct tastiDiAggiunta: View{
 struct singolaValigiaView: View{
     
     @ObservedObject var singolaIstanza: ValigiaViaggiante
-    @ObservedObject var viaggio: Viaggio
+    var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View{

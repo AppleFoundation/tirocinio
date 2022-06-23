@@ -13,7 +13,7 @@ struct CategoriaScrollView: View{
     
     var nome: String
     
-    @ObservedObject var viaggio: Viaggio
+    var viaggio: Viaggio
     
     var oggettiCategoria: [Oggetto]
     

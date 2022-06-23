@@ -17,7 +17,7 @@ struct EditValigiaView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    @ObservedObject var valigia: Valigia
+    var valigia: Valigia
     
     
     var body: some View {
