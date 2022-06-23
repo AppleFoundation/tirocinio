@@ -122,34 +122,36 @@ struct tastiDiAggiunta: View{
         
         HStack{
             Spacer()
-            ZStack{
-                VStack{
-                    Text("Aggiungi Oggetti")
-                        .multilineTextAlignment(.center)
-                        
-                    //                    Text("Oggetti presenti: \(oggettiDB.count)")
-                    Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                    Image(systemName: "archivebox.fill")
-                        .padding(.top, 1.0)
-                }
-                .padding()
-                .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
-                
-                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-                
+            
+            VStack{
+                Text("Aggiungi Oggetti")
+                    .multilineTextAlignment(.center)
+                    
+                //                    Text("Oggetti presenti: \(oggettiDB.count)")
+                Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                Image(systemName: "archivebox.fill")
+                    .padding(.top, 1.0)
+            }
+            .padding()
+            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+            
+            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            .overlay(){
                 NavigationLink(destination:  AddTripView(viaggio: viaggio)){
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-                        .frame(width: 150)
+//                            .frame(width: 150)
                         .cornerRadius(10)
                 }
-                
             }
+                
+                
+            
             .contextMenu(.init(menuItems: {
                 
                 
@@ -176,33 +178,35 @@ struct tastiDiAggiunta: View{
             Spacer()
             
             
-            ZStack{
-                VStack{
-                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
-                    Text("Aggiungi Valigie")
-                        .multilineTextAlignment(.center)
-                    Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                    Image(systemName: "suitcase.fill")
-                        .padding(.top, 1.0)
-                    
-                }
-                .padding()
-                .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
-                .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            
+            VStack{
+                let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
+                Text("Aggiungi Valigie")
+                    .multilineTextAlignment(.center)
+                Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                Image(systemName: "suitcase.fill")
+                    .padding(.top, 1.0)
                 
+            }
+            .padding()
+            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            .overlay(){
                 NavigationLink(destination:  AddBagView(viaggio: viaggio)){
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-                        .frame(width: 150)
+//                            .frame(width: 150)
                         .cornerRadius(10)
                 }
-                
             }
+                
+                
+            
             .contextMenu(.init(menuItems: {
                 
                 Button(action: {
@@ -232,20 +236,23 @@ struct tastiDiAggiunta: View{
         
         
         HStack{
-            Toggle({
-                if (volumePeso == false){
-                    return "Riempi valigie per: Volume"
-                }else{
-                    return "Riempi valigie per: Peso"
-                }
-            }(), isOn: $volumePeso)
+            Toggle(isOn: $volumePeso){
+                Text("Usa i limiti di peso")
+                    .font(.title2.bold())
+            }
             .onChange(of: volumePeso){ value in
                 viaggio.allocaPer = value
                 PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: value)
             }
+            
             .toggleStyle(.switch)
             .tint(.mint)
             .padding()
+            .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 0.9))
+            .cornerRadius(10)
+            .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
+            .padding(.horizontal, 20)
+            .padding(.vertical)
             
             
         }
@@ -267,6 +274,7 @@ struct singolaValigiaView: View{
     @ObservedObject var singolaIstanza: ValigiaViaggiante
     var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
+    @State var visualizzaOggetti: Bool = false
     
     var body: some View{
         
@@ -275,10 +283,22 @@ struct singolaValigiaView: View{
             Spacer()
             VStack{
                 HStack{
-                    Text((singolaIstanza.valigiaRef?.nome)!)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    
+                    Button(action: {
+                        visualizzaOggetti.toggle()
+                    }){
+                        HStack{
+                            if (visualizzaOggetti){
+                                Image(systemName: "arrowtriangle.down.fill")
+                            }else{
+                                Image(systemName: "arrowtriangle.forward.fill")
+                            }
+                            Text("\((singolaIstanza.valigiaRef?.nome)!)")
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
+                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                       
+                    }
                     Spacer()
                     VStack(alignment: .trailing){
                         //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
@@ -300,24 +320,27 @@ struct singolaValigiaView: View{
                 .padding(.bottom)
                 
                 
-                ForEach(singolaIstanza.contenuto.array(of: OggettoInValigia.self).sorted(by: { rhs, lhs in
-                    return rhs.oggettoViaggianteRef!.oggettoRef!.nome! < lhs.oggettoViaggianteRef!.oggettoRef!.nome!    
-                })){
-                    oggetto in
-                    
-                    HStack{
+                if (visualizzaOggetti){
+                    ForEach(singolaIstanza.contenuto.array(of: OggettoInValigia.self).sorted(by: { rhs, lhs in
+                        return rhs.oggettoViaggianteRef!.oggettoRef!.nome! < lhs.oggettoViaggianteRef!.oggettoRef!.nome!
+                    })){
+                        oggetto in
                         
-                        Text("\(oggetto.quantitaInValigia)")
-                        Text(oggetto.oggettoViaggianteRef?.oggettoRef?.nome ?? "Nome non trovato")
-                        Spacer()
+                        HStack{
+                            
+                            Text("\(oggetto.quantitaInValigia)")
+                            Text(oggetto.oggettoViaggianteRef?.oggettoRef?.nome ?? "Nome non trovato")
+                            Spacer()
+                            
+                        }
+                        .padding(8)
+                        .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
+                        .cornerRadius(10)
+                        
                         
                     }
-                    .padding(8)
-                    .background(colorScheme == .dark ? Color.init(white: 0.1,opacity: 0.4) : Color.init(white: 0.9,opacity: 0.4))
-                    .cornerRadius(10)
-                    
-                    
                 }
+                
                 
                 
                 

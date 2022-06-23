@@ -34,7 +34,7 @@ struct AddNuovoOggetto: View {
             
             
             Section(header: Text("Nome")){
-                TextField("Nuovo nome viaggio", text: $nomeAgg)
+                TextField("Nuovo nome oggetto", text: $nomeAgg)
                 //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
             

@@ -31,6 +31,9 @@ struct CardView: View {
 
             HStack{
                 
+                if (value <= 0){
+                    Spacer(minLength: 12)
+                }
                 
                 Text("\(value)")
                     .font(.headline)
@@ -58,9 +61,16 @@ struct CardView: View {
                         }
                     }
                 }, label: {
-                    Image(systemName: "minus.circle.fill")
+                    if (value > 0){
+                        Image(systemName: "minus.circle.fill")
                         .resizable()
                         .frame(width: 18, height: 18)
+                        
+                    }else{
+                        Spacer(minLength: 11)
+                    }
+                    
+                    
                 })
                 
                 
@@ -138,11 +148,17 @@ struct CardView: View {
         
         if(String("\(colorScheme)") == "light"){
             if(value > 0){
+                //Viola Light
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 116/255, green: 116/255, blue: 234/255, opacity: 1.0))
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 157/255, green: 156/255, blue: 240/255, opacity: 1.0))
                 gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
                 
+                //Gialla light
+//                var coloreArray = Array<Color>.init()
+//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
+//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 229/255, blue: 138/255, opacity: 1.0))
+//                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }else{
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 255/255, blue: 255/255, opacity: 1.0))
@@ -150,10 +166,17 @@ struct CardView: View {
             }
         }else{
             if(value > 0){
+                //Viola Dark
                 var coloreArray = Array<Color>.init()
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 62/255, green: 6/255, blue: 95/255, opacity: 1.0))
-                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 142/255, green: 5/255, blue: 194/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 22/255, green: 0/255, blue: 55/255, opacity: 1.0))
+                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 52/255, green: 0/255, blue: 94/255, opacity: 1.0))
                 gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
+                
+                //Gialla Dark
+//                var coloreArray = Array<Color>.init()
+//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 64/255, green: 3/255, blue: 0/255, opacity: 1.0))
+//                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 105/255, green: 57/255, blue: 0/255, opacity: 1.0))
+//                gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
             }else{
                 var coloreArray = Array<Color>.init()
                 coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 45/255, green: 45/255, blue: 45/255, opacity: 1.0))
