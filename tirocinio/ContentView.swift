@@ -15,10 +15,6 @@ struct ContentView: View {
 //    var preferred: ModeEnum = getPreferredColorScheme()
     @Environment(\.colorScheme) var systemColorScheme
     @State var myColorScheme: ColorScheme?
-    @EnvironmentObject var speech : SpeechToText
-    
-    
-    
     
     @FetchRequest<Viaggio>(entity: Viaggio.entity(), sortDescriptors: []) var allViaggi: FetchedResults<Viaggio>
     let columns = Array(repeating: GridItem.init(.fixed(175), spacing: 20, alignment: .center), count: 2)

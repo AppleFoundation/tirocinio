@@ -74,6 +74,7 @@ struct DetailTripView: View {
         }
         
         .onAppear(){
+            speech.text = ""
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
                 return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
             })
@@ -81,8 +82,6 @@ struct DetailTripView: View {
             insiemeDiValigie = valigieDB
             
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
-            
-            speech.text = ""
         }
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
