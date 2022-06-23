@@ -56,7 +56,19 @@ struct ContentView: View {
                         }
 //                        .frame(width: 130)
                         .padding()
-                        .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+                        .background({ () -> Color in
+                            if (myColorScheme == .dark){
+                                return Color.init(white: 0.2)
+                            }else if(myColorScheme == .light){
+                                return Color.white
+                            }else{
+                                if(colorScheme == .dark){
+                                    return Color.init(white: 0.2)
+                                }else{
+                                    return Color.white
+                                }
+                            }
+                        }())
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
                         
@@ -91,16 +103,28 @@ struct ContentView: View {
                 IntroductionView(showingWelcomeView: $showingWelcomeView)
             }
             .background{
-                if(String("\(colorScheme)") == "light"){
+                if(myColorScheme == .light){
                     Image("Sfondo App 1Light")
                         .resizable()
                     //                        .scaledToFill()
                         .ignoresSafeArea()
-                }else{
+                }else if(myColorScheme == .dark){
                     Image("Sfondo App 1Dark")
                         .resizable()
                     //                        .scaledToFill()
                         .ignoresSafeArea()
+                }else{
+                    if(colorScheme == .light){
+                        Image("Sfondo App 1Light")
+                            .resizable()
+                        //                        .scaledToFill()
+                            .ignoresSafeArea()
+                    }else{
+                        Image("Sfondo App 1Dark")
+                            .resizable()
+                        //                        .scaledToFill()
+                            .ignoresSafeArea()
+                    }
                 }
                 
             }
