@@ -15,7 +15,7 @@ struct CardView: View {
     
     @State private var editEnable = false
     
-    var oggetto: Oggetto
+    @ObservedObject var oggetto: Oggetto
     var viaggio: Viaggio
     
     @State var count: Int = 0

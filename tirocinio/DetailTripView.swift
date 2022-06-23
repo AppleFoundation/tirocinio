@@ -74,6 +74,7 @@ struct DetailTripView: View {
         }
         
         .onAppear(){
+            speech.text = ""
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
                 return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
             })
@@ -115,6 +116,7 @@ struct tastiDiAggiunta: View{
         
         return sum
     }
+    
     
     var body: some View{
         
@@ -167,7 +169,7 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
+//                    presentationMode.wrappedValue.dismiss()
                     
                 }
             }
@@ -217,7 +219,7 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
-                    presentationMode.wrappedValue.dismiss()
+//                    presentationMode.wrappedValue.dismiss()
                     
                 }
             }
@@ -260,7 +262,7 @@ struct tastiDiAggiunta: View{
 
 struct singolaValigiaView: View{
     
-    var singolaIstanza: ValigiaViaggiante
+    @ObservedObject var singolaIstanza: ValigiaViaggiante
     var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     
