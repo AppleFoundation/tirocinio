@@ -43,7 +43,6 @@ struct SpeechToTextButton: View {
                         DispatchQueue.main.async {
                             
                             // ritorno sul main dalla queue per aggiornare l'interfaccia
-                            speech.text = ""
                             print("sono sull'interfaccia principale")
                             
                         }
