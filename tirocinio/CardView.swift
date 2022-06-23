@@ -27,7 +27,7 @@ struct CardView: View {
     
     var body: some View {
         
-        if (editEnable == false){
+
             HStack{
                 
                 Text("\(value)")
@@ -124,14 +124,9 @@ struct CardView: View {
                     }
                 })
             }))
+            .background(NavigationLink("", destination: EditOggettoView(nomeAgg: oggetto.nome ?? "Nome", lunghezzaAgg: Double(oggetto.lunghezza), larghezzaAgg: Double(oggetto.larghezza), profonditaAgg: Double(oggetto.profondita), pesoAgg: Double(oggetto.peso), oggetto: oggetto), isActive: $editEnable))
             
-            
-        }else{
-            Text("Loading...")
-                .foregroundColor(Color.red)
-                .background(NavigationLink("", destination: EditOggettoView(nomeAgg: oggetto.nome!, lunghezzaAgg: Double(oggetto.lunghezza), larghezzaAgg: Double(oggetto.larghezza), profonditaAgg: Double(oggetto.profondita), pesoAgg: Double(oggetto.peso), oggetto: oggetto), isActive: $editEnable))
-            
-        }
+        
         
         
         
