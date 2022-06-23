@@ -43,6 +43,9 @@ struct ValigiaCardView: View {
                                     value -= 1
                                     count -= 1
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: valigia)
+                                    if (value == 0){
+                                        pesoMassimo = 0
+                                    }
                                 }
                                 
                             }, label: {
@@ -112,20 +115,38 @@ struct ValigiaCardView: View {
                 })
             }))
             
-            HStack{
-                VStack{
-                    Text("Peso max: \(String(format: "%.1f", pesoMassimo))Kg")
-                        .foregroundColor(.red)
+            if (value > 0){
+                HStack{
+                    VStack{
+                        Text("Peso max: \(String(format: "%.1f", pesoMassimo))Kg")
+                            .foregroundColor({
+                                if (value > 0){
+                                    return .red
+                                }else{
+                                    return .gray
+                                }
+                            }())
+                    }
+                    VStack{
+                        //                    Slider(value: $pesoMassimo, in: 0...30, step: 1.0)
+                        
+                        Slider(value: $pesoMassimo, in: 0...30, step: 1.0, onEditingChanged: {_ in
+                            PersistenceManager.shared.aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: Int(pesoMassimo)*1000)
+                        }).disabled({
+                            if (value > 0){
+                                return false
+                            }else{
+                                return true
+                            }
+                        }())
+                        
+                    }
+                    
                 }
-                VStack{
-                    //                    Slider(value: $pesoMassimo, in: 0...30, step: 1.0)
-                    Slider(value: $pesoMassimo, in: 0...30, step: 1.0, onEditingChanged: {_ in
-                        PersistenceManager.shared.aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: Int(pesoMassimo)*1000)
-                    })
-                }
-                
+                .padding(.init(top: 0, leading: 15, bottom: 15, trailing: 15))
             }
-            .padding(.init(top: 0, leading: 15, bottom: 15, trailing: 15))
+            
+            
             
             
         }
