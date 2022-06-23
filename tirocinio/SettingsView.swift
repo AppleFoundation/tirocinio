@@ -27,7 +27,7 @@ struct SettingsView: View {
                 Button(action: {
                     showAlertReset.toggle()
                 }, label: {
-                    Text("Reset database oggetti").foregroundColor(.red)
+                    Text("Reset database").foregroundColor(.red)
                 })
                 Button(action: {
                     showAlertViaggi.toggle()
