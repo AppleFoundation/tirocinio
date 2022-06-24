@@ -183,20 +183,7 @@ public class DecodeInput {
         
         if peso == 0{
             // se non è presente alcun numero restituisco un valore di default in base alla categoria della valigia
-            switch category {
-                case "trolley":
-                    peso = 10
-                case "bagaglio da stiva":
-                    peso = 23
-                case "piccola":
-                    peso = 10
-                case "zaino":
-                    peso = 6
-                default:
-                    // altro
-                    peso = 10
-            }
-            // Grazia aggiungi gli altri casi ->>>>>>>>>>>>>
+            peso = Int(Int32.max)
         }
         
         return peso
