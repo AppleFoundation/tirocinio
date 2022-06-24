@@ -1061,23 +1061,25 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 7, lunghezza: 29, profondita: 2, peso: 200, nome: "Pantofole")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 19, lunghezza: 26, profondita: 6, peso: 400, nome: "Accappatoio")//Misurato
         //Categoria 2
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Biancheria Intima")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Calzini")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "T-Shirt")
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 7, lunghezza: 11, profondita: 4, peso: 60, nome: "Biancheria Intima")//Misurat
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 7, lunghezza: 9, profondita: 3, peso: 25, nome: "Calzini")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 13, lunghezza: 14, profondita: 4, peso: 180, nome: "T-Shirt")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Maglioncino")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Maglione")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Giacca")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Cappotto")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Giubbino")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pantaloncino")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pantalone")
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 17, lunghezza: 27, profondita: 6, peso: 630, nome: "Pantalone")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 14, lunghezza: 28, profondita: 4, peso: 430, nome: "Pantaloncino")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Camicia")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pigiama")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Scarpe")
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 12, lunghezza: 30, profondita: 22, peso: 950, nome: "Scarpe")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 22, lunghezza: 24, profondita: 10, peso: 620, nome: "Felpa")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Calze")
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Leggins")
         //Categoria 3
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 5, lunghezza: 11, profondita: 2, peso: 30, nome: "Farmaci")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 7, lunghezza: 11, profondita: 3, peso: 190, nome: "Cintura")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 3, lunghezza: 8, profondita: 2, peso: 100, nome: "Chiavi di casa")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 5, lunghezza: 15, profondita: 1, peso: 5, nome: "Mascherina")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 5, lunghezza: 16, profondita: 2, peso: 140, nome: "Occhiali")//Misurato
@@ -1111,12 +1113,12 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Telo mare")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Occhialini")
         //Categoria 6
-        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "T-shirt da palestra")
+        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 9, lunghezza: 17, profondita: 4, peso: 110, nome: "T-shirt da palestra")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Felpa tuta")
-        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pantaloni tuta")
-        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pantaloncini tuta")
-        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Scarpe da ginnastica")
-        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Scarpe da trekking")
+        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 14, lunghezza: 23, profondita: 6, peso: 300, nome: "Pantaloni tuta")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 7, lunghezza: 7, profondita: 28, peso: 200, nome: "Pantaloncini tuta")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 12, lunghezza: 30, profondita: 19, peso: 800, nome: "Scarpe da ginnastica")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 12, lunghezza: 30, profondita: 26, peso: 1200, nome: "Scarpe da trekking")//Misurato
         //Categoria 7
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 5, lunghezza: 5, profondita: 5, peso: 100, nome: "Caricatore")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 13, profondita: 11, peso: 650, nome: "Fotocamera")//Misurato
