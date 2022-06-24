@@ -97,6 +97,7 @@ public class DecodeInput {
             
                 // se non sono stati trovati oggetti, verifico se si tratta di una valigia da eliminare
                 for c in DecodeInput.valigie {
+                    // Grazia correggi qui per tenere conto del peso massimo ->>>>>>>>>>>>>>>>>>>>>>>>>
                     if(text.lowercased().contains(c.name.lowercased())){
                         let valigiaViagg = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
                         for val in valigiaViagg{
