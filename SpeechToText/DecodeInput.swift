@@ -133,6 +133,7 @@ public class DecodeInput {
                         for val in valigiaViagg{
                             if(val.valigiaRef!.nome!.lowercased() == c.name.lowercased()){
                                 
+                                // quante volte devo eliminare la valigia viaggiante trovata
                                 rep = getOccurrences(input: text, name: c.name.lowercased()) // occorrenze della valigia da eliminare
                                 
                                 for _ in 1...rep{
@@ -184,8 +185,6 @@ public class DecodeInput {
                 countOcc += 1
             }
         }
-        
-        print(countOcc)
         
         // cerco il peso della valigia all'interno della stringa inserita
         // countOcc, se diverso da 0, contiene il numero di occorrenze del nome della valigia da skippare prima di prendere il peso

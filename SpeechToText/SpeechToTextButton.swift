@@ -81,9 +81,9 @@ struct SpeechToTextButton: View {
     
 }
 
-//struct SpeechToTextButton_Previews: PreviewProvider {
-//
-//    static var previews: some View {
-//        SpeechToTextButton()
-//    }
-//}
+struct SpeechToTextButton_Previews: PreviewProvider {
+
+    static var previews: some View {
+        SpeechToTextButton()
+    }
+}
