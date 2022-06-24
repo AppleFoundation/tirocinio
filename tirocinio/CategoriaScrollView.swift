@@ -58,6 +58,7 @@ struct CategoriaScrollView: View{
             }
             
         }
+
     }
 }
 
@@ -66,3 +67,7 @@ struct CategoriaScrollView_Previews: PreviewProvider {
         CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategoria: PersistenceManager.shared.loadAllOggetti())
     }
 }
+
+
+
+

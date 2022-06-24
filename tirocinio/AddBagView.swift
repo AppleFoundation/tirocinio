@@ -61,6 +61,9 @@ struct AddBagView: View {
             }
         }
         .navigationTitle("Aggiungi Valigie")
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
 }
 

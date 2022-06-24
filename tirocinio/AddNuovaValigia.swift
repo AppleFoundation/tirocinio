@@ -199,6 +199,9 @@ struct AddNuovaValigia: View {
                 }, label: {Text("Cancel")})
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         
         
     }
