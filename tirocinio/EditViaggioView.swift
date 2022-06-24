@@ -147,5 +147,8 @@ struct EditViaggioView: View {
                 selectedTipo = .europa
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
 }

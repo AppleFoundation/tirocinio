@@ -109,7 +109,9 @@ struct EditValigiaView: View {
                 }, label: {Text("Cancel")})
             }
         }
-        
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
     
 }

@@ -44,7 +44,6 @@ struct AddBagView: View {
                     
                 }
                 
-                
                 Spacer(minLength: 50)
             }
             .padding()
@@ -61,6 +60,9 @@ struct AddBagView: View {
             }
         }
         .navigationTitle("Aggiungi Valigie")
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
 }
 

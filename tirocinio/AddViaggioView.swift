@@ -20,12 +20,6 @@ struct AddViaggioView: View {
     }
     @State private var selectedTipo: TipiViaggio = .aereo
     
-    
-    //    @Binding var allViaggi: [Viaggio]
-    //
-    //    init(allViaggi: Binding<[Viaggio]>){
-    //        self._allViaggi = allViaggi
-    //    }
     var body: some View {
         Form{
             //nome, data
@@ -133,6 +127,9 @@ struct AddViaggioView: View {
                 }, label: {Text("Cancel")})
             }
         }
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         
         
     }
@@ -143,3 +140,11 @@ struct AddViaggioView: View {
 //        AddViaggioView()
 //    }
 //}
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif

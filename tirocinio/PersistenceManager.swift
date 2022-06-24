@@ -447,6 +447,18 @@ class PersistenceManager: ObservableObject {
         return oggettiinvaligia
     }
     
+    func loadOggettiInValigiaFromValigiaViaggianteViaggio(valigiaviaggiante: ValigiaViaggiante, viaggio: Viaggio) -> [OggettoInValigia]{
+        let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "contenitore = %@ AND viaggioRef = %@", valigiaviaggiante, viaggio)
+        request.predicate = predicate
+        
+        let oggetti = self.loadOggettiInValigiaFromFetchRequest(request:request)
+        
+        return oggetti
+    }
+    
     func loadOggettiInValigiaFromValigia(valigia: ValigiaViaggiante) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
@@ -763,6 +775,8 @@ class PersistenceManager: ObservableObject {
             bins.append(contentsOf: loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigiareale))
         }
         for b in bins{
+            let oggettiInValigia = self.loadOggettiInValigiaFromValigiaViaggianteViaggio(valigiaviaggiante: b, viaggio: viaggio)
+            b.removeFromContenuto(NSSet(array: oggettiInValigia))
             b.volumeAttuale = 0
             b.pesoAttuale = b.valigiaRef?.tara ?? 0
         }
@@ -800,19 +814,14 @@ class PersistenceManager: ObservableObject {
         //Calcolo secondo peso ma devo comunque non superare il volume massimo
         for item in descendingelements{
             item.quantitaAllocata = 0 //reinizializzo
-            print(item.oggettoRef?.nome ?? "Nome")
             
-            print("In totale ci sono \(bins.count) valigie")
             for i in bins.indices{
-                print("Guardo nella valigia \(bins[i].valigiaRef?.nome ?? "nome")")
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let pesodisponibile = Int(bins[i].pesoMassimo - bins[i].pesoAttuale)
                 let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
-                print("MAX: \(bins[i].pesoMassimo), ACTU: \(bins[i].pesoAttuale)")
                 
                 var numItemContenibili = Int(pesodisponibile/Int((item.oggettoRef?.peso ?? 0)))
                 let numItemContenibiliPerVolume = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 0)))
-                print("Numero di item contenibili secondo il peso: \(numItemContenibili)")
                 
                 if numItemContenibili > 0{//significa che almeno uno lo posso inserire
                     
@@ -826,29 +835,32 @@ class PersistenceManager: ObservableObject {
                     }
                     if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){//li posso inserire tutti senza oltrepassare il peso massimo
                         
-                        print("Tutta la quantità contenibile")
+                        
                         allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
                         
                     }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
                         
-                        print("Solo \(numItemContenibili) contenibili")
+                        
                         allocabili = numItemContenibili //alloco il possibile
                         
                     }
                     
-                    print("numero di item contenibili \(numItemContenibili)")
-                    if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
-                        print("Elemento già esistente nella valigia")
-                        item.quantitaAllocata += Int32(allocabili)
-                        existing[0].quantitaInValigia += Int32(allocabili)
-                    }else{//nesssun oggetto precedentemente allocato
-                        let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
-                        newallocazione.quantitaInValigia = Int32(allocabili)
-                        bins[i].addToContenuto(newallocazione)
-                        item.quantitaAllocata += Int32(allocabili)
+                    
+                    if allocabili != 0{
+                        if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
+                    
+                            item.quantitaAllocata += Int32(allocabili)
+                            existing[0].quantitaInValigia += Int32(allocabili)
+                        }else{//nesssun oggetto precedentemente allocato
+                            let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
+                            newallocazione.quantitaInValigia = Int32(allocabili)
+                            bins[i].addToContenuto(newallocazione)
+                            item.quantitaAllocata += Int32(allocabili)
+                        }
+                        bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
+                        bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
                     }
-                    bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
-                    bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
+                    
                     
                     if item.quantitaAllocata == item.quantitaInViaggio {//se ho allocato tutta la quantità dell'oggetto allora posso evitre di vedere altre valigie
                         break
@@ -871,12 +883,7 @@ class PersistenceManager: ObservableObject {
                 nonallocati.volumeAttuale += Int32(quantitaMancante) * (item.oggettoRef?.volume ?? 0)
                 nonallocati.pesoAttuale += Int32(quantitaMancante) * (item.oggettoRef?.peso ?? 0)
             }
-            print("BINS")
-            for b in bins{
-                print(b.valigiaRef?.nome ?? "Nome")
-                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
-                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
-            }
+
             
         }
         
@@ -891,16 +898,16 @@ class PersistenceManager: ObservableObject {
         //Calcolo secondo volume
         for item in descendingelements{
             item.quantitaAllocata = 0 //reinizializzo
-            print(item.oggettoRef?.nome ?? "Nome")
             
-            print("In totale ci sono \(bins.count) valigie")
+            
+            
             for i in bins.indices{
-                print("Guardo nella valigia \(bins[i].valigiaRef?.nome ?? "nome")")
+            
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
-                print("MAX: \(bins[i].volumeMassimo), ACTU: \(bins[i].volumeAttuale)")
+            
                 let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 1)))
-                print("Numero di item contenibili: \(numItemContenibili)")
+            
                 if numItemContenibili > 0{//significa che almeno uno lo posso inserire
                     
                     //controllo se nel bin attuale vi è già un oggetto in valigia che si riferisce all'oggetto viaggiante in questione (item)
@@ -909,28 +916,31 @@ class PersistenceManager: ObservableObject {
                     
                     if numItemContenibili >= (item.quantitaInViaggio - item.quantitaAllocata){
                         //li posso inserire tutti li inserisco tutti
-                        print("Tutta la quantità contenibile")
+                        
                         allocabili = Int(item.quantitaInViaggio - item.quantitaAllocata) //alloco quelli che mancano per allocarli tutti
-                        print("Ne andrò ad allocare \(allocabili)")
+                        
                         
                     }else{//maggiore di 0 ma non posso inserire tutta la quantità dell'item
-                        print("Solo \(numItemContenibili) contenibili")
+                        
                         allocabili = numItemContenibili //alloco il possibile
                         
                     }
-                    print("numero di item contenibili \(numItemContenibili)")
-                    if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
-                        print("Elemento già esistente nella valigia")
-                        item.quantitaAllocata += Int32(allocabili)
-                        existing[0].quantitaInValigia += Int32(allocabili)
-                    }else{//nesssun oggetto precedentemente allocato
-                        let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
-                        newallocazione.quantitaInValigia = Int32(allocabili)
-                        bins[i].addToContenuto(newallocazione)
-                        item.quantitaAllocata += Int32(allocabili)
+                    
+                    
+                    if allocabili != 0{
+                        if existing.count > 0{//se esiste già un oggettoinvaligia con quell'item
+                    
+                            item.quantitaAllocata += Int32(allocabili)
+                            existing[0].quantitaInValigia += Int32(allocabili)
+                        }else{//nesssun oggetto precedentemente allocato
+                            let newallocazione: OggettoInValigia = self.addOggettoInValigia(oggetto: item, valigia: bins[i], viaggio: viaggio)
+                            newallocazione.quantitaInValigia = Int32(allocabili)
+                            bins[i].addToContenuto(newallocazione)
+                            item.quantitaAllocata += Int32(allocabili)
+                        }
+                        bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
+                        bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
                     }
-                    bins[i].volumeAttuale += Int32(allocabili) * (item.oggettoRef?.volume ?? 0)
-                    bins[i].pesoAttuale += Int32(allocabili) * (item.oggettoRef?.peso ?? 0)
 
                     if item.quantitaAllocata == item.quantitaInViaggio {//se ho allocato tutta la quantità dell'oggetto allora posso evitre di vedere altre valigie
                         break
@@ -953,15 +963,7 @@ class PersistenceManager: ObservableObject {
                 nonallocati.volumeAttuale += Int32(quantitaMancante) * (item.oggettoRef?.volume ?? 0)
                 nonallocati.pesoAttuale += Int32(quantitaMancante) * (item.oggettoRef?.peso ?? 0)
             }
-            print("BINS")
-            for b in bins{
-                print(b.valigiaRef?.nome ?? "Nome")
-                print("VOLUME")
-                print(b.volumeAttuale)
-                print("FINE VOLUME")
-                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.quantitaInValigia}))
-                print(b.contenuto.array(of: OggettoInValigia.self).map({$0.oggettoViaggianteRef?.oggettoRef?.nome}))
-            }
+
             
         }
         
@@ -1049,7 +1051,7 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Lenti a contatto")
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Pinzetta")
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Rasoio")
-        PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Spazzolino da denti")
+        PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Spazzolino")
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Spazzola")
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Tagliaunghie")
         PersistenceManager.shared.addOggetto(categoria: "Articoli da bagno", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Trucchi")
@@ -1102,10 +1104,10 @@ class PersistenceManager: ObservableObject {
         //Categoria 5
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Borsa da spiaggia")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Cappello")
-        PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Costume da bagno")
+        PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Costumex")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Protezione Solare")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Doposole")
-        PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Ombrellone da spiaggia")
+        PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Ombrellone")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Telo mare")
         PersistenceManager.shared.addOggetto(categoria: "Spiaggia", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Occhialini")
         //Categoria 6
@@ -1116,19 +1118,22 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Scarpe da ginnastica")
         PersistenceManager.shared.addOggetto(categoria: "Sport", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Scarpe da trekking")
         //Categoria 7
-        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Caricabatterie smartphone")
-        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Macchina Fotografica")
+        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Caricatore")
+        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Fotocamera")
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Cuffie")
-        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Computer portatile")
-        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Caricatore laptop")
+        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Laptop")
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Smartwatch")
-        PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Caricatore Smartwatch")
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Powerbank")
         PersistenceManager.shared.addOggetto(categoria: "Informatica ed Elettronica", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Cacciaviti")
     }
 
     func inizializzaValigie(){
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Bagaglio", tara: 1000, utilizzato: false)
+        PersistenceManager.shared.addValigia(categoria: "Zaino", lunghezza: 40, larghezza: 20, profondita: 13, nome: "Zaino", tara: 900, utilizzato: false)
+        
+        PersistenceManager.shared.addValigia(categoria: "Bagaglio a mano", lunghezza: 40, larghezza: 25, profondita: 20, nome: "Bagaglio a mano", tara: 2700, utilizzato: false)
+        
+        PersistenceManager.shared.addValigia(categoria: "Bagaglio da stiva", lunghezza: 77, larghezza: 50, profondita: 31, nome: "Bagaglio da stiva", tara: 4500, utilizzato: false)
+        
         
         PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false)
     }

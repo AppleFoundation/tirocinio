@@ -100,7 +100,9 @@ struct EditOggettoView: View {
                 }, label: {Text("Cancel")})
             }
         }
-        
+        .onTapGesture {
+            self.hideKeyboard()
+        }
     }
     
 }

@@ -10,6 +10,7 @@ import SwiftUI
 struct SpeechToTextButton: View {
     
     @EnvironmentObject var speech : SpeechToText
+    @Environment(\.colorScheme) var colorScheme
     @State private var message = ""
     
     var input = DecodeInput()
@@ -61,8 +62,20 @@ struct SpeechToTextButton: View {
             Image(systemName: "mic.fill")
                 .resizable()
                 .frame(width: 30, height: 40)
-                .foregroundColor(.white)
-                .background(speech.isRecording ? Circle().foregroundColor(.red).frame(width: 85, height: 85) : Circle().foregroundColor(.blue).frame(width: 70, height: 70))
+                .foregroundColor(speech.isRecording ? .white : .blue)
+                .background(speech.isRecording ?
+                            Circle()
+                    .foregroundColor(.red)
+                    .frame(width: 90, height: 90)
+                    .shadow(color: Color.black.opacity(0.5), radius: 5, y: 5)
+                            : Circle()
+                    .foregroundColor(colorScheme == .dark ? Color.init(white: 0.1764705882) : Color.white)
+                    .frame(width: 80, height: 80)
+                    .shadow(color: Color.black.opacity(0.5), radius: 5, y: 5)
+                )
+            
+//                .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 1.0))
+                
         })
     }
     

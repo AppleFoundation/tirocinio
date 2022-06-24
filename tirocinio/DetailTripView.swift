@@ -13,17 +13,15 @@ struct DetailTripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
-    @State var insiemeDiValigie: [ValigiaViaggiante] = []
     @EnvironmentObject var speech : SpeechToText
     
     var body: some View {
         
         let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
         VStack{
-            if((valigieDB.count - numValigieDiSistema) != 0){
+            if(((valigieDB.count - numValigieDiSistema) != 0) && (calculateNumberOggetti(oggettiviaggianti: oggettiDB) != 0)){
                 VStack{
                     ScrollView(.vertical, showsIndicators: false){
                         
@@ -31,18 +29,15 @@ struct DetailTripView: View {
                             
                             tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
                             
-                            ForEach(insiemeDiValigie){
+                            ForEach(valigieDB){
                                 singolaIstanza in
                                 
-                                //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
                                 
                                 singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
                                 
                             }
                         }
                         Spacer()
-                        //                Spacer(minLength: 30)
-                        
                         
                         
                     }
@@ -78,11 +73,11 @@ struct DetailTripView: View {
         
         .onAppear(){
             speech.text = ""
+        
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
                 return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
             })
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
-            insiemeDiValigie = valigieDB
             
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
         }
@@ -92,7 +87,14 @@ struct DetailTripView: View {
         
     }
     
-    
+    func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
+        var sum: Int = 0
+        for i in oggettiviaggianti.map({$0.quantitaInViaggio}){
+            sum += Int(i)
+        }
+        
+        return sum
+    }
 }
 
 
@@ -100,11 +102,13 @@ struct tastiSenzaValigie: View{
     
     @Binding var valigieDB: [ValigiaViaggiante]
     @Binding var oggettiDB: [OggettoViaggiante]
+    
     var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @State var volumePeso: Bool = false
+    @EnvironmentObject var speech : SpeechToText
     
     init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
         self._valigieDB = valigieDB
@@ -119,64 +123,81 @@ struct tastiSenzaValigie: View{
                 Spacer()
             }
             
-            VStack{
-                Text("Aggiungi Oggetti")
-                    .font(.title.bold())
-                    .multilineTextAlignment(.center)
-                
-                //                    Text("Oggetti presenti: \(oggettiDB.count)")
-                Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-                Image(systemName: "archivebox.fill")
-                    .padding(.top, 1.0)
-                Text("Attualmente nella tua valigia ci sono degli oggetti, in questa sezione potrai aggiungere oggetti per far si che essi siano aggiunti all'interno delle tue valigie!")
+            NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+                VStack{
+                    if(calculateNumberOggetti(oggettiviaggianti: oggettiDB) <= 0){
+                        Text("Per iniziare aggiungi almeno un oggetto")
+                        //                        .foregroundColor(.blue)
+                            .font(.title.bold())
+                            .multilineTextAlignment(.center)
+                    }else{
+                        Text("Aggiungi Oggetti")
+                            .font(.title.bold())
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    //                    Text("Oggetti presenti: \(oggettiDB.count)")
+                    Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                    Image(systemName: "archivebox.fill")
+                        .resizable()
+                        .frame(width: 60, height: 60, alignment: .center)
+                        .padding(.top, 1.0)
+                }
+               
             }
             .padding()
-//            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
-            
+            .frame(width: 300, height: 200, alignment: .center)
+            .foregroundColor(colorScheme == .dark ? .white : .black)
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-            .overlay(){
-                NavigationLink(destination:  AddTripView(viaggio: viaggio)){
-                    Rectangle()
-                        .background(Color.white)
-                        .opacity(0.1)
-                    //                            .frame(width: 150)
-                        .cornerRadius(10)
-                }
-            }
+            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
             
-            VStack{
-                let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
-                Text("Aggiungi Valigie")
-                    .font(.title.bold())
-                    .multilineTextAlignment(.center)
-                Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-                Image(systemName: "suitcase.fill")
-                    .padding(.top, 1.0)
-                Text("Attualmente non hai selezionato nessuna valigia, per poter utilizzare l'applizazione oltre a selezionare gli oggetti che desideri portare con te, dovrai anche aggiungere le valigie di cui sei a disposizione e lasciare che io organizzi i tuoi oggetti!")
+            
+            Spacer()
+            
+            
+            NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+                VStack{
+                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
+                    if(valigieDB.count - numValigieDiSistema <= 0){
+                        Text("Per iniziare aggiungi almeno una valigia")
+                        //                        .foregroundColor(.blue)
+                            .font(.title.bold())
+                            .multilineTextAlignment(.center)
+                    }else{
+                        Text("Aggiungi Valigie")
+                            .font(.title.bold())
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                    Image(systemName: "suitcase.fill")
+                        .resizable()
+                        .frame(width: 60, height: 60, alignment: .center)
+                        .padding(.top, 1.0)
+                    
+                    
+                }
                 
             }
             .padding()
-//            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+            .frame(width: 300, height: 200, alignment: .center)
+            .foregroundColor(colorScheme == .dark ? .white : .black)
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
-            .overlay(){
-                NavigationLink(destination:  AddBagView(viaggio: viaggio)){
-                    Rectangle()
-                        .background(Color.white)
-                        .opacity(0.1)
-                    //                            .frame(width: 150)
-                        .cornerRadius(10)
-                }
+            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
+            
+            Spacer()
+            VStack{
+                Text("\(speech.text)")
+                    .font(.title)
+                    .bold()
+                speech.getButton(viaggioNome: self.viaggio.nome!)
             }
-            
-            
             Spacer()
         }
     }
@@ -227,7 +248,7 @@ struct tastiDiAggiunta: View{
             VStack{
                 Text("Aggiungi Oggetti")
                     .multilineTextAlignment(.center)
-                    
+                
                 //                    Text("Oggetti presenti: \(oggettiDB.count)")
                 Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
                     .font(.caption)
@@ -246,7 +267,7 @@ struct tastiDiAggiunta: View{
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-//                            .frame(width: 150)
+                    //                            .frame(width: 150)
                         .cornerRadius(10)
                 }
             }
@@ -270,7 +291,7 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutti gli oggetti?", isPresented: $showingAlertOggetti, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllOggettoViaggiante(viaggio: viaggio)
-//                    presentationMode.wrappedValue.dismiss()
+                    //                    presentationMode.wrappedValue.dismiss()
                 }
             }
             
@@ -299,12 +320,12 @@ struct tastiDiAggiunta: View{
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
-//                            .frame(width: 150)
+                    //                            .frame(width: 150)
                         .cornerRadius(10)
                 }
             }
-                
-                
+            
+            
             
             .contextMenu(.init(menuItems: {
                 
@@ -321,11 +342,11 @@ struct tastiDiAggiunta: View{
             .confirmationDialog("Vuoi davvero togliere tutte le valigie?", isPresented: $showingAlertValigie, titleVisibility: .visible){
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
-//                    presentationMode.wrappedValue.dismiss()
+                    //                    presentationMode.wrappedValue.dismiss()
                     valigieDB.removeAll()
-                    valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non 
+                    valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non
                     PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
-
+                    
                 }
             }
             
@@ -345,11 +366,14 @@ struct tastiDiAggiunta: View{
             }
             
             .toggleStyle(.switch)
-//            .tint(.mint)
-            .padding()
-            .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 0.9))
-            .cornerRadius(10)
-            .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
+            //            .tint(.mint)
+            .padding(.horizontal)
+            .padding(.vertical, 10)
+            .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 1.0))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            //            .cornerRadius(10)
+            //            .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)
             .padding(.horizontal, 20)
             .padding(.vertical)
             
@@ -360,9 +384,9 @@ struct tastiDiAggiunta: View{
         }
         
         
-
-    }
         
+    }
+    
     
     
 }
@@ -396,7 +420,7 @@ struct singolaValigiaView: View{
                                 .fontWeight(.bold)
                         }
                         .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                       
+                        
                     }
                     Spacer()
                     VStack(alignment: .trailing){
@@ -514,13 +538,13 @@ struct singolaValigiaView: View{
             }
         }else{ //Caso di ordinare per peso
             if(String("\(colorScheme)") == "light"){
-                if(valigia.pesoAttuale > valigia.pesoMassimo){
+                if(valigia.pesoAttuale > valigia.pesoMassimo || valigia.volumeAttuale > valigia.volumeMassimo){
                     //Rossa light
                     var coloreArray = Array<Color>.init()
                     coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 208/255, green: 24/255, blue: 24/255, opacity: 1.0))
                     coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 212/255, green: 105/255, blue: 105/255, opacity: 1.0))
                     gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
+                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9 || Double(valigia.volumeAttuale) > Double(valigia.volumeMassimo) * 0.9){
                     //Gialla light
                     var coloreArray = Array<Color>.init()
                     coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 255/255, green: 204/255, blue: 24/255, opacity: 1.0))
@@ -534,13 +558,13 @@ struct singolaValigiaView: View{
                     gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
                 }
             }else{
-                if(valigia.pesoAttuale > valigia.pesoMassimo){
+                if(valigia.pesoAttuale > valigia.pesoMassimo || valigia.volumeAttuale > valigia.volumeMassimo){
                     //Rossa dark
                     var coloreArray = Array<Color>.init()
                     coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 119/255, green: 17/255, blue: 17/255, opacity: 1.0))
                     coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 161/255, green: 22/255, blue: 22/255, opacity: 1.0))
                     gradienteScheda = LinearGradient(colors: coloreArray, startPoint: inizio, endPoint: fine)
-                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9){
+                }else if(Double(valigia.pesoAttuale) > Double(valigia.pesoMassimo) * 0.9 || Double(valigia.volumeAttuale) > Double(valigia.volumeMassimo) * 0.9){
                     //Gialla dark
                     var coloreArray = Array<Color>.init()
                     //                coloreArray.append(Color.init(Color.RGBColorSpace.sRGB, red: 237/255, green: 185/255, blue: 51/255, opacity: 1.0))

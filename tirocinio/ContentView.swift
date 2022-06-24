@@ -137,6 +137,7 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView(myColorScheme: $myColorScheme)) {
                         Image(systemName: "gearshape.fill")
+                            
                   }
                 }
             }
