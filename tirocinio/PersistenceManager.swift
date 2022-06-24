@@ -677,13 +677,11 @@ class PersistenceManager: ObservableObject {
         }
     }
     
-    
     func deleteOggetto(nome: String, categoria: String){
         let oggetti = self.loadOggettiFromNomeCategoria(nome: nome, categoria: categoria)
         
         if(!oggetti.isEmpty){
             self.context.delete(oggetti[0])
-                        print("Oggetti: \(String(describing: oggetti[0].nome))")
             self.saveContext()
         }
     }
@@ -693,7 +691,6 @@ class PersistenceManager: ObservableObject {
         
         if(oggettiViaggianti.count > 0){
             self.context.delete(oggettiViaggianti[0])
-            //            print("Oggetti: \(String(describing: oggettiViaggianti[0].oggettoRef?.nome))")
             self.saveContext()
         }
     }
