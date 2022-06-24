@@ -1128,7 +1128,12 @@ class PersistenceManager: ObservableObject {
     }
 
     func inizializzaValigie(){
-        PersistenceManager.shared.addValigia(categoria: "Trolley", lunghezza: 35, larghezza: 40, profondita: 20, nome: "Bagaglio", tara: 1000, utilizzato: false)
+        PersistenceManager.shared.addValigia(categoria: "Zaino", lunghezza: 40, larghezza: 20, profondita: 13, nome: "Zaino", tara: 900, utilizzato: false)
+        
+        PersistenceManager.shared.addValigia(categoria: "Bagaglio a mano", lunghezza: 40, larghezza: 25, profondita: 20, nome: "Bagaglio a mano", tara: 2700, utilizzato: false)
+        
+        PersistenceManager.shared.addValigia(categoria: "Bagaglio da stiva", lunghezza: 77, larghezza: 50, profondita: 31, nome: "Bagaglio da stiva", tara: 4500, utilizzato: false)
+        
         
         PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false)
     }

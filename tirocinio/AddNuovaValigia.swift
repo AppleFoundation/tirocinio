@@ -68,42 +68,42 @@ struct AddNuovaValigia: View {
                             lunghezza = 40
                             larghezza = 25
                             profondita = 20
-                            tara = 3500
+                            tara = 2700
                         case .bagaglioDaStiva:
-                            lunghezza = 119
-                            larghezza = 119
-                            profondita = 81
-                            tara = 3500
+                            lunghezza = 77
+                            larghezza = 50
+                            profondita = 31
+                            tara = 4500
                         case .borsone:
                             lunghezza = 48
                             larghezza = 52
                             profondita = 35
-                            tara = 3500
+                            tara = 1200
                         case .valigiaGrande:
                             lunghezza = 119
                             larghezza = 119
                             profondita = 81
-                            tara = 3500
+                            tara = 4500
                         case .valigiaMedia:
                             lunghezza = 40
                             larghezza = 25
                             profondita = 20
-                            tara = 3500
+                            tara = 3100
                         case .valigiaPiccola:
-                            lunghezza = 2
-                            larghezza = 2
-                            profondita = 2
-                            tara = 3500
+                            lunghezza = 46
+                            larghezza = 33
+                            profondita = 10
+                            tara = 1500
                         case .trolley:
                             lunghezza = 56
                             larghezza = 45
                             profondita = 25
-                            tara = 3500
+                            tara = 3100
                         case .zaino:
                             lunghezza = 40
-                            larghezza = 30
+                            larghezza = 20
                             profondita = 13
-                            tara = 3500
+                            tara = 900
                         }
                     
                 }

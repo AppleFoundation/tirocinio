@@ -35,7 +35,7 @@ struct IntroductionView: View {
                 generator.notificationOccurred(.success)
                 presentationMode.wrappedValue.dismiss()
             }) {
-                Text("Continue")
+                Text("Continua")
                     .customButton()
             }
             .padding(.horizontal)
@@ -52,7 +52,7 @@ struct TitleView: View {
                 .frame(width: 180, alignment: .center)
                 .accessibility(hidden: true)
 
-            Text("Welcome to")
+            Text("Benvenuto in")
                 .customTitleText()
 
             Text("Smart SuitCases")
@@ -65,9 +65,9 @@ struct TitleView: View {
 struct InformationContainerView: View {
     var body: some View {
         VStack(alignment: .leading) {
-            InformationDetailView(title: "Packing", subTitle: "Porta con te tutto il necessario senza perdere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
-            InformationDetailView(title: "Money saving", subTitle: "Evita di pagare per gli eccessi di peso, con quest'app saprai sempre quanto pesa la tua valigia!", imageName: "creditcard.fill")
-            InformationDetailView(title: "Smart list", subTitle: "Prepara la tua valigia in forma digitale in modo da non dimenticare nulla!", imageName: "checklist")
+            InformationDetailView(title: "Imballaggio", subTitle: "Porta con te tutto il necessario senza perdere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
+            InformationDetailView(title: "Risparmio", subTitle: "Evita di pagare per gli eccessi di peso, con quest'app saprai sempre quanto pesa la tua valigia!", imageName: "creditcard.fill")
+            InformationDetailView(title: "Lista intelligente", subTitle: "Prepara la tua valigia in forma digitale in modo da non dimenticare nulla!", imageName: "checklist")
 
 //            InformationDetailView(title: "Find", subTitle: "To get what you need", imageName: "dot.viewfinder")
 

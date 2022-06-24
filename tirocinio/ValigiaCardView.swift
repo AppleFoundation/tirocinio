@@ -128,7 +128,6 @@ struct ValigiaCardView: View {
                     }
                 })
             }))
-            
             if (value > 0){
                 HStack{
                     VStack{
