@@ -39,6 +39,7 @@ public class DecodeInput {
         // all'interno di un array
         var azione : String = text.components(separatedBy: " ")[0].lowercased()
         var done = false
+        var rep : Int
         let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
         
         // interpretazione dell'azione
@@ -48,17 +49,19 @@ public class DecodeInput {
         switch azione {
             
             case "aggiungi":
-            var rep : Int
                 
                 // verifico se l'oggetto da inserire è effettivamente un oggetto
                 for item in DecodeInput.oggetti {
                     
                     if(text.lowercased().contains(item.name.lowercased())){
                         
+                        // quante volte devo inserire l'oggetto trovato
                         rep = getOccurrences(input: text, name: item.name.lowercased())
                         
-                        for i in 1...rep{
-                            let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+                        // inserisco tutte le occorrenze dell'oggetto
+                        let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+                        
+                        for _ in 1...rep{
                             PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                         }
                         
@@ -70,22 +73,29 @@ public class DecodeInput {
             
                 // se non sono stati trovati oggetti verifico se si tratta di una valigia da inserire
                 for c in DecodeInput.valigie {
+                    
                     if(text.lowercased().contains(c.name.lowercased())){
                         
-                        rep = contaOccorrenze(input: text.lowercased(), name: c.name.lowercased())
+                        // conto il numero di occorrenze di quella valigia all'interno della stringa di input (più
+                        // occorrenze della stessa valigia potrebbero avere pesi massimi diversi)
+                        rep = contaOccorrenze(input: text.lowercased(), name: c.name.lowercased()) // occorrenze della stessa valigia diverso peso max
+                        let rep2 = getOccurrences(input: text, name: c.name.lowercased()) // occorrenze di una valigia da aggiungere (es. 2, 3, 4, ...)
                         
-                        for i in 1...rep{
+                        for _ in 1...rep{
                             let valigia = PersistenceManager.shared.loadValigieFromNomeCategoria(nome: c.name, categoria: c.category)[0]
 
                             DecodeInput.valigieUsate.append(valigia.nome!)
                             let pesoMassimo = getPesoMassimo(input: text.lowercased(), name: c.name, category: c.category)
                             
-                            PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo)
-    
+                            // inserisco tutte le occorrenze della valigia
+                            for _ in 1...rep2{
+                                PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo*1000)
+                            }
                         }
                         
                         done = true
                     }
+                    
                 }
                 
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
@@ -96,13 +106,21 @@ public class DecodeInput {
                 // verifico se l'oggetto da eliminare è effettivamente un oggetto
                 for item in DecodeInput.oggetti {
                     if(text.lowercased().contains(item.name.lowercased())){
+                        
+                        // quante volte devo eliminare l'oggetto trovato
+                        rep = getOccurrences(input: text, name: item.name.lowercased())
+                        
                         let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
                         let ov  = PersistenceManager.shared.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: oggetto, viaggioRef: viaggio)[0]
-                        ov.quantitaInViaggio -= 1
-                        ov.quantitaAllocata -= 1
-                        if ov.quantitaInViaggio == 0{
-                            PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                        
+                        for _ in 1...rep{
+                            ov.quantitaInViaggio -= 1
+                            ov.quantitaAllocata -= 1
+                            if ov.quantitaInViaggio == 0{
+                                PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+                            }
                         }
+
                         done = true
                     }
                 }
@@ -110,10 +128,17 @@ public class DecodeInput {
                 // se non sono stati trovati oggetti, verifico se si tratta di una valigia da eliminare
                 for c in DecodeInput.valigie {
                     if(text.lowercased().contains(c.name.lowercased())){
+                        
                         let valigiaViagg = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
                         for val in valigiaViagg{
                             if(val.valigiaRef!.nome!.lowercased() == c.name.lowercased()){
-                                PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)
+                                
+                                rep = getOccurrences(input: text, name: c.name.lowercased()) // occorrenze della valigia da eliminare
+                                
+                                for _ in 1...rep{
+                                    PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)
+                                }
+                                
                                 done = true
                                 break
                             }
@@ -210,12 +235,8 @@ public class DecodeInput {
         for item in inputArray {
             
             if i != 0 {
-                print(stringIsNumber(inputArray[i-1].lowercased()))
-                print(item)
                 
                 if (item.lowercased() == name.lowercased()){
-                    
-                    print("sono qui")
                     
                     if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
                         
