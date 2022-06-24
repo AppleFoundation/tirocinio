@@ -44,7 +44,6 @@ struct AddBagView: View {
                     
                 }
                 
-                
                 Spacer(minLength: 50)
             }
             .padding()
