@@ -159,7 +159,9 @@ struct AddNuovoOggetto: View {
                 }, label: {Text("Cancel")})
             }
         }
-        
+        .onTapGesture {
+            self.hideKeyboard()
+        }
         
     }
 }

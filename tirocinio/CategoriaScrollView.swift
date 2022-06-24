@@ -33,7 +33,7 @@ struct CategoriaScrollView: View{
             
             let rows: [GridItem] = Array(repeating: GridItem.init(.flexible(minimum: 60, maximum: .infinity), spacing: 5, alignment: .center), count: oggettiCategoria.count < 3 ? oggettiCategoria.count : 3)
             
-            ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal, showsIndicators: true) {
                 HStack{
                     Spacer(minLength: 15) //Utile per far iniziare la scroll più a destra e farlo combaciare col padding superiore
                     LazyHGrid(rows: rows, alignment: .top, spacing: 15) {
@@ -50,14 +50,17 @@ struct CategoriaScrollView: View{
                             }else{
                                 CardView(oggetto: oggetto, viaggio: viaggio, value: 0)
                             }
+                                
                             
                         }
                     }
                     Spacer(minLength: 15) //Utile per avere più simmetria
                 }
+                .padding(.bottom)
             }
             
         }
+
     }
 }
 
@@ -66,3 +69,7 @@ struct CategoriaScrollView_Previews: PreviewProvider {
         CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategoria: PersistenceManager.shared.loadAllOggetti())
     }
 }
+
+
+
+
