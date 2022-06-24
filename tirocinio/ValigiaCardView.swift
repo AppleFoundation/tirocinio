@@ -56,7 +56,13 @@ struct ValigiaCardView: View {
                             Button(action: {
                                 value += 1
                                 count += 1
-                                PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: Int(pesoMassimo)*1000)
+                                PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: {
+                                    if(pesoMassimo == 0){
+                                        return Int(Int32.max)
+                                    }else{
+                                        return Int(pesoMassimo)*1000
+                                    }
+                                }())
                             }, label: {
                                 Image(systemName: "plus.circle.fill")
                                     .resizable()
@@ -106,7 +112,7 @@ struct ValigiaCardView: View {
                     editEnable = true
                 }, label: {
                     HStack {
-                        Text("Edit")
+                        Text("Modifica")
                         Image(systemName: "pencil")
                     }
                 })
@@ -126,21 +132,42 @@ struct ValigiaCardView: View {
             if (value > 0){
                 HStack{
                     VStack{
-                        Text("Peso max: \(String(format: "%.1f", pesoMassimo))Kg")
-                            .foregroundColor({
-                                if (value > 0){
-                                    return .red
-                                }else{
-                                    return .gray
-                                }
-                            }())
+                        if(pesoMassimo > 0){
+                            Text("Limite di peso: \(String(format: "%.1f", pesoMassimo))Kg")
+                                .foregroundColor({
+                                    if (value > 0){
+                                        return .red
+                                    }else{
+                                        return .gray
+                                    }
+                                }())
+                        }else{
+                            Text("Limite di peso: nessuo")
+                                .foregroundColor({
+                                    if (value > 0){
+                                        return .red
+                                    }else{
+                                        return .gray
+                                    }
+                                }())
+                        }
+                            
                     }
-                    VStack{
+                    Spacer()
+                    VStack(alignment: .trailing){
                         //                    Slider(value: $pesoMassimo, in: 0...30, step: 1.0)
                         
                         Slider(value: $pesoMassimo, in: 0...30, step: 1.0, onEditingChanged: {_ in
-                            PersistenceManager.shared.aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: Int(pesoMassimo)*1000)
-                        }).disabled({
+                            PersistenceManager.shared.aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: {
+                                if(pesoMassimo == 0){
+                                    return Int(Int32.max)
+                                }else{
+                                    return Int(pesoMassimo)*1000
+                                }
+                            }())
+                        })
+                        .frame(width: 170)
+                        .disabled({
                             if (value > 0){
                                 return false
                             }else{
@@ -165,6 +192,9 @@ struct ValigiaCardView: View {
             let valigiaViaggiante = PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia)
             if(!valigiaViaggiante.isEmpty){
                 pesoMassimo = Double(valigiaViaggiante[0].pesoMassimo)/1000
+                if(Int32(pesoMassimo*1000) == Int32.max){
+                    pesoMassimo = 0
+                }
             }
             value = PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count
         }

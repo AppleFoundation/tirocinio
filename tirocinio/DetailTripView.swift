@@ -21,41 +21,44 @@ struct DetailTripView: View {
     
     var body: some View {
         
-        
-        
+        let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
         VStack{
-            ScrollView(.vertical, showsIndicators: false){
-                
+            if((valigieDB.count - numValigieDiSistema) != 0){
                 VStack{
-                    
-                    tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
-                    
-                    ForEach(insiemeDiValigie){
-                        singolaIstanza in
+                    ScrollView(.vertical, showsIndicators: false){
                         
-                        //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
+                        VStack{
+                            
+                            tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
+                            
+                            ForEach(insiemeDiValigie){
+                                singolaIstanza in
+                                
+                                //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
+                                
+                                singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
+                                
+                            }
+                        }
+                        Spacer()
+                        //                Spacer(minLength: 30)
                         
-                        singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
+                        
                         
                     }
+                    VStack{
+                        Text("\(speech.text)")
+                            .font(.title)
+                            .bold()
+                        speech.getButton(viaggioNome: self.viaggio.nome!)
+                    }
+                    
+                    Spacer(minLength: 30)
                 }
-                Spacer()
-//                Spacer(minLength: 30)
-                
-
-                
+            }else{
+                tastiSenzaValigie(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
             }
-            VStack{
-                Text("\(speech.text)")
-                    .font(.title)
-                    .bold()
-                speech.getButton(viaggioNome: self.viaggio.nome!)
-            }
-            
-            Spacer(minLength: 30)
         }
-        
-        
         .padding(.horizontal)
         .navigationBarTitleDisplayMode(.large)
         .background{
@@ -86,9 +89,107 @@ struct DetailTripView: View {
         
         .navigationTitle(viaggio.nome ?? "Nome viaggio")
         
+        
     }
+    
+    
 }
 
+
+struct tastiSenzaValigie: View{
+    
+    @Binding var valigieDB: [ValigiaViaggiante]
+    @Binding var oggettiDB: [OggettoViaggiante]
+    var viaggio: Viaggio
+    
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State var volumePeso: Bool = false
+    
+    init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
+        self._valigieDB = valigieDB
+        self._oggettiDB = oggettiDB
+        self.viaggio = viaggio
+    }
+    
+    var body: some View{
+        VStack{
+            Spacer()
+            HStack{
+                Spacer()
+            }
+            
+            VStack{
+                Text("Aggiungi Oggetti")
+                    .font(.title.bold())
+                    .multilineTextAlignment(.center)
+                
+                //                    Text("Oggetti presenti: \(oggettiDB.count)")
+                Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                Image(systemName: "archivebox.fill")
+                    .padding(.top, 1.0)
+                Text("Attualmente nella tua valigia ci sono degli oggetti, in questa sezione potrai aggiungere oggetti per far si che essi siano aggiunti all'interno delle tue valigie!")
+            }
+            .padding()
+//            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+            
+            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            .overlay(){
+                NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+                    Rectangle()
+                        .background(Color.white)
+                        .opacity(0.1)
+                    //                            .frame(width: 150)
+                        .cornerRadius(10)
+                }
+            }
+            
+            VStack{
+                let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
+                Text("Aggiungi Valigie")
+                    .font(.title.bold())
+                    .multilineTextAlignment(.center)
+                Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
+                    .font(.caption)
+                    .multilineTextAlignment(.center)
+                Image(systemName: "suitcase.fill")
+                    .padding(.top, 1.0)
+                Text("Attualmente non hai selezionato nessuna valigia, per poter utilizzare l'applizazione oltre a selezionare gli oggetti che desideri portare con te, dovrai anche aggiungere le valigie di cui sei a disposizione e lasciare che io organizzi i tuoi oggetti!")
+                
+            }
+            .padding()
+//            .frame(minWidth: 150, maxWidth: 150, minHeight: 80)
+            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
+            .overlay(){
+                NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+                    Rectangle()
+                        .background(Color.white)
+                        .opacity(0.1)
+                    //                            .frame(width: 150)
+                        .cornerRadius(10)
+                }
+            }
+            
+            
+            Spacer()
+        }
+    }
+    
+    func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
+        var sum: Int = 0
+        for i in oggettiviaggianti.map({$0.quantitaInViaggio}){
+            sum += Int(i)
+        }
+        
+        return sum
+    }
+}
 
 struct tastiDiAggiunta: View{
     
@@ -149,8 +250,6 @@ struct tastiDiAggiunta: View{
                         .cornerRadius(10)
                 }
             }
-                
-                
             
             .contextMenu(.init(menuItems: {
                 
@@ -246,7 +345,7 @@ struct tastiDiAggiunta: View{
             }
             
             .toggleStyle(.switch)
-            .tint(.mint)
+//            .tint(.mint)
             .padding()
             .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 0.9))
             .cornerRadius(10)
@@ -310,8 +409,14 @@ struct singolaValigiaView: View{
                         }else{
                             Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
                                 .font(.caption)
-                            Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
-                                .font(.caption)
+                            if(singolaIstanza.pesoMassimo < Int32.max){
+                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                    .font(.caption)
+                            }else{
+                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di ∞")
+                                    .font(.caption)
+                            }
+                            
                         }
                         
                         

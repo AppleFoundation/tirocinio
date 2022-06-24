@@ -51,6 +51,7 @@ struct AddNuovoOggetto: View {
                 }
                 .pickerStyle(.menu)
                 
+                
             }
             
             Section(header: Text("Dimensioni")){

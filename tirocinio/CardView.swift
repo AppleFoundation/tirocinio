@@ -113,7 +113,11 @@ struct CardView: View {
                     editEnable = true
                 }, label: {
                     HStack {
-                        Text("Edit")
+                        if (oggetto.nome!.contains(Character.init("★"))){
+                            Text("Modifica")
+                        }else{
+                            Text("Clona e personalizza")
+                        }
                         Image(systemName: "pencil")
                     }
                 })

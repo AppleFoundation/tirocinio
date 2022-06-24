@@ -37,7 +37,7 @@ struct AddNuovaValigia: View {
     var body: some View {
         Form{
             Section(header: Text("Nome")){
-                TextField("Nuovo nome valigia", text: $nome)
+                TextField("Nome nuova valigia", text: $nome)
                 //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
             
@@ -56,24 +56,75 @@ struct AddNuovaValigia: View {
                     
                 }
                 .pickerStyle(.menu)
+                .onChange(of: selectedCategoria){ value in
+                    
+                        switch value{
+                        case .altro:
+                            lunghezza = 1
+                            larghezza = 1
+                            profondita = 1
+                            tara = 0
+                        case .bagaglioAMano:
+                            lunghezza = 40
+                            larghezza = 25
+                            profondita = 20
+                            tara = 3500
+                        case .bagaglioDaStiva:
+                            lunghezza = 119
+                            larghezza = 119
+                            profondita = 81
+                            tara = 3500
+                        case .borsone:
+                            lunghezza = 48
+                            larghezza = 52
+                            profondita = 35
+                            tara = 3500
+                        case .valigiaGrande:
+                            lunghezza = 119
+                            larghezza = 119
+                            profondita = 81
+                            tara = 3500
+                        case .valigiaMedia:
+                            lunghezza = 40
+                            larghezza = 25
+                            profondita = 20
+                            tara = 3500
+                        case .valigiaPiccola:
+                            lunghezza = 2
+                            larghezza = 2
+                            profondita = 2
+                            tara = 3500
+                        case .trolley:
+                            lunghezza = 56
+                            larghezza = 45
+                            profondita = 25
+                            tara = 3500
+                        case .zaino:
+                            lunghezza = 40
+                            larghezza = 30
+                            profondita = 13
+                            tara = 3500
+                        }
+                    
+                }
                 
             }
             
             Section(header: Text("Dimensioni")){
                 Text("Volume (litri): \(String(format: "%.3f", lunghezza*larghezza*profondita/1000))")
                 Text("Lunghezza (centimetri): \(Int(lunghezza)) ")
-                Slider(value: $lunghezza, in: 1...60, step: 1.0)
+                Slider(value: $lunghezza, in: 1...120, step: 1.0)
                 Text("Larghezza (centimetri): \(Int(larghezza))")
-                Slider(value: $larghezza, in: 1...60, step: 1.0)
+                Slider(value: $larghezza, in: 1...120, step: 1.0)
                 Text("Profondita (centimetri): \(Int(profondita))")
-                Slider(value: $profondita, in: 1...60, step: 1.0)
+                Slider(value: $profondita, in: 1...120, step: 1.0)
 
             }
             
             
             
             Section(header: Text("Tara (grammi): \(Int(tara))")){
-                Slider(value: $tara, in: 0...3000, step: 50.0)
+                Slider(value: $tara, in: 0...6000, step: 50.0)
             }
             
         }

@@ -222,7 +222,7 @@ struct ActionButtonView: View{
                         editEnable = true
                     }, label: {
                         HStack {
-                            Text("Edit")
+                            Text("Modifica")
                             Image(systemName: "pencil")
                         }
                     })
