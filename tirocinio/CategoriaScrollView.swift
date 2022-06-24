@@ -16,7 +16,7 @@ struct CategoriaScrollView: View{
     var viaggio: Viaggio
     
     var oggettiCategoria: [Oggetto]
-
+    
     
     //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
@@ -50,7 +50,7 @@ struct CategoriaScrollView: View{
                             }else{
                                 CardView(oggetto: oggetto, viaggio: viaggio, value: 0)
                             }
-                                
+                            
                             
                         }
                     }
@@ -60,7 +60,7 @@ struct CategoriaScrollView: View{
             }
             
         }
-
+        
     }
 }
 
@@ -69,6 +69,7 @@ struct CategoriaScrollView_Previews: PreviewProvider {
         CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategoria: PersistenceManager.shared.loadAllOggetti())
     }
 }
+
 
 
 
