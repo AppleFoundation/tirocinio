@@ -21,37 +21,38 @@ struct DetailTripView: View {
         
         let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
         VStack{
-            if(((valigieDB.count - numValigieDiSistema) != 0) && (calculateNumberOggetti(oggettiviaggianti: oggettiDB) != 0)){
-                VStack{
-                    ScrollView(.vertical, showsIndicators: false){
-                        
-                        VStack{
-                            
-                            tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
-                            
-                            ForEach(valigieDB){
-                                singolaIstanza in
-                                
-                                
-                                singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
-                                
-                            }
-                        }
-                        Spacer()
-                        
-                        
-                    }
-                    VStack{
-                        Text("\(speech.text)")
-                            .font(.title)
-                            .bold()
-                        speech.getButton(viaggioNome: self.viaggio.nome!)
-                    }
+//            if(((valigieDB.count - numValigieDiSistema) != 0) && (calculateNumberOggetti(oggettiviaggianti: oggettiDB) != 0)){
+//
+//            }else{
+//                tastiSenzaValigie(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
+//            }
+            VStack{
+                ScrollView(.vertical, showsIndicators: false){
                     
-                    Spacer(minLength: 30)
+                    VStack{
+                        
+                        tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
+                        
+                        ForEach(valigieDB){
+                            singolaIstanza in
+                            
+                            
+                            singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
+                            
+                        }
+                    }
+                    Spacer()
+                    
+                    
                 }
-            }else{
-                tastiSenzaValigie(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
+                VStack{
+                    Text("\(speech.text)")
+                        .font(.title)
+                        .bold()
+                    speech.getButton(viaggioNome: self.viaggio.nome!)
+                }
+                
+                Spacer(minLength: 30)
             }
         }
         .padding(.horizontal)
@@ -405,10 +406,11 @@ struct singolaValigiaView: View{
             
             Spacer()
             VStack{
-                HStack{
-                    Button(action: {
-                        visualizzaOggetti.toggle()
-                    }){
+                
+                Button(action: {
+                    visualizzaOggetti.toggle()
+                }){
+                    HStack{
                         HStack{
                             if (visualizzaOggetti){
                                 Image(systemName: "arrowtriangle.down.fill")
@@ -418,34 +420,38 @@ struct singolaValigiaView: View{
                             Text("\((singolaIstanza.valigiaRef?.nome)!)")
                                 .font(.title)
                                 .fontWeight(.bold)
-                        }
-                        .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
-                        
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing){
-                        //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
-                        if singolaIstanza.valigiaRef?.categoria == "0SYSTEM"{
-                            Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l")
-                                .font(.caption)
-                            Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g")
-                                .font(.caption)
-                        }else{
-                            Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
-                                .font(.caption)
-                            if(singolaIstanza.pesoMassimo < Int32.max){
-                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
-                                    .font(.caption)
-                            }else{
-                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di ∞")
-                                    .font(.caption)
-                            }
                             
                         }
                         
-                        
+                        Spacer()
+                        VStack(alignment: .trailing){
+                            //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
+                            if singolaIstanza.valigiaRef?.categoria == "0SYSTEM"{
+                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l")
+                                    .font(.caption)
+                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g")
+                                    .font(.caption)
+                            }else{
+                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
+                                    .font(.caption)
+                                if(singolaIstanza.pesoMassimo < Int32.max){
+                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                        .font(.caption)
+                                }else{
+                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di ∞")
+                                        .font(.caption)
+                                }
+                                
+                            }
+                            
+                            
+                        }
                     }
+                    .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
+                    
                 }
+                
+                
                 .padding(.bottom)
                 
                 
