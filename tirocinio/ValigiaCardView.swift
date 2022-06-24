@@ -142,7 +142,7 @@ struct ValigiaCardView: View {
                                     }
                                 }())
                         }else{
-                            Text("Limite di peso: nessuo")
+                            Text("Limite di peso: nessuno")
                                 .foregroundColor({
                                     if (value > 0){
                                         return .red
