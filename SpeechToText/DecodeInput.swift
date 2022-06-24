@@ -48,20 +48,31 @@ public class DecodeInput {
         switch azione {
             
             case "aggiungi":
+            var rep : Int
                 
                 // verifico se l'oggetto da inserire è effettivamente un oggetto
                 for item in DecodeInput.oggetti {
+                    
                     if(text.lowercased().contains(item.name.lowercased())){
-                        let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
-                        PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
-                        done = true
+                        
+                        rep = getOccurrences(input: text, name: item.name.lowercased())
+                        
+                        for i in 1...rep{
+                            let oggetto = PersistenceManager.shared.loadOggettiFromNomeCategoria(nome: item.name, categoria: item.category)[0]
+                            PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
+                        }
+                        
                     }
+                    
+                    done = true
+                    
                 }
             
                 // se non sono stati trovati oggetti verifico se si tratta di una valigia da inserire
                 for c in DecodeInput.valigie {
                     if(text.lowercased().contains(c.name.lowercased())){
-                        let rep = contaOccorrenze(input: text.lowercased(), name: c.name.lowercased())
+                        
+                        rep = contaOccorrenze(input: text.lowercased(), name: c.name.lowercased())
                         
                         for i in 1...rep{
                             let valigia = PersistenceManager.shared.loadValigieFromNomeCategoria(nome: c.name, categoria: c.category)[0]
@@ -69,14 +80,15 @@ public class DecodeInput {
                             DecodeInput.valigieUsate.append(valigia.nome!)
                             let pesoMassimo = getPesoMassimo(input: text.lowercased(), name: c.name, category: c.category)
                             
-                            print("------------------------Peso:\(pesoMassimo)---------------------------")
                             PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo)
+    
                         }
                         
                         done = true
                     }
                 }
                 
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
             DecodeInput.valigieUsate.removeAll()
                 
             case "rimuovi":
@@ -97,7 +109,6 @@ public class DecodeInput {
             
                 // se non sono stati trovati oggetti, verifico se si tratta di una valigia da eliminare
                 for c in DecodeInput.valigie {
-                    // Grazia correggi qui per tenere conto del peso massimo ->>>>>>>>>>>>>>>>>>>>>>>>>
                     if(text.lowercased().contains(c.name.lowercased())){
                         let valigiaViagg = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
                         for val in valigiaViagg{
@@ -110,7 +121,8 @@ public class DecodeInput {
                     }
                 }
             
-                
+            PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
+            
             default:
             
                 // l'azione da compiere non è aggiunta o rimozione di oggetti / valigie
@@ -182,22 +194,56 @@ public class DecodeInput {
         }
         
         if peso == 0{
-            // se non è presente alcun numero restituisco un valore di default in base alla categoria della valigia
+            // se non è presente alcun numero restituisco un valore di default
             peso = Int(Int32.max)
         }
         
         return peso
     }
     
+    public func getOccurrences(input: String, name: String) -> Int {
+        
+        var i = 0
+        
+        let inputArray = input.components(separatedBy: " ")
+        
+        for item in inputArray {
+            
+            print(item)
+            
+            if (item.lowercased() == name.lowercased() && i != 0){
+                
+                if(inputArray[i-1].lowercased() ~= "[a-z]*"){
+                    
+                    for (key, value) in numbers {
+                        if (value == inputArray[i-1].lowercased()){
+                            return key
+                        }
+                    }
+                    
+                }
+                
+            }
+            
+            i += 1
+            
+        }
+        
+        return 1
+        
+    }
+    
     func contaOccorrenze (input: String, name: String) -> Int {
+        
         let inputArray = input.components(separatedBy: " ")
         var conta = 0
         for i in inputArray{
-            if i == name {
+            if i.lowercased() == name.lowercased() {
                 conta += 1
             }
         }
         return conta
+        
     }
     
     let numbers:[Int:String] = [1:"uno", 2:"due", 3:"tre", 4:"quattro", 5:"cinque",
@@ -226,5 +272,11 @@ extension String {
 extension Dictionary where Value: Equatable {
     func key(from value: Value) -> Key? {
         return self.first(where: { $0.value == value })?.key
+    }
+}
+
+extension String  {
+    var isNumber: Bool {
+        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
 }
