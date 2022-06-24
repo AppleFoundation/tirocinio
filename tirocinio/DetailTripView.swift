@@ -41,6 +41,9 @@ struct DetailTripView: View {
                         
                         
                     }
+                    .refreshable {
+                        print("Marameo")
+                    }
                     VStack{
                         Text("\(speech.text)")
                             .font(.title)

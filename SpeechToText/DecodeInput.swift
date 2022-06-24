@@ -117,7 +117,7 @@ public class DecodeInput {
                 done = false
             
         }
-        
+        PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
         return done
     }
     
