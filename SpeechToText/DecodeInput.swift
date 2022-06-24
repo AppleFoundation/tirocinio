@@ -209,20 +209,29 @@ public class DecodeInput {
         
         for item in inputArray {
             
-            print(item)
-            
-            if (item.lowercased() == name.lowercased() && i != 0){
+            if i != 0 {
+                print(stringIsNumber(inputArray[i-1].lowercased()))
+                print(item)
                 
-                if(inputArray[i-1].lowercased() ~= "[a-z]*"){
+                if (item.lowercased() == name.lowercased()){
                     
-                    for (key, value) in numbers {
-                        if (value == inputArray[i-1].lowercased()){
-                            return key
+                    print("sono qui")
+                    
+                    if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
+                        
+                        for (key, value) in numbers {
+                            if (value == inputArray[i-1].lowercased()){
+                                return key
+                            }
                         }
+                        
+                    }else if(stringIsNumber(inputArray[i-1].lowercased())){
+                        
+                        return Int(inputArray[i-1].lowercased())!
+                        
                     }
                     
                 }
-                
             }
             
             i += 1
@@ -252,6 +261,16 @@ public class DecodeInput {
                                16:"sedici", 17:"diciassette", 18:"diciotto", 19:"diciannove", 20:"venti",
                                21:"ventuno", 22:"ventidue", 23:"ventitré", 24:"ventiquattro", 25:"venticinque",
                                26:"ventisei", 27:"ventisette", 28:"ventotto", 29:"ventinove", 30:"trenta"]
+    
+    func stringIsNumber(_ string:String) -> Bool {
+        for character in string{
+            if !character.isNumber{
+                return false
+            }
+        }
+        return true
+    }
+    
 }
 
 extension NSRegularExpression {
@@ -275,8 +294,7 @@ extension Dictionary where Value: Equatable {
     }
 }
 
-extension String  {
-    var isNumber: Bool {
-        return !isEmpty && rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
-    }
-}
+    
+
+    
+
