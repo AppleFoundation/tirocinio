@@ -46,7 +46,7 @@ struct CategoriaScrollView: View{
                             
                             let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
                             if (oggettiInValigia.isEmpty == false){
-                                CardView(oggetto: oggetto, viaggio: viaggio, value: Int(oggettiInValigia[0].quantitaInValigia))
+                                CardView(oggetto: oggetto, viaggio: viaggio, value: Int(oggettiInValigia[0].oggettoViaggianteRef!.quantitaInViaggio))
                             }else{
                                 CardView(oggetto: oggetto, viaggio: viaggio, value: 0)
                             }

@@ -13,10 +13,8 @@ struct DetailTripView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    
     @State var valigieDB: [ValigiaViaggiante] = []
     @State var oggettiDB: [OggettoViaggiante] = []
-    @State var insiemeDiValigie: [ValigiaViaggiante] = []
     @EnvironmentObject var speech : SpeechToText
     
     var body: some View {
@@ -31,18 +29,15 @@ struct DetailTripView: View {
                             
                             tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
                             
-                            ForEach(insiemeDiValigie){
+                            ForEach(valigieDB){
                                 singolaIstanza in
                                 
-                                //                        Text(singolaIstanza.valigiaRef?.nome ?? "Marameo")
                                 
                                 singolaValigiaView(singolaIstanza: singolaIstanza, viaggio: viaggio)
                                 
                             }
                         }
                         Spacer()
-                        //                Spacer(minLength: 30)
-                        
                         
                         
                     }
@@ -78,11 +73,11 @@ struct DetailTripView: View {
         
         .onAppear(){
             speech.text = ""
+        
             valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
                 return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
             })
             oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
-            insiemeDiValigie = valigieDB
             
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
         }
@@ -107,6 +102,7 @@ struct tastiSenzaValigie: View{
     
     @Binding var valigieDB: [ValigiaViaggiante]
     @Binding var oggettiDB: [OggettoViaggiante]
+    
     var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
