@@ -197,7 +197,6 @@ public class DecodeInput {
     // funzione che restituisce il peso massimo della valigia viaggiante da inserire
     public func getPesoMassimo(input: String, name: String) -> Int32 {
         
-        var peso : Int32 = 0
         var countOcc = 0
         
         for conta in DecodeInput.valigieUsate{
@@ -206,44 +205,96 @@ public class DecodeInput {
             }
         }
         
+        // di quante parole si compone il nome della valigia?
+        let nomeArray = name.components(separatedBy: " ")
+        
+        
         // cerco il peso della valigia all'interno della stringa inserita
         // countOcc, se diverso da 0, contiene il numero di occorrenze del nome della valigia da skippare prima di prendere il peso
         let inputArray = input.components(separatedBy: " ")
         
         var i = 0, c = 0
-        for item in inputArray {
-            
-            if (item.lowercased() == name.lowercased()){
-                print(item.lowercased())
-                c += 1
-            }
-            
-            if (item.lowercased() == name.lowercased() && c == countOcc){
-                // valigia di cui prendere il peso
+        
+        // se il nome della valigia è composto da una parola
+        if nomeArray.count == 1 {
+            for item in inputArray {
                 
-                for k in i...inputArray.count-1 {
-                    if inputArray[k].lowercased() == "kg" {
-                        
-                        if(inputArray[k-1] ~= "[0-9]*"){
-                            // il peso è scritto a numero
-                            return Int32(exactly: Int(inputArray[k-1])!*1000)! // res in grammi
-
-                        }
-                    }
+                print("--\(item.lowercased())--\(name.lowercased())--")
+                
+                if (item.lowercased() == name.lowercased()){
+                    print(item.lowercased())
+                    c += 1
                 }
                 
-            }
+                if (item.lowercased() == name.lowercased() && c == countOcc){
+                    // valigia di cui prendere il peso
+                    
+                    for k in i...inputArray.count-1 {
+                        if inputArray[k].lowercased() == "kg" {
+                            
+                            if(inputArray[k-1] ~= "[0-9]*"){
+                                // il peso è scritto a numero
+                                return Int32(exactly: Int(inputArray[k-1])!*1000)! // res in grammi
 
-            i = i + 1
+                            }
+                        }
+                    }
+                    
+                }
+
+                i = i + 1
+                
+            }
             
+        // se il nome della valigia è composto da più parole
+        }else{
+            
+            for item in inputArray{
+                
+                // ho trovato la prima parola del nome della valigia uguale alla prima parola della stringa di input
+                if (item.lowercased() == nomeArray[0].lowercased()){
+                    
+                    print("--\(item.lowercased())--\(name.lowercased())--")
+                    c += 1
+                    
+                }
+                
+                // sono sulla valigia giusta in quanto ho contato il numero di occorrenze
+                if (item.lowercased() == nomeArray[0].lowercased() && c == countOcc){
+                    
+                    // ora devo verificare che anche le altre parole che compongono il nome della valigia siano uguali a quelle di input
+                    for j in 0...nomeArray.count-1{
+                        
+                        print("--\(nomeArray[j].lowercased())--\(inputArray[i].lowercased())--")
+                        
+                        if nomeArray[j].lowercased() != inputArray[i].lowercased() {
+                            return Int32.max
+                        }
+                        
+                        i += 1
+                        
+                    }
+                    
+                    // se sono tutte uguali allora continuo a scorrere l'array e restituisco il peso
+                    for k in i...inputArray.count-1 {
+                        if inputArray[k].lowercased() == "kg" {
+                            
+                            if(inputArray[k-1] ~= "[0-9]*"){
+                                // il peso è scritto a numero
+                                return Int32(exactly: Int(inputArray[k-1])!*1000)! // res in grammi
+
+                            }
+                        }
+                    }
+                    
+                }
+                
+                i = i + 1
+                
+            }
         }
         
-        if peso == 0{
-            // se non è presente alcun numero restituisco un valore di default
-            peso = Int32.max
-        }
-        
-        return peso
+        return Int32.max
     }
     
     public func getOccurrences(input: String, name: String) -> Int {
