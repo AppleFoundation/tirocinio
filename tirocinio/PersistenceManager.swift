@@ -78,7 +78,7 @@ class PersistenceManager: ObservableObject {
     //ADD
     func addValigia(categoria: String, lunghezza: Int, larghezza: Int, profondita: Int, nome: String, tara: Int, utilizzato:Bool){
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
-        if(loadValigieFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
+        if(loadValigieFromNomeCategoria(nome: nome.trimmingCharacters(in: .whitespaces), categoria: categoria).isEmpty){
             let newValigia = Valigia(entity: entity!, insertInto: self.context)
             newValigia.nome = nome.trimmingCharacters(in: .whitespaces)
             newValigia.categoria = categoria
@@ -332,7 +332,7 @@ class PersistenceManager: ObservableObject {
         let request: NSFetchRequest <Valigia> = NSFetchRequest(entityName: "Valigia")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "nome = %@ AND categoria = %@", nome, categoria)
+        let predicate = NSPredicate(format: "nome = %@ AND categoria = %@", nome.trimmingCharacters(in: .whitespaces), categoria)
         request.predicate = predicate
         
         let valigie = self.loadValigieFromFetchRequest(request:request)
@@ -499,7 +499,7 @@ class PersistenceManager: ObservableObject {
         let request: NSFetchRequest <Viaggio> = NSFetchRequest(entityName: "Viaggio")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "nome = %@", nome)
+        let predicate = NSPredicate(format: "nome = %@", nome.trimmingCharacters(in: .whitespaces))
         request.predicate = predicate
         
         let viaggi = self.loadViaggiFromFetchRequest(request:request)
@@ -510,7 +510,7 @@ class PersistenceManager: ObservableObject {
         let request: NSFetchRequest <Oggetto> = NSFetchRequest(entityName: "Oggetto")
         request.returnsObjectsAsFaults = false
         
-        let predicate = NSPredicate(format: "nome = %@ AND categoria = %@", nome, categoria)
+        let predicate = NSPredicate(format: "nome = %@ AND categoria = %@", nome.trimmingCharacters(in: .whitespaces), categoria)
         request.predicate = predicate
         
         let oggetti = self.loadOggettiFromFetchRequest(request:request)
@@ -672,7 +672,7 @@ class PersistenceManager: ObservableObject {
     }
     
     func deleteViaggio(nome: String){
-        let viaggi = self.loadViaggiFromNome(nome: nome)
+        let viaggi = self.loadViaggiFromNome(nome: nome.trimmingCharacters(in: .whitespaces))
         
         if(viaggi.count > 0){
             print("Viaggi: \(String(describing: viaggi[0].nome))")
