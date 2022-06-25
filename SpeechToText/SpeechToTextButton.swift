@@ -10,6 +10,11 @@ import SwiftUI
 struct SpeechToTextButton: View {
     
     @EnvironmentObject var speech : SpeechToText
+    
+    @EnvironmentObject var vStore: ValigieStore
+    @EnvironmentObject var oStore: OggettiStore
+    
+    
     @Environment(\.colorScheme) var colorScheme
     @State private var message = ""
     @State private var showingAlert = false
@@ -91,7 +96,14 @@ struct SpeechToTextButton: View {
                 
         })
         .alert(message, isPresented: $showingAlert) {
-                    Button("OK", role: .cancel) { message = "" }
+                    Button("OK", role: .cancel) {
+                        message = ""
+
+                        let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: speech.viaggioNome)[0]
+                        vStore.valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
+                        oStore.oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+                        PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
+                    }
                 }
     }
     

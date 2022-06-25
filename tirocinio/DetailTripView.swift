@@ -7,19 +7,29 @@
 
 import SwiftUI
 
+class ValigieStore: ObservableObject{
+    @Published var valigieDB: [ValigiaViaggiante] = []
+}
+
+class OggettiStore: ObservableObject{
+    @Published var oggettiDB: [OggettoViaggiante] = []
+}
+
 struct DetailTripView: View {
     
     var viaggio: Viaggio
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State var valigieDB: [ValigiaViaggiante] = []
-    @State var oggettiDB: [OggettoViaggiante] = []
+//    @State var valigieDB: [ValigiaViaggiante] = []
+//    @State var oggettiDB: [OggettoViaggiante] = []
+    @StateObject var vStore: ValigieStore = ValigieStore()
+    @StateObject var oStore: OggettiStore = OggettiStore()
     @EnvironmentObject var speech : SpeechToText
     
     var body: some View {
         
-        let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
+//        let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
         VStack{
 //            if(((valigieDB.count - numValigieDiSistema) != 0) && (calculateNumberOggetti(oggettiviaggianti: oggettiDB) != 0)){
 //
@@ -31,9 +41,9 @@ struct DetailTripView: View {
                     
                     VStack{
                         
-                        tastiDiAggiunta(valigieDB: $valigieDB, oggettiDB: $oggettiDB, viaggio: viaggio)
-                        
-                        ForEach(valigieDB){
+                        tastiDiAggiunta(vStore: vStore, oStore: oStore, viaggio: viaggio)
+
+                        ForEach(vStore.valigieDB){
                             singolaIstanza in
                             
                             
@@ -48,6 +58,8 @@ struct DetailTripView: View {
                 
                 VStack{
                     speech.getButton(viaggioNome: self.viaggio.nome!)
+                        .environmentObject(vStore)
+                        .environmentObject(oStore)
                 }
                 
                 Spacer(minLength: 30)
@@ -73,10 +85,10 @@ struct DetailTripView: View {
         .onAppear(){
             speech.text = ""
         
-            valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
+            vStore.valigieDB = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio).sorted(by: { lhs, rhs in
                 return lhs.valigiaRef!.categoria! < rhs.valigiaRef!.categoria!
             })
-            oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
+            oStore.oggettiDB = PersistenceManager.shared.loadOggettiViaggiantiFromViaggio(viaggioRef: viaggio)
             
             PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)//ANDRA NEL PULSANTE SALVA
         }
@@ -96,125 +108,12 @@ struct DetailTripView: View {
     }
 }
 
-
-struct tastiSenzaValigie: View{
-    
-    @Binding var valigieDB: [ValigiaViaggiante]
-    @Binding var oggettiDB: [OggettoViaggiante]
-    
-    var viaggio: Viaggio
-    
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var volumePeso: Bool = false
-    @EnvironmentObject var speech : SpeechToText
-    
-    init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
-        self._valigieDB = valigieDB
-        self._oggettiDB = oggettiDB
-        self.viaggio = viaggio
-    }
-    
-    var body: some View{
-        VStack{
-            Spacer()
-            HStack{
-                Spacer()
-            }
-            
-            NavigationLink(destination:  AddTripView(viaggio: viaggio)){
-                VStack{
-                    if(calculateNumberOggetti(oggettiviaggianti: oggettiDB) <= 0){
-                        Text("Per iniziare aggiungi almeno un oggetto")
-                        //                        .foregroundColor(.blue)
-                            .font(.title.bold())
-                            .multilineTextAlignment(.center)
-                    }else{
-                        Text("Aggiungi Oggetti")
-                            .font(.title.bold())
-                            .multilineTextAlignment(.center)
-                    }
-                    
-                    //                    Text("Oggetti presenti: \(oggettiDB.count)")
-                    Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
-                        .font(.headline)
-                        .multilineTextAlignment(.center)
-                    Image(systemName: "archivebox.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60, alignment: .center)
-                        .padding(.top, 1.0)
-                }
-               
-            }
-            .padding()
-            .frame(width: 300, height: 200, alignment: .center)
-            .foregroundColor(colorScheme == .dark ? .white : .black)
-            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
-            
-            
-            Spacer()
-            
-            
-            NavigationLink(destination:  AddBagView(viaggio: viaggio)){
-                VStack{
-                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
-                    if(valigieDB.count - numValigieDiSistema <= 0){
-                        Text("Per iniziare aggiungi almeno una valigia")
-                        //                        .foregroundColor(.blue)
-                            .font(.title.bold())
-                            .multilineTextAlignment(.center)
-                    }else{
-                        Text("Aggiungi Valigie")
-                            .font(.title.bold())
-                            .multilineTextAlignment(.center)
-                    }
-                    
-                    Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
-                        .font(.headline)
-                        .multilineTextAlignment(.center)
-                    Image(systemName: "suitcase.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60, alignment: .center)
-                        .padding(.top, 1.0)
-                    
-                    
-                }
-                
-            }
-            .padding()
-            .frame(width: 300, height: 200, alignment: .center)
-            .foregroundColor(colorScheme == .dark ? .white : .black)
-            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
-            
-            Spacer()
-            VStack{
-                Text("\(speech.text)")
-                    .font(.title)
-                    .bold()
-                speech.getButton(viaggioNome: self.viaggio.nome!)
-            }
-            Spacer()
-        }
-    }
-    
-    func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
-        var sum: Int = 0
-        for i in oggettiviaggianti.map({$0.quantitaInViaggio}){
-            sum += Int(i)
-        }
-        
-        return sum
-    }
-}
-
 struct tastiDiAggiunta: View{
     
-    @Binding var valigieDB: [ValigiaViaggiante]
-    @Binding var oggettiDB: [OggettoViaggiante]
+//    @Binding var valigieDB: [ValigiaViaggiante]
+//    @Binding var oggettiDB: [OggettoViaggiante]
+    @ObservedObject var vStore: ValigieStore
+    @ObservedObject var oStore: OggettiStore
     var viaggio: Viaggio
     
     @Environment(\.colorScheme) var colorScheme
@@ -223,9 +122,9 @@ struct tastiDiAggiunta: View{
     @State private var showingAlertValigie = false
     @State var volumePeso: Bool = false
     
-    init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
-        self._valigieDB = valigieDB
-        self._oggettiDB = oggettiDB
+    init(vStore: ValigieStore, oStore: OggettiStore, viaggio: Viaggio){
+        self.vStore = vStore
+        self.oStore = oStore
         self.viaggio = viaggio
     }
     
@@ -249,7 +148,7 @@ struct tastiDiAggiunta: View{
                     .multilineTextAlignment(.center)
                 
                 //                    Text("Oggetti presenti: \(oggettiDB.count)")
-                Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
+                Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oStore.oggettiDB))")
                     .font(.caption)
                     .multilineTextAlignment(.center)
                 Image(systemName: "archivebox.fill")
@@ -302,7 +201,7 @@ struct tastiDiAggiunta: View{
                 let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
                 Text("Aggiungi Valigie")
                     .multilineTextAlignment(.center)
-                Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
+                Text("Valigie presenti: \(vStore.valigieDB.count - numValigieDiSistema)")
                     .font(.caption)
                     .multilineTextAlignment(.center)
                 Image(systemName: "suitcase.fill")
@@ -342,8 +241,8 @@ struct tastiDiAggiunta: View{
                 Button("Rimuovi", role: .destructive){
                     PersistenceManager.shared.deleteAllValigiaViaggiante(viaggio: viaggio)
                     //                    presentationMode.wrappedValue.dismiss()
-                    valigieDB.removeAll()
-                    valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non
+                    vStore.valigieDB.removeAll()
+                    vStore.valigieDB.append(PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)[0]) //per ipotesi l'unica valigia rimasta è quella dei non
                     PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
                     
                 }
@@ -607,3 +506,119 @@ extension Optional where Wrapped == NSSet {
         return [T]()
     }
 }
+
+
+
+//struct tastiSenzaValigie: View{
+//
+//    @Binding var valigieDB: [ValigiaViaggiante]
+//    @Binding var oggettiDB: [OggettoViaggiante]
+//
+//    var viaggio: Viaggio
+//
+//    @Environment(\.colorScheme) var colorScheme
+//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+//    @State var volumePeso: Bool = false
+//    @EnvironmentObject var speech : SpeechToText
+//
+//    init(valigieDB: Binding<[ValigiaViaggiante]>, oggettiDB: Binding<[OggettoViaggiante]>, viaggio: Viaggio){
+//        self._valigieDB = valigieDB
+//        self._oggettiDB = oggettiDB
+//        self.viaggio = viaggio
+//    }
+//
+//    var body: some View{
+//        VStack{
+//            Spacer()
+//            HStack{
+//                Spacer()
+//            }
+//
+//            NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+//                VStack{
+//                    if(calculateNumberOggetti(oggettiviaggianti: oggettiDB) <= 0){
+//                        Text("Per iniziare aggiungi almeno un oggetto")
+//                        //                        .foregroundColor(.blue)
+//                            .font(.title.bold())
+//                            .multilineTextAlignment(.center)
+//                    }else{
+//                        Text("Aggiungi Oggetti")
+//                            .font(.title.bold())
+//                            .multilineTextAlignment(.center)
+//                    }
+//
+//                    //                    Text("Oggetti presenti: \(oggettiDB.count)")
+//                    Text("Oggetti presenti: \(calculateNumberOggetti(oggettiviaggianti: oggettiDB))")
+//                        .font(.headline)
+//                        .multilineTextAlignment(.center)
+//                    Image(systemName: "archivebox.fill")
+//                        .resizable()
+//                        .frame(width: 60, height: 60, alignment: .center)
+//                        .padding(.top, 1.0)
+//                }
+//
+//            }
+//            .padding()
+//            .frame(width: 300, height: 200, alignment: .center)
+//            .foregroundColor(colorScheme == .dark ? .white : .black)
+//            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+//            .clipShape(RoundedRectangle(cornerRadius: 10))
+//            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
+//
+//
+//            Spacer()
+//
+//
+//            NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+//                VStack{
+//                    let numValigieDiSistema: Int = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM").count
+//                    if(valigieDB.count - numValigieDiSistema <= 0){
+//                        Text("Per iniziare aggiungi almeno una valigia")
+//                        //                        .foregroundColor(.blue)
+//                            .font(.title.bold())
+//                            .multilineTextAlignment(.center)
+//                    }else{
+//                        Text("Aggiungi Valigie")
+//                            .font(.title.bold())
+//                            .multilineTextAlignment(.center)
+//                    }
+//
+//                    Text("Valigie presenti: \(valigieDB.count - numValigieDiSistema)")
+//                        .font(.headline)
+//                        .multilineTextAlignment(.center)
+//                    Image(systemName: "suitcase.fill")
+//                        .resizable()
+//                        .frame(width: 60, height: 60, alignment: .center)
+//                        .padding(.top, 1.0)
+//
+//
+//                }
+//
+//            }
+//            .padding()
+//            .frame(width: 300, height: 200, alignment: .center)
+//            .foregroundColor(colorScheme == .dark ? .white : .black)
+//            .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.white)
+//            .clipShape(RoundedRectangle(cornerRadius: 10))
+//            .shadow(color: Color.black.opacity(0.4), radius: 10, y: 5)
+//
+//            Spacer()
+//            VStack{
+//                Text("\(speech.text)")
+//                    .font(.title)
+//                    .bold()
+//                speech.getButton(viaggioNome: self.viaggio.nome!)
+//            }
+//            Spacer()
+//        }
+//    }
+//
+//    func calculateNumberOggetti(oggettiviaggianti: [OggettoViaggiante]) -> Int{
+//        var sum: Int = 0
+//        for i in oggettiviaggianti.map({$0.quantitaInViaggio}){
+//            sum += Int(i)
+//        }
+//
+//        return sum
+//    }
+//}
