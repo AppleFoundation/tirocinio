@@ -427,18 +427,18 @@ struct singolaValigiaView: View{
                         VStack(alignment: .trailing){
                             //la card ha una visualizzazione distinta nel caso di valigia di sistema. non mostra i valori massimo poiché è solo una valigia logica
                             if singolaIstanza.valigiaRef?.categoria == "0SYSTEM"{
-                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l")
+                                Text("Ingombro: \(singolaIstanza.volumeAttuale)ml")
                                     .font(.caption)
-                                Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g")
+                                Text("Peso: \(singolaIstanza.pesoAttuale)g")
                                     .font(.caption)
                             }else{
-                                Text("Ingombro Occupato: \(singolaIstanza.volumeAttuale/1000)l di \(singolaIstanza.volumeMassimo/1000)l")
+                                Text("Ingombro: \(singolaIstanza.volumeAttuale)ml di \(singolaIstanza.volumeMassimo/1000)l")
                                     .font(.caption)
                                 if(singolaIstanza.pesoMassimo < Int32.max){
-                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
+                                    Text("Peso: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo/1000)Kg")
                                         .font(.caption)
                                 }else{
-                                    Text("Peso Occupato: \(singolaIstanza.pesoAttuale)g di ∞")
+                                    Text("Peso: \(singolaIstanza.pesoAttuale)g di ∞")
                                         .font(.caption)
                                 }
                                 
@@ -466,6 +466,9 @@ struct singolaValigiaView: View{
                             Text("\(oggetto.quantitaInValigia)")
                             Text(oggetto.oggettoViaggianteRef?.oggettoRef?.nome ?? "Nome non trovato")
                             Spacer()
+                            Text("\(oggetto.oggettoViaggianteRef?.oggettoRef?.volume.description ?? "0")ml • \(oggetto.quantitaInValigia) = \(oggetto.quantitaInValigia * (oggetto.oggettoViaggianteRef?.oggettoRef?.volume ?? 0))ml\n\(oggetto.oggettoViaggianteRef?.oggettoRef?.peso.description ?? "0")g • \(oggetto.quantitaInValigia) = \(oggetto.quantitaInValigia * (oggetto.oggettoViaggianteRef?.oggettoRef?.peso ?? 0))g")
+                                .font(.caption2)
+                                .multilineTextAlignment(.trailing)
                             
                         }
                         .padding(8)
