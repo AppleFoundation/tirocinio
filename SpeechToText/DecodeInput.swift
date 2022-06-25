@@ -95,7 +95,7 @@ public class DecodeInput {
                             
                             // inserisco tutte le occorrenze della valigia
                             for _ in 1...rep2{
-                                PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo*1000)
+                                PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: Int(pesoMassimo))
                             }
                             
                             decodedValues.valigieAggiunte.append((valigia.nome!, rep2))
@@ -188,9 +188,9 @@ public class DecodeInput {
     }
     
     // funzione che restituisce il peso massimo della valigia viaggiante da inserire
-    public func getPesoMassimo(input: String, name: String, category: String) -> Int {
+    public func getPesoMassimo(input: String, name: String, category: String) -> Int32 {
         
-        var peso = 0
+        var peso : Int32 = 0
         var countOcc = 0
         
         for conta in DecodeInput.valigieUsate{
@@ -216,9 +216,9 @@ public class DecodeInput {
                 for k in i...inputArray.count-1 {
                     if inputArray[k].lowercased() == "kg" {
                         
-                        if(inputArray[k-1] ~= "[0-9]{2}"){
+                        if(inputArray[k-1] ~= "[0-9]*"){
                             // il peso è scritto a numero
-                            return Int(inputArray[k-1])!
+                            return Int32(exactly: Int(inputArray[k-1])!*1000)! // res in grammi
 
                         }
                     }
@@ -232,7 +232,7 @@ public class DecodeInput {
         
         if peso == 0{
             // se non è presente alcun numero restituisco un valore di default
-            peso = Int(Int32.max)
+            peso = Int32.max
         }
         
         return peso
@@ -279,11 +279,17 @@ public class DecodeInput {
         
         let inputArray = input.components(separatedBy: " ")
         var conta = 0
+        
         for i in inputArray{
             if i.lowercased() == name.lowercased() {
                 conta += 1
             }
         }
+        
+        if conta == 0 {
+            conta = 1
+        }
+        
         return conta
         
     }
