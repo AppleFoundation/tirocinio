@@ -30,6 +30,9 @@ struct EditViaggioView: View {
                 TextField("Nuovo nome viaggio", text: $nomeViaggio)
                 //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
+            .onTapGesture {
+                self.hideKeyboard()
+            }
             
             Section(header: Text("Icona")){
                 Picker("Tipo", selection: $selectedTipo) {
@@ -147,8 +150,9 @@ struct EditViaggioView: View {
                 selectedTipo = .europa
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+        .onChange(of: dataViaggio, perform: {value in hideKeyboard()})
+        .onChange(of: selectedTipo, perform: {value in hideKeyboard()})
+
+        
     }
 }

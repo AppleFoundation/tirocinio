@@ -459,6 +459,18 @@ class PersistenceManager: ObservableObject {
         return oggetti
     }
     
+    func loadOggettiInValigiaFromViaggioOggettoViaggiante(viaggio: Viaggio, oggetto: OggettoViaggiante) -> [OggettoInValigia]{
+        let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
+        request.returnsObjectsAsFaults = false
+        
+        let predicate = NSPredicate(format: "oggettoViaggianteRef = %@ AND viaggioRef = %@", oggetto, viaggio)
+        request.predicate = predicate
+        
+        let oggetti = self.loadOggettiInValigiaFromFetchRequest(request:request)
+        
+        return oggetti
+    }
+    
     func loadOggettiInValigiaFromValigia(valigia: ValigiaViaggiante) -> [OggettoInValigia]{
         let request: NSFetchRequest <OggettoInValigia> = NSFetchRequest(entityName: "OggettoInValigia")
         request.returnsObjectsAsFaults = false
@@ -635,6 +647,8 @@ class PersistenceManager: ObservableObject {
         return self.loadValigieViaggiantiFromFetchRequest(request: request)
     }
     
+    
+    
     //DELETE
     func deleteValigia(nome: String, categoria: String) {
         let valigie = self.loadValigieFromNomeCategoria(nome: nome, categoria: categoria)
@@ -701,8 +715,25 @@ class PersistenceManager: ObservableObject {
     func deleteOggettoViaggiante(ogetto: Oggetto, viaggio: Viaggio){
         let oggettiViaggianti = self.loadOggettiViaggiantiFromOggettoViaggio(oggettoRef: ogetto, viaggioRef: viaggio)
         
+        //quando elimino un oggetto viaggiante ne elimino ogni sua occorrenza all'interno delle valigie del viaggio (oggetto in valigia)
+        for o in oggettiViaggianti{
+            PersistenceManager.shared.deleteOggettiInValigiaFromViaggioOggettoViaggiante(viaggio: viaggio, oggetto: o)
+        }
+        
         if(oggettiViaggianti.count > 0){
             self.context.delete(oggettiViaggianti[0])
+            self.saveContext()
+        }
+        
+    }
+    
+    func deleteOggettiInValigiaFromViaggioOggettoViaggiante(viaggio: Viaggio, oggetto: OggettoViaggiante){
+        let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggettoViaggiante(viaggio: viaggio, oggetto: oggetto)
+        
+        if !oggettiInValigia.isEmpty{
+            for o in oggettiInValigia{
+                self.context.delete(o)
+            }
             self.saveContext()
         }
     }
@@ -1070,7 +1101,7 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 29, lunghezza: 40, profondita: 6, peso: 1000, nome: "Cappotto")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 24, lunghezza: 30, profondita: 8, peso: 600, nome: "Giubbino")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 17, lunghezza: 27, profondita: 6, peso: 630, nome: "Pantalone")//Misurato
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 14, lunghezza: 28, profondita: 4, peso: 430, nome: "Pantaloncino")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 14, lunghezza: 28, profondita: 4, peso: 430, nome: "Pantaloncini")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 19, lunghezza: 21, profondita: 2, peso: 180, nome: "Camicia")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 13, lunghezza: 14, profondita: 8, peso: 400, nome: "Pigiama")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 12, lunghezza: 30, profondita: 22, peso: 950, nome: "Scarpe")//Misurato

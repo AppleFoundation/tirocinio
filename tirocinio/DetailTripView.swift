@@ -57,6 +57,7 @@ struct DetailTripView: View {
                 }
                 
                 VStack{
+                    Text(speech.text)
                     speech.getButton(viaggioNome: self.viaggio.nome!)
                         .environmentObject(vStore)
                         .environmentObject(oStore)
