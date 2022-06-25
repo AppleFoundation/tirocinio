@@ -206,11 +206,12 @@ public class DecodeInput {
         var i = 0, c = 0
         for item in inputArray {
             
-            if (item.lowercased() == name.lowercased()){
+            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
+                print(item.lowercased())
                 c += 1
             }
             
-            if (item.lowercased() == name.lowercased() && c == countOcc){
+            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces)  && c == countOcc){
                 // valigia di cui prendere il peso
                 
                 for k in i...inputArray.count-1 {
@@ -248,7 +249,7 @@ public class DecodeInput {
             
             if i != 0 {
                 
-                if (item.lowercased() == name.lowercased()){
+                if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
                     
                     if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
                         
