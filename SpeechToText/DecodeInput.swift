@@ -91,7 +91,7 @@ public class DecodeInput {
                             let valigia = PersistenceManager.shared.loadValigieFromNomeCategoria(nome: c.name, categoria: c.category)[0]
 
                             DecodeInput.valigieUsate.append(valigia.nome!)
-                            let pesoMassimo = getPesoMassimo(input: text.lowercased(), name: c.name, category: c.category)
+                            let pesoMassimo = getPesoMassimo(input: text.lowercased(), name: c.name)
                             
                             // inserisco tutte le occorrenze della valigia
                             for _ in 1...rep2{
@@ -188,7 +188,7 @@ public class DecodeInput {
     }
     
     // funzione che restituisce il peso massimo della valigia viaggiante da inserire
-    public func getPesoMassimo(input: String, name: String, category: String) -> Int32 {
+    public func getPesoMassimo(input: String, name: String) -> Int32 {
         
         var peso : Int32 = 0
         var countOcc = 0
@@ -206,11 +206,12 @@ public class DecodeInput {
         var i = 0, c = 0
         for item in inputArray {
             
-            if (item.lowercased() == name.lowercased()){
+            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
+                print(item.lowercased())
                 c += 1
             }
             
-            if (item.lowercased() == name.lowercased() && c == countOcc){
+            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces)  && c == countOcc){
                 // valigia di cui prendere il peso
                 
                 for k in i...inputArray.count-1 {
@@ -248,7 +249,7 @@ public class DecodeInput {
             
             if i != 0 {
                 
-                if (item.lowercased() == name.lowercased()){
+                if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
                     
                     if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
                         
