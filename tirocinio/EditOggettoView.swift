@@ -90,7 +90,6 @@ struct EditOggettoView: View {
                     }
                     
                     
-                    
                     presentationMode.wrappedValue.dismiss()
                 }, label: {Text("Save")})
             }
