@@ -52,6 +52,8 @@ public class DecodeInput {
         // interpretazione dell'azione
         azione = checkAction(action: azione)
         
+        print("----\(text)----")
+        
         // verifico l'azione da compiere
         switch azione {
             
@@ -79,6 +81,8 @@ public class DecodeInput {
             
                 // se non sono stati trovati oggetti verifico se si tratta di una valigia da inserire
                 for c in DecodeInput.valigie {
+                    
+                    print(c)
                     
                     if(text.lowercased().contains(c.name.lowercased())){
                         
@@ -126,6 +130,7 @@ public class DecodeInput {
                             ov.quantitaAllocata -= 1
                             if ov.quantitaInViaggio == 0{
                                 PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
+
                             }
                         }
                         
@@ -145,10 +150,11 @@ public class DecodeInput {
                                 // quante volte devo eliminare la valigia viaggiante trovata
                                 rep = getOccurrences(input: text, name: c.name.lowercased()) // occorrenze della valigia da eliminare
                                 
+                                let valigiaRef = val.valigiaRef!
                                 
                                 for _ in 1...rep{
-                                    decodedValues.valigieEliminate.append((val.valigiaRef!.nome!, rep))
-                                    PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)
+                                    decodedValues.valigieEliminate.append((valigiaRef.nome!, rep))
+                                    PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: valigiaRef)
                                 }
                                 
                                 
@@ -207,12 +213,12 @@ public class DecodeInput {
         var i = 0, c = 0
         for item in inputArray {
             
-            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
+            if (item.lowercased() == name.lowercased()){
                 print(item.lowercased())
                 c += 1
             }
             
-            if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces)  && c == countOcc){
+            if (item.lowercased() == name.lowercased() && c == countOcc){
                 // valigia di cui prendere il peso
                 
                 for k in i...inputArray.count-1 {
@@ -250,7 +256,7 @@ public class DecodeInput {
             
             if i != 0 {
                 
-                if (item.lowercased() == name.lowercased().trimmingCharacters(in: .whitespaces) ){
+                if (item.lowercased() == name.lowercased()){
                     
                     if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
                         
