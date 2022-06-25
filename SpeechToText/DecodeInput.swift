@@ -219,8 +219,6 @@ public class DecodeInput {
         if nomeArray.count == 1 {
             for item in inputArray {
                 
-                print("--\(item.lowercased())--\(name.lowercased())--")
-                
                 if (item.lowercased() == name.lowercased()){
                     print(item.lowercased())
                     c += 1
@@ -254,7 +252,6 @@ public class DecodeInput {
                 // ho trovato la prima parola del nome della valigia uguale alla prima parola della stringa di input
                 if (item.lowercased() == nomeArray[0].lowercased()){
                     
-                    print("--\(item.lowercased())--\(name.lowercased())--")
                     c += 1
                     
                 }
@@ -264,8 +261,6 @@ public class DecodeInput {
                     
                     // ora devo verificare che anche le altre parole che compongono il nome della valigia siano uguali a quelle di input
                     for j in 0...nomeArray.count-1{
-                        
-                        print("--\(nomeArray[j].lowercased())--\(inputArray[i].lowercased())--")
                         
                         if nomeArray[j].lowercased() != inputArray[i].lowercased() {
                             return Int32.max
