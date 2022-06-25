@@ -10,10 +10,8 @@ import SwiftUI
 struct SpeechToTextButton: View {
     
     @EnvironmentObject var speech : SpeechToText
-    
     @EnvironmentObject var vStore: ValigieStore
     @EnvironmentObject var oStore: OggettiStore
-    
     
     @Environment(\.colorScheme) var colorScheme
     @State private var message = ""
