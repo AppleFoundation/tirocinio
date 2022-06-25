@@ -45,10 +45,8 @@ struct DetailTripView: View {
                     
                     
                 }
+                
                 VStack{
-                    Text("\(speech.text)")
-                        .font(.title)
-                        .bold()
                     speech.getButton(viaggioNome: self.viaggio.nome!)
                 }
                 

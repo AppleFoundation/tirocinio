@@ -13,6 +13,13 @@ public class DecodeInput {
     public static var valigie = [(name:String, category:String)]()
     public static var valigieUsate : [String] = []
     
+    public struct DecodedValues{
+        var valigieAggiunte: [(_:String, _:Int)]
+        var valigieEliminate: [(_:String, _:Int)]
+        var oggettiAggiunti: [(_:String, _:Int)]
+        var oggettiEliminati: [(_:String, _:Int)]
+    }
+    
     public func searchIntoCollection(){
         DecodeInput.oggetti.removeAll()
         let allObjects = PersistenceManager.shared.loadAllOggetti()
@@ -29,7 +36,7 @@ public class DecodeInput {
         }
     }
     
-    public func decode(text: String, viaggioNome: String) -> Bool {
+    public func decode(text: String, viaggioNome: String) -> DecodedValues {
         
         // metto tutti gli oggetti disponibili all'interno dell'array oggetti
         searchIntoCollection()
@@ -38,9 +45,9 @@ public class DecodeInput {
         // permette di splittare una stringa ed inserire le parole di cui è composta
         // all'interno di un array
         var azione : String = text.components(separatedBy: " ")[0].lowercased()
-        var done = false
         var rep : Int
         let viaggio = PersistenceManager.shared.loadViaggiFromNome(nome: viaggioNome)[0]
+        var decodedValues = DecodedValues(valigieAggiunte: [], valigieEliminate: [], oggettiAggiunti: [], oggettiEliminati: [])
         
         // interpretazione dell'azione
         azione = checkAction(action: azione)
@@ -65,9 +72,8 @@ public class DecodeInput {
                             PersistenceManager.shared.addOggettoViaggiante(oggetto: oggetto, viaggio: viaggio)
                         }
                         
+                        decodedValues.oggettiAggiunti.append((item.name, rep))
                     }
-                    
-                    done = true
                     
                 }
             
@@ -91,9 +97,11 @@ public class DecodeInput {
                             for _ in 1...rep2{
                                 PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: pesoMassimo*1000)
                             }
+                            
+                            decodedValues.valigieAggiunte.append((valigia.nome!, rep2))
+                            
                         }
                         
-                        done = true
                     }
                     
                 }
@@ -120,8 +128,9 @@ public class DecodeInput {
                                 PersistenceManager.shared.deleteOggettoViaggiante(ogetto: oggetto, viaggio: viaggio)
                             }
                         }
+                        
+                        decodedValues.oggettiEliminati.append((item.name, rep))
 
-                        done = true
                     }
                 }
             
@@ -140,7 +149,8 @@ public class DecodeInput {
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)
                                 }
                                 
-                                done = true
+                                decodedValues.valigieEliminate.append((val.valigiaRef!.nome!, rep))
+                                
                                 break
                             }
                         }
@@ -152,11 +162,14 @@ public class DecodeInput {
             default:
             
                 // l'azione da compiere non è aggiunta o rimozione di oggetti / valigie
-                done = false
+                return decodedValues
             
         }
+        
         PersistenceManager.shared.allocaOggetti(viaggio: viaggio, ordinamento: viaggio.allocaPer)
-        return done
+        
+        return decodedValues
+        
     }
     
     // funzione che prende l'azione dall'input dell'utente e la decodifica in modo univoco

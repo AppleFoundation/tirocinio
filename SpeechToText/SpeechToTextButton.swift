@@ -12,7 +12,7 @@ struct SpeechToTextButton: View {
     @EnvironmentObject var speech : SpeechToText
     @Environment(\.colorScheme) var colorScheme
     @State private var message = ""
-    
+    @State private var showingAlert = false
     var input = DecodeInput()
     
     var body: some View {
@@ -25,36 +25,49 @@ struct SpeechToTextButton: View {
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.3, blendDuration: 0.3)){
                     self.speech.isRecording.toggle()
                 }
+                
                 if(self.speech.isRecording){
                     self.speech.startRecording()
                 }else{
                     self.speech.stopRecording()
                     
-                    if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
-                        print("ok")
-                    }else{
-                        print("decodifica input non riuscita")
+                    // return decoded results
+                    let dec = input.decode(text: speech.text, viaggioNome: speech.viaggioNome)
+                    
+                    // print results into box
+                    if(dec.oggettiAggiunti.count>0){
+                        message += "Ho aggiunto i seguenti oggetti: "
+                        for item in dec.oggettiAggiunti{
+                            message += "\(item.1) \(item.0)\n"
+                        }
                     }
                     
+                    if(dec.oggettiEliminati.count>0){
+                        message += "Ho eliminato i seguenti oggetti: "
+                        for item in dec.oggettiEliminati{
+                            message += "\(item.1) \(item.0)\n"
+                        }
+                    }
                     
-//                    let queueSpeech = DispatchQueue.init(label: "it.unisa.diem.tirocinio.queueSpeech", qos: .userInitiated)
-//                    queueSpeech.async {
-//
-//                        // testo acquisito
-//
-//                        if(input.decode(text: speech.text, viaggioNome: speech.viaggioNome)){
-//                            print("ok")
-//                        }else{
-//                            print("decodifica input non riuscita")
-//                        }
-//
-//                        DispatchQueue.main.async {
-//
-//                            // ritorno sul main dalla queue per aggiornare l'interfaccia
-//                            print("sono sull'interfaccia principale")
-//
-//                        }
-//                    }
+                    if(dec.valigieAggiunte.count>0){
+                        message += "Ho aggiunto le seguenti valigie: "
+                        for item in dec.valigieAggiunte{
+                            message += "\(item.1) \(item.0)\n"
+                        }
+                    }
+                    
+                    if(dec.valigieEliminate.count>0){
+                        message += "Ho eliminato le seguenti valigie: "
+                        for item in dec.valigieEliminate{
+                            message += "\(item.1) \(item.0)\n"
+                        }
+                    }
+                    
+                    if (dec.oggettiAggiunti.isEmpty && dec.oggettiEliminati.isEmpty && dec.valigieAggiunte.isEmpty && dec.valigieEliminate.isEmpty) {
+                        message = "Non ho capito, riprova!"
+                    }
+                    
+                    showingAlert = true
                     
                 }
             }
@@ -77,6 +90,9 @@ struct SpeechToTextButton: View {
 //                .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 1.0))
                 
         })
+        .alert(message, isPresented: $showingAlert) {
+                    Button("OK", role: .cancel) { message = "" }
+                }
     }
     
 }
