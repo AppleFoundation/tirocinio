@@ -9,13 +9,15 @@ import SwiftUI
 
 struct SpeechToTextButton: View {
     
-    @EnvironmentObject var speech : SpeechToText
+    @EnvironmentObject var speech: SpeechToText
     @EnvironmentObject var vStore: ValigieStore
     @EnvironmentObject var oStore: OggettiStore
     
     @Environment(\.colorScheme) var colorScheme
+    
     @State private var message = ""
     @State private var showingAlert = false
+    
     var input = DecodeInput()
     
     var body: some View {

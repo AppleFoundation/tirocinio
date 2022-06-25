@@ -137,25 +137,6 @@ public class SpeechToText: ObservableObject{
             }
         }
         
-//        task = speechRecognizerEN?.recognitionTask(with: recognitionRequest){ result, error in
-//            if (result != nil){
-//                self.text = (result?.transcriptions[0].formattedString)!
-//            }
-//            if let result = result{
-//                // aggiorno la stringa con i risultati ottenuti
-//                self.text = result.transcriptions[0].formattedString
-//            }
-//            if error != nil {
-//                // stoppo il riconoscimento dell'audio se sorge un problema
-//                self.audioEngine.stop()
-//                inputNode.removeTap(onBus: 0)
-//                self.recognitionRequest = nil
-//                self.task = nil
-//
-//            }
-//        }
-        
-        
     }
     
     func stopRecording(){// end recording
