@@ -269,8 +269,6 @@ public class DecodeInput {
                         t += 1
                         
                     }
-                    print(i)
-                    print(inputArray.count-1)
                     
                     // se sono tutte uguali allora continuo a scorrere l'array e restituisco il peso
                     for k in i...inputArray.count-1 {
