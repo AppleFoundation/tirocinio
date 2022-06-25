@@ -162,6 +162,10 @@ struct AddNuovoOggetto: View {
         .onTapGesture {
             self.hideKeyboard()
         }
+        .onChange(of: larghezzaAgg, perform: {value in hideKeyboard()})
+        .onChange(of: lunghezzaAgg, perform: {value in hideKeyboard()})
+        .onChange(of: profonditaAgg, perform: {value in hideKeyboard()})
+        .onChange(of: pesoAgg, perform: {value in hideKeyboard()})
         
     }
 }
