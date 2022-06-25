@@ -1075,8 +1075,8 @@ class PersistenceManager: ObservableObject {
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 13, lunghezza: 14, profondita: 8, peso: 400, nome: "Pigiama")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 12, lunghezza: 30, profondita: 22, peso: 950, nome: "Scarpe")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 22, lunghezza: 24, profondita: 10, peso: 620, nome: "Felpa")//Misurato
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Calze")
-        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 10, lunghezza: 20, profondita: 5, peso: 10, nome: "Leggins")
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 9, lunghezza: 17, profondita: 4, peso: 110, nome: "Calze")//Misurato
+        PersistenceManager.shared.addOggetto(categoria: "Abbigliamento", larghezza: 7, lunghezza: 28, profondita: 7, peso: 200, nome: "Leggins")//Misurato
         //Categoria 3
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 5, lunghezza: 11, profondita: 2, peso: 30, nome: "Farmaci")//Misurato
         PersistenceManager.shared.addOggetto(categoria: "Essenziali", larghezza: 7, lunghezza: 11, profondita: 3, peso: 190, nome: "Cintura")//Misurato
