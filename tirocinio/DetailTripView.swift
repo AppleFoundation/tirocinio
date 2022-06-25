@@ -57,6 +57,7 @@ struct DetailTripView: View {
                 }
                 
                 VStack{
+                    Text(speech.text)
                     speech.getButton(viaggioNome: self.viaggio.nome!)
                         .environmentObject(vStore)
                         .environmentObject(oStore)
@@ -329,10 +330,10 @@ struct singolaValigiaView: View{
                                 Text("Peso: \(singolaIstanza.pesoAttuale)g")
                                     .font(.caption)
                             }else{
-                                Text("Ingombro: \(singolaIstanza.volumeAttuale)ml di \(singolaIstanza.volumeMassimo/1000)l")
+                                Text("Ingombro: \(singolaIstanza.volumeAttuale)ml di \(singolaIstanza.valigiaRef!.volume)ml")
                                     .font(.caption)
                                 if(singolaIstanza.pesoMassimo < Int32.max){
-                                    Text("Peso: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo/1000)Kg")
+                                    Text("Peso: \(singolaIstanza.pesoAttuale)g di \(singolaIstanza.pesoMassimo)g")
                                         .font(.caption)
                                 }else{
                                     Text("Peso: \(singolaIstanza.pesoAttuale)g di ∞")

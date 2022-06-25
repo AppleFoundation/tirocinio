@@ -157,6 +157,7 @@ public class DecodeInput {
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: valigiaRef)
                                 }
                                 
+                                
                                 break
                             }
                         }
