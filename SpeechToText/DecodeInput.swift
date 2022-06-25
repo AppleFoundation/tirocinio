@@ -145,6 +145,7 @@ public class DecodeInput {
                                 // quante volte devo eliminare la valigia viaggiante trovata
                                 rep = getOccurrences(input: text, name: c.name.lowercased()) // occorrenze della valigia da eliminare
                                 
+                                
                                 for _ in 1...rep{
                                     decodedValues.valigieEliminate.append((val.valigiaRef!.nome!, rep))
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: val.valigiaRef!)

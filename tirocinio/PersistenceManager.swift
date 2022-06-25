@@ -80,7 +80,7 @@ class PersistenceManager: ObservableObject {
         let entity = NSEntityDescription.entity(forEntityName: "Valigia", in: self.context)
         if(loadValigieFromNomeCategoria(nome: nome, categoria: categoria).isEmpty){
             let newValigia = Valigia(entity: entity!, insertInto: self.context)
-            newValigia.nome = nome
+            newValigia.nome = nome.trimmingCharacters(in: .whitespaces)
             newValigia.categoria = categoria
             newValigia.lunghezza = Int32(lunghezza)
             newValigia.larghezza = Int32(larghezza)
@@ -104,7 +104,7 @@ class PersistenceManager: ObservableObject {
         if(loadViaggiFromNome(nome: nome).isEmpty){
             let newViaggio = Viaggio(entity: entity!, insertInto: self.context)
             
-            newViaggio.nome = nome
+            newViaggio.nome = nome.trimmingCharacters(in: .whitespaces)
             newViaggio.id = UUID()
             newViaggio.data = data
             newViaggio.tipo = tipo
@@ -124,7 +124,7 @@ class PersistenceManager: ObservableObject {
             let newOggetto = Oggetto(entity: entity!, insertInto: self.context)
             
             newOggetto.categoria = categoria
-            newOggetto.nome = nome
+            newOggetto.nome = nome.trimmingCharacters(in: .whitespaces)
             newOggetto.larghezza = Int32(larghezza)
             newOggetto.lunghezza = Int32(lunghezza)
             newOggetto.profondita = Int32(profondita)

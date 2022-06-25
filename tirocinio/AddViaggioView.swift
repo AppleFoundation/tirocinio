@@ -118,7 +118,7 @@ struct AddViaggioView: View {
                     PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false) //Da togliere quando inizializziamo bene l'applicazione
                     
                     let nonallocati: Valigia = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM")[0]
-                    PersistenceManager.shared.addValigiaViaggiante(valigia: nonallocati, viaggio: PersistenceManager.shared.loadViaggiFromNome(nome: nomeViaggio)[0], pesoMassimo: 0)
+                    PersistenceManager.shared.addValigiaViaggiante(valigia: nonallocati, viaggio: PersistenceManager.shared.loadViaggiFromNome(nome: nomeViaggio.trimmingCharacters(in: .whitespaces))[0], pesoMassimo: 0)
                     presentationMode.wrappedValue.dismiss()
                     
                 }, label: {Text("Save")})
