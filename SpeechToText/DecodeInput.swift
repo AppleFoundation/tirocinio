@@ -153,10 +153,10 @@ public class DecodeInput {
                                 let valigiaRef = val.valigiaRef!
                                 
                                 for _ in 1...rep{
-                                    decodedValues.valigieEliminate.append((valigiaRef.nome!, rep))
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: valigiaRef)
                                 }
                                 
+                                decodedValues.valigieEliminate.append((valigiaRef.nome!, rep))
                                 
                                 break
                             }
