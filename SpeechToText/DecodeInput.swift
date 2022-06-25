@@ -208,7 +208,6 @@ public class DecodeInput {
         // di quante parole si compone il nome della valigia?
         let nomeArray = name.components(separatedBy: " ")
         
-        
         // cerco il peso della valigia all'interno della stringa inserita
         // countOcc, se diverso da 0, contiene il numero di occorrenze del nome della valigia da skippare prima di prendere il peso
         let inputArray = input.components(separatedBy: " ")
@@ -260,15 +259,18 @@ public class DecodeInput {
                 if (item.lowercased() == nomeArray[0].lowercased() && c == countOcc){
                     
                     // ora devo verificare che anche le altre parole che compongono il nome della valigia siano uguali a quelle di input
+                    var t = i
                     for j in 0...nomeArray.count-1{
                         
-                        if nomeArray[j].lowercased() != inputArray[i].lowercased() {
+                        if nomeArray[j].lowercased() != inputArray[t].lowercased() {
                             return Int32.max
                         }
                         
-                        i += 1
+                        t += 1
                         
                     }
+                    print(i)
+                    print(inputArray.count-1)
                     
                     // se sono tutte uguali allora continuo a scorrere l'array e restituisco il peso
                     for k in i...inputArray.count-1 {
@@ -298,30 +300,83 @@ public class DecodeInput {
         
         let inputArray = input.components(separatedBy: " ")
         
-        for item in inputArray {
+        // di quante parole si compone il nome?
+        let nomeArray = name.components(separatedBy: " ")
+        
+        // se il nome è composto da una sola parola
+        if nomeArray.count == 1 {
             
-            if i != 0 {
-                
-                if (item.lowercased() == name.lowercased()){
+            for item in inputArray {
+
+                if i != 0 {
                     
-                    if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
+                    if (item.lowercased() == name.lowercased()){
                         
-                        for (key, value) in numbers {
-                            if (value == inputArray[i-1].lowercased()){
-                                return key
+                        if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
+                            
+                            for (key, value) in numbers {
+                                if (value == inputArray[i-1].lowercased()){
+                                    return key
+                                }
                             }
+                            
+                        }else if(stringIsNumber(inputArray[i-1].lowercased())){
+                            
+                            return Int(inputArray[i-1].lowercased())!
+                            
                         }
                         
-                    }else if(stringIsNumber(inputArray[i-1].lowercased())){
+                    }
+                }
+                
+                i += 1
+                
+            }
+        
+        // se il nome si compone di più parole
+        }else{
+            
+            for item in inputArray {
+                
+                if i != 0 {
+                    
+                    // la prima parola che compone il nome è uguale alla parola della stringa trovata
+                    if (item.lowercased() == nomeArray[0].lowercased()){
                         
-                        return Int(inputArray[i-1].lowercased())!
+                        // controllo che anche le latre siano uguali
+                        var t = i
+                        for j in 0...nomeArray.count-1{
+                            
+                            if nomeArray[j].lowercased() != inputArray[t].lowercased() {
+                                return 1
+                            }
+                            
+                            t += 1
+                            
+                        }
+                        
+                        // se tutte le parole coincidono allora mi prendo il numero di occorrenze e lo restituisco
+                        if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
+                            
+                            for (key, value) in numbers {
+                                if (value == inputArray[i-1].lowercased()){
+                                    return key
+                                }
+                            }
+                            
+                        }else if(stringIsNumber(inputArray[i-1].lowercased())){
+                            
+                            return Int(inputArray[i-1].lowercased())!
+                            
+                        }
                         
                     }
                     
                 }
+                
+                i += 1
+                
             }
-            
-            i += 1
             
         }
         
