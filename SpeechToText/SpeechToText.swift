@@ -191,4 +191,8 @@ public class SpeechToText: ObservableObject{
         
     }
     
+    func setTextIntoBox(text: String){
+        self.text = text
+    }
+    
 }
