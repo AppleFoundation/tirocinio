@@ -202,6 +202,10 @@ struct AddNuovaValigia: View {
         .onTapGesture {
             self.hideKeyboard()
         }
+        .onChange(of: larghezza, perform: {value in hideKeyboard()})
+        .onChange(of: profondita, perform: {value in hideKeyboard()})
+        .onChange(of: lunghezza, perform: {value in hideKeyboard()})
+        .onChange(of: tara, perform: {value in hideKeyboard()})
         
         
     }

@@ -14,7 +14,7 @@ struct AddViaggioView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    enum TipiViaggio: String, CaseIterable, Identifiable {
+    enum TipiViaggio: String, CaseIterable, Identifiable, Equatable {
         case aereo, nave, auto, bus, treno, estate, primavera, autunno, inverno, america, europa, asia
         var id: Self { self }
     }
@@ -30,6 +30,9 @@ struct AddViaggioView: View {
                 //Inserire un limite di caratteri massimo 30
                 
                 
+            }
+            .onTapGesture {
+                self.hideKeyboard()
             }
             
             Section(header: Text("Icona")){
@@ -127,9 +130,9 @@ struct AddViaggioView: View {
                 }, label: {Text("Cancel")})
             }
         }
-        .onTapGesture {
-            self.hideKeyboard()
-        }
+        .onChange(of: dataViaggio, perform: {value in hideKeyboard()})
+        .onChange(of: selectedTipo, perform: {value in hideKeyboard()})
+
         
         
     }
