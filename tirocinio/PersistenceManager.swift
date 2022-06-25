@@ -818,7 +818,7 @@ class PersistenceManager: ObservableObject {
             for i in bins.indices{
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
                 let pesodisponibile = Int(bins[i].pesoMassimo - bins[i].pesoAttuale)
-                let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
+                let volumedisponibile = Int(bins[i].valigiaRef!.volume - bins[i].volumeAttuale)
                 
                 var numItemContenibili = Int(pesodisponibile/Int((item.oggettoRef?.peso ?? 0)))
                 let numItemContenibiliPerVolume = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 0)))
@@ -904,7 +904,7 @@ class PersistenceManager: ObservableObject {
             for i in bins.indices{
             
                 //calcolo quante occorrenze di questo item possono essere inserite nel bin attuale e le inserisco
-                let volumedisponibile = Int(bins[i].volumeMassimo - bins[i].volumeAttuale)
+                let volumedisponibile = Int(bins[i].valigiaRef!.volume - bins[i].volumeAttuale)
             
                 let numItemContenibili = Int(volumedisponibile/Int((item.oggettoRef?.volume ?? 1)))
             
