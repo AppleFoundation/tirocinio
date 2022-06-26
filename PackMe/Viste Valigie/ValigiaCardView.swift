@@ -173,7 +173,6 @@ struct ValigiaCardView: View {
         .background(NavigationLink("", destination: EditValigiaView(nomeAgg: valigia.nome!, lunghezzaAgg: Double(valigia.lunghezza), larghezzaAgg: Double(valigia.larghezza), profonditaAgg: Double(valigia.profondita), pesoAgg: Double(valigia.tara), valigia: valigia), isActive: $editEnable))
         
         .onAppear(){
-            inserito = valigia.utilizzato
             let valigiaViaggiante = PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia)
             if(!valigiaViaggiante.isEmpty){
                 pesoMassimo = Double(valigiaViaggiante[0].pesoMassimo)/1000

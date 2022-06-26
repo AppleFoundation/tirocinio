@@ -20,7 +20,6 @@ extension ValigiaViaggiante {
     @NSManaged public var pesoAttuale: Int32
     @NSManaged public var pesoMassimo: Int32
     @NSManaged public var volumeAttuale: Int32
-    @NSManaged public var volumeMassimo: Int32
     @NSManaged public var contenuto: NSSet?
     @NSManaged public var valigiaRef: Valigia?
     @NSManaged public var viaggioRef: Viaggio?

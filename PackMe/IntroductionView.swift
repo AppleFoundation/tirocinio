@@ -55,7 +55,7 @@ struct TitleView: View {
             Text("Benvenuto in")
                 .customTitleText()
 
-            Text("Smart SuitCases")
+            Text("PackMe")
                 .customTitleText()
                 .foregroundColor(.blue)
         }
@@ -68,10 +68,6 @@ struct InformationContainerView: View {
             InformationDetailView(title: "Imballaggio", subTitle: "Porta con te tutto il necessario senza perdere tempo a capire dove posizionare gli oggetti!", imageName: "suitcase.fill")
             InformationDetailView(title: "Risparmio", subTitle: "Evita di pagare per gli eccessi di peso, con quest'app saprai sempre quanto pesa la tua valigia!", imageName: "creditcard.fill")
             InformationDetailView(title: "Lista intelligente", subTitle: "Prepara la tua valigia in forma digitale in modo da non dimenticare nulla!", imageName: "checklist")
-
-//            InformationDetailView(title: "Find", subTitle: "To get what you need", imageName: "dot.viewfinder")
-
-//            InformationDetailView(title: "Survive", subTitle: "To live away from home", imageName: "waveform.path.ecg")
         }
         .padding(.horizontal)
     }

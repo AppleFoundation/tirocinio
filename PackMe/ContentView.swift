@@ -23,7 +23,7 @@ struct ContentView: View {
             MainView()
             
             .navigationViewStyle(.stack)
-            .navigationTitle("SmartSuitCase")
+            .navigationTitle("PackMe")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: SettingsView(myColorScheme: $myColorScheme)) {
