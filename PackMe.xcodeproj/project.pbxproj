@@ -43,13 +43,13 @@
 		9DE6BB492868A34D00C6CEC1 /* ValigiaRiempitaCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6BB482868A34D00C6CEC1 /* ValigiaRiempitaCardView.swift */; };
 		9DE6BB4B2868A39400C6CEC1 /* BottoneCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE6BB4A2868A39400C6CEC1 /* BottoneCardView.swift */; };
 		9DE99337282A9772009A9330 /* OggettoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE99336282A9772009A9330 /* OggettoCardView.swift */; };
-		F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */; };
+		F29EF2DB28154A690013D6F5 /* PackMeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DA28154A690013D6F5 /* PackMeApp.swift */; };
 		F29EF2DD28154A690013D6F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2DC28154A690013D6F5 /* ContentView.swift */; };
 		F29EF2DF28154A6C0013D6F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */; };
 		F29EF2E228154A6C0013D6F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F29EF2E128154A6C0013D6F5 /* Preview Assets.xcassets */; };
-		F29EF2EC28154A6C0013D6F5 /* tirocinioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */; };
-		F29EF2F628154A6C0013D6F5 /* tirocinioUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */; };
-		F29EF2F828154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */; };
+		F29EF2EC28154A6C0013D6F5 /* PackmeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2EB28154A6C0013D6F5 /* PackmeTests.swift */; };
+		F29EF2F628154A6C0013D6F5 /* PackMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F528154A6C0013D6F5 /* PackMeTests.swift */; };
+		F29EF2F828154A6C0013D6F5 /* PackMeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29EF2F728154A6C0013D6F5 /* PackMeUITestsLaunchTests.swift */; };
 		F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F2CE1A81281942B400479BFB /* model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
@@ -88,9 +88,9 @@
 		40ADE902285C6C7300574D92 /* OggettoInValigia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OggettoInValigia+CoreDataClass.swift"; sourceTree = "<group>"; };
 		40ADE903285C6C7300574D92 /* OggettoInValigia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OggettoInValigia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		40C54B5828565C9D0054B614 /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
-		40C54B6828590F6E0054B614 /* SpeechToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToText.swift; path = SpeechToText/SpeechToText.swift; sourceTree = SOURCE_ROOT; };
-		40C54B6A28590F6E0054B614 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToTextButton.swift; path = SpeechToText/SpeechToTextButton.swift; sourceTree = SOURCE_ROOT; };
-		40C54B6E28590F7D0054B614 /* DecodeInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeInput.swift; path = SpeechToText/DecodeInput.swift; sourceTree = SOURCE_ROOT; };
+		40C54B6828590F6E0054B614 /* SpeechToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToText.swift; path = PackMe/SpeechToText/SpeechToText.swift; sourceTree = SOURCE_ROOT; };
+		40C54B6A28590F6E0054B614 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToTextButton.swift; path = PackMe/SpeechToText/SpeechToTextButton.swift; sourceTree = SOURCE_ROOT; };
+		40C54B6E28590F7D0054B614 /* DecodeInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeInput.swift; path = PackMe/SpeechToText/DecodeInput.swift; sourceTree = SOURCE_ROOT; };
 		40FB606D28565B990047E738 /* ModificaViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificaViaggioView.swift; sourceTree = "<group>"; };
 		40FB606E28565B990047E738 /* ModificaOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificaOggettoView.swift; sourceTree = "<group>"; };
 		9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OggettoViaggianteClass.swift; sourceTree = "<group>"; };
@@ -107,16 +107,16 @@
 		9DE6BB482868A34D00C6CEC1 /* ValigiaRiempitaCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValigiaRiempitaCardView.swift; sourceTree = "<group>"; };
 		9DE6BB4A2868A39400C6CEC1 /* BottoneCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottoneCardView.swift; sourceTree = "<group>"; };
 		9DE99336282A9772009A9330 /* OggettoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OggettoCardView.swift; sourceTree = "<group>"; };
-		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
+		F29EF2D728154A690013D6F5 /* PackMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2DA28154A690013D6F5 /* PackMeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackMeApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F29EF2E128154A6C0013D6F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tirocinioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioTests.swift; sourceTree = "<group>"; };
-		F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tirocinioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITests.swift; sourceTree = "<group>"; };
-		F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F29EF2E728154A6C0013D6F5 /* PackMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PackMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2EB28154A6C0013D6F5 /* PackmeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackmeTests.swift; sourceTree = "<group>"; };
+		F29EF2F128154A6C0013D6F5 /* PackMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PackMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29EF2F528154A6C0013D6F5 /* PackMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackMeTests.swift; sourceTree = "<group>"; };
+		F29EF2F728154A6C0013D6F5 /* PackMeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackMeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F2CE1A82281942B400479BFB /* model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -232,10 +232,9 @@
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
-				40C54B7028590FEB0054B614 /* SpeechToText */,
-				F29EF2D928154A690013D6F5 /* tirocinio */,
-				F29EF2EA28154A6C0013D6F5 /* tirocinioTests */,
-				F29EF2F428154A6C0013D6F5 /* tirocinioUITests */,
+				F29EF2D928154A690013D6F5 /* Packme */,
+				F29EF2EA28154A6C0013D6F5 /* PackMeTests */,
+				F29EF2F428154A6C0013D6F5 /* PackMeUITests */,
 				F29EF2D828154A690013D6F5 /* Products */,
 				40925D64281C62F800F2F223 /* Recovered References */,
 			);
@@ -244,20 +243,21 @@
 		F29EF2D828154A690013D6F5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F29EF2D728154A690013D6F5 /* tirocinio.app */,
-				F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */,
-				F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */,
+				F29EF2D728154A690013D6F5 /* PackMe.app */,
+				F29EF2E728154A6C0013D6F5 /* PackMeTests.xctest */,
+				F29EF2F128154A6C0013D6F5 /* PackMeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F29EF2D928154A690013D6F5 /* tirocinio */ = {
+		F29EF2D928154A690013D6F5 /* Packme */ = {
 			isa = PBXGroup;
 			children = (
-				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
+				F29EF2DA28154A690013D6F5 /* PackMeApp.swift */,
 				9DE6BB462868A11600C6CEC1 /* Estensioni.swift */,
 				4088D758286304EB00F95E0A /* IntroductionView.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
+				40C54B7028590FEB0054B614 /* SpeechToText */,
 				9DE6BB4C2868A52A00C6CEC1 /* Viste Dettagli Viaggio */,
 				9DE6BB4128689CE500C6CEC1 /* Viste Viaggio */,
 				9D183AA1286898BB00C021DB /* Viste Valigie */,
@@ -266,7 +266,7 @@
 				F29EF2E028154A6C0013D6F5 /* Preview Content */,
 				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
 			);
-			path = tirocinio;
+			path = Packme;
 			sourceTree = "<group>";
 		};
 		F29EF2E028154A6C0013D6F5 /* Preview Content */ = {
@@ -277,29 +277,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F29EF2EA28154A6C0013D6F5 /* tirocinioTests */ = {
+		F29EF2EA28154A6C0013D6F5 /* PackMeTests */ = {
 			isa = PBXGroup;
 			children = (
-				F29EF2EB28154A6C0013D6F5 /* tirocinioTests.swift */,
+				F29EF2EB28154A6C0013D6F5 /* PackmeTests.swift */,
 			);
-			path = tirocinioTests;
+			path = PackMeTests;
 			sourceTree = "<group>";
 		};
-		F29EF2F428154A6C0013D6F5 /* tirocinioUITests */ = {
+		F29EF2F428154A6C0013D6F5 /* PackMeUITests */ = {
 			isa = PBXGroup;
 			children = (
-				F29EF2F528154A6C0013D6F5 /* tirocinioUITests.swift */,
-				F29EF2F728154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift */,
+				F29EF2F528154A6C0013D6F5 /* PackMeTests.swift */,
+				F29EF2F728154A6C0013D6F5 /* PackMeUITestsLaunchTests.swift */,
 			);
-			path = tirocinioUITests;
+			path = PackMeUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F29EF2D628154A690013D6F5 /* tirocinio */ = {
+		F29EF2D628154A690013D6F5 /* PackMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinio" */;
+			buildConfigurationList = F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMe" */;
 			buildPhases = (
 				F29EF2D328154A690013D6F5 /* Sources */,
 				F29EF2D428154A690013D6F5 /* Frameworks */,
@@ -309,14 +309,14 @@
 			);
 			dependencies = (
 			);
-			name = tirocinio;
+			name = PackMe;
 			productName = tirocinio;
-			productReference = F29EF2D728154A690013D6F5 /* tirocinio.app */;
+			productReference = F29EF2D728154A690013D6F5 /* PackMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F29EF2E628154A6C0013D6F5 /* tirocinioTests */ = {
+		F29EF2E628154A6C0013D6F5 /* PackMeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioTests" */;
+			buildConfigurationList = F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMeTests" */;
 			buildPhases = (
 				F29EF2E328154A6C0013D6F5 /* Sources */,
 				F29EF2E428154A6C0013D6F5 /* Frameworks */,
@@ -327,14 +327,14 @@
 			dependencies = (
 				F29EF2E928154A6C0013D6F5 /* PBXTargetDependency */,
 			);
-			name = tirocinioTests;
+			name = PackMeTests;
 			productName = tirocinioTests;
-			productReference = F29EF2E728154A6C0013D6F5 /* tirocinioTests.xctest */;
+			productReference = F29EF2E728154A6C0013D6F5 /* PackMeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F29EF2F028154A6C0013D6F5 /* tirocinioUITests */ = {
+		F29EF2F028154A6C0013D6F5 /* PackMeUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioUITests" */;
+			buildConfigurationList = F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMeUITests" */;
 			buildPhases = (
 				F29EF2ED28154A6C0013D6F5 /* Sources */,
 				F29EF2EE28154A6C0013D6F5 /* Frameworks */,
@@ -345,9 +345,9 @@
 			dependencies = (
 				F29EF2F328154A6C0013D6F5 /* PBXTargetDependency */,
 			);
-			name = tirocinioUITests;
+			name = PackMeUITests;
 			productName = tirocinioUITests;
-			productReference = F29EF2F128154A6C0013D6F5 /* tirocinioUITests.xctest */;
+			productReference = F29EF2F128154A6C0013D6F5 /* PackMeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -373,7 +373,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "tirocinio" */;
+			buildConfigurationList = F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "PackMe" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -386,9 +386,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F29EF2D628154A690013D6F5 /* tirocinio */,
-				F29EF2E628154A6C0013D6F5 /* tirocinioTests */,
-				F29EF2F028154A6C0013D6F5 /* tirocinioUITests */,
+				F29EF2D628154A690013D6F5 /* PackMe */,
+				F29EF2E628154A6C0013D6F5 /* PackMeTests */,
+				F29EF2F028154A6C0013D6F5 /* PackMeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -459,7 +459,7 @@
 				4088D7572862EEC100F95E0A /* EditValigiaView.swift in Sources */,
 				40ADE90D285C6C7300574D92 /* Oggetto+CoreDataProperties.swift in Sources */,
 				40C54B6F28590F7D0054B614 /* DecodeInput.swift in Sources */,
-				F29EF2DB28154A690013D6F5 /* tirocinioApp.swift in Sources */,
+				F29EF2DB28154A690013D6F5 /* PackMeApp.swift in Sources */,
 				40ADE90A285C6C7300574D92 /* ValigiaViaggiante+CoreDataClass.swift in Sources */,
 				9D9EB3982846047A008D4341 /* CreaValigiaView.swift in Sources */,
 				F2CE1A83281942B400479BFB /* model.xcdatamodeld in Sources */,
@@ -470,7 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F29EF2EC28154A6C0013D6F5 /* tirocinioTests.swift in Sources */,
+				F29EF2EC28154A6C0013D6F5 /* PackmeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,8 +478,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F29EF2F628154A6C0013D6F5 /* tirocinioUITests.swift in Sources */,
-				F29EF2F828154A6C0013D6F5 /* tirocinioUITestsLaunchTests.swift in Sources */,
+				F29EF2F628154A6C0013D6F5 /* PackMeTests.swift in Sources */,
+				F29EF2F828154A6C0013D6F5 /* PackMeUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,12 +488,12 @@
 /* Begin PBXTargetDependency section */
 		F29EF2E928154A6C0013D6F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F29EF2D628154A690013D6F5 /* tirocinio */;
+			target = F29EF2D628154A690013D6F5 /* PackMe */;
 			targetProxy = F29EF2E828154A6C0013D6F5 /* PBXContainerItemProxy */;
 		};
 		F29EF2F328154A6C0013D6F5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F29EF2D628154A690013D6F5 /* tirocinio */;
+			target = F29EF2D628154A690013D6F5 /* PackMe */;
 			targetProxy = F29EF2F228154A6C0013D6F5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -621,8 +621,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"tirocinio/Preview Content\"";
-				DEVELOPMENT_TEAM = HL4ALNTRLD;
+				DEVELOPMENT_ASSET_PATHS = "\"PackMe/Preview Content\"";
+				DEVELOPMENT_TEAM = K8WJKQA676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -655,8 +655,8 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"tirocinio/Preview Content\"";
-				DEVELOPMENT_TEAM = HL4ALNTRLD;
+				DEVELOPMENT_ASSET_PATHS = "\"PackMe/Preview Content\"";
+				DEVELOPMENT_TEAM = K8WJKQA676;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
@@ -692,12 +692,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioTests;
+				PRODUCT_BUNDLE_IDENTIFIER = PackMe.PackMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tirocinio.app/tirocinio";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PackMe.app/PackMe";
 			};
 			name = Debug;
 		};
@@ -712,12 +712,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tirocinio.tirocinioTests;
+				PRODUCT_BUNDLE_IDENTIFIER = PackMe.PackMeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tirocinio.app/tirocinio";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PackMe.app/PackMe";
 			};
 			name = Release;
 		};
@@ -760,7 +760,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "tirocinio" */ = {
+		F29EF2D228154A690013D6F5 /* Build configuration list for PBXProject "PackMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F29EF2F928154A6C0013D6F5 /* Debug */,
@@ -769,7 +769,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinio" */ = {
+		F29EF2FB28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F29EF2FC28154A6C0013D6F5 /* Debug */,
@@ -778,7 +778,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioTests" */ = {
+		F29EF2FE28154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F29EF2FF28154A6C0013D6F5 /* Debug */,
@@ -787,7 +787,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "tirocinioUITests" */ = {
+		F29EF30128154A6C0013D6F5 /* Build configuration list for PBXNativeTarget "PackMeUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F29EF30228154A6C0013D6F5 /* Debug */,
