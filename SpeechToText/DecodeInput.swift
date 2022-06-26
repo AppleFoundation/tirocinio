@@ -210,7 +210,7 @@ public class DecodeInput {
         
         // cerco il peso della valigia all'interno della stringa inserita
         // countOcc, se diverso da 0, contiene il numero di occorrenze del nome della valigia da skippare prima di prendere il peso
-        let inputArray = input.components(separatedBy: " ")
+        var inputArray = input.components(separatedBy: " ")
         
         var i = 0, c = 0
         
@@ -262,7 +262,7 @@ public class DecodeInput {
                     var t = i
                     for j in 0...nomeArray.count-1{
                         
-                        if nomeArray[j].lowercased() != inputArray[t].lowercased() {
+                        if t < inputArray.count && nomeArray[j].lowercased() != inputArray[t].lowercased() {
                             return Int32.max
                         }
                         
@@ -274,11 +274,17 @@ public class DecodeInput {
                     for k in i...inputArray.count-1 {
                         if inputArray[k].lowercased() == "kg" {
                             
+                            // se il numero ha la virgola, prendo solo la parte intera
+                            if (inputArray[k-1].contains(",")){
+                                inputArray[k-1] = inputArray[k-1].components(separatedBy: ",")[0]
+                            }
+                            
                             if(inputArray[k-1] ~= "[0-9]*"){
                                 // il peso è scritto a numero
                                 return Int32(exactly: Int(inputArray[k-1])!*1000)! // res in grammi
 
                             }
+                            
                         }
                     }
                     
@@ -341,7 +347,7 @@ public class DecodeInput {
                     // la prima parola che compone il nome è uguale alla parola della stringa trovata
                     if (item.lowercased() == nomeArray[0].lowercased()){
                         
-                        // controllo che anche le latre siano uguali
+                        // controllo che anche le altre siano uguali
                         var t = i
                         for j in 0...nomeArray.count-1{
                             
@@ -385,11 +391,51 @@ public class DecodeInput {
     func contaOccorrenze (input: String, name: String) -> Int {
         
         let inputArray = input.components(separatedBy: " ")
+        
+        // di quante parole si compone il nome?
+        let nomeArray = name.components(separatedBy: " ")
+        
         var conta = 0
         
-        for i in inputArray{
-            if i.lowercased() == name.lowercased() {
-                conta += 1
+        // il nome è composto da un'unica parola
+        if nomeArray.count == 1{
+            for i in inputArray{
+                if i.lowercased() == name.lowercased() {
+                    conta += 1
+                }
+            }
+            
+        // il nome è composto da più parole
+        }else{
+            
+            var i = 0
+            for item in inputArray{
+                
+                if item.lowercased() == nomeArray[0].lowercased() {
+                    
+                    var found = true
+                    
+                    // controllo se tutte le parole che formano il nome corrispondono a quelle presenti nella stringa
+                    var t = i
+                    for j in 0...nomeArray.count-1{
+                        
+                        if t >= inputArray.count || nomeArray[j].lowercased() != inputArray[t].lowercased() {
+                            found = false
+                            break
+                        }
+                        
+                        t += 1
+                        
+                    }
+                    
+                    if found == true {
+                        conta += 1
+                    }
+                    
+                }
+                
+                i += 1
+                
             }
         }
         

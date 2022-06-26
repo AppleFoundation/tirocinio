@@ -91,8 +91,6 @@ struct SpeechToTextButton: View {
                     .frame(width: 80, height: 80)
                     .shadow(color: Color.black.opacity(0.5), radius: 5, y: 5)
                 )
-            
-//                .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 1.0))
                 
         })
         .alert(message, isPresented: $showingAlert) {
