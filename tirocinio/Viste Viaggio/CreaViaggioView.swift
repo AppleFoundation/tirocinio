@@ -7,29 +7,26 @@
 
 import SwiftUI
 
-struct AddViaggioView: View {
+struct CreaViaggioView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @State var nomeViaggio: String = ""
     @State var dataViaggio: Date = Date.now
     @State var tipoViaggio: String = ""
-    @Environment(\.presentationMode) private var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
+    @State private var selectedTipo: TipiViaggio = .aereo
     
     enum TipiViaggio: String, CaseIterable, Identifiable, Equatable {
         case aereo, nave, auto, bus, treno, estate, primavera, autunno, inverno, america, europa, asia
         var id: Self { self }
     }
-    @State private var selectedTipo: TipiViaggio = .aereo
     
     var body: some View {
         Form{
             //nome, data
             Section(header: Text("Nome")){
-                
                 TextField("Nome Viaggio", text: $nomeViaggio)
-                
-                //Inserire un limite di caratteri massimo 30
-                
-                
             }
             .onTapGesture {
                 self.hideKeyboard()
@@ -114,8 +111,6 @@ struct AddViaggioView: View {
                         }
                     }())
                     
-                    //non allocati è una valigia di sistema creata per ogni viaggio in grado di contenere gli oggetti non ancora allocati
-                    PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false) //Da togliere quando inizializziamo bene l'applicazione
                     
                     let nonallocati: Valigia = PersistenceManager.shared.loadValigieFromCategoria(categoria: "0SYSTEM")[0]
                     PersistenceManager.shared.addValigiaViaggiante(valigia: nonallocati, viaggio: PersistenceManager.shared.loadViaggiFromNome(nome: nomeViaggio.trimmingCharacters(in: .whitespaces))[0], pesoMassimo: 0)
@@ -138,16 +133,3 @@ struct AddViaggioView: View {
     }
 }
 
-//struct AddViaggioView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AddViaggioView()
-//    }
-//}
-
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-#endif

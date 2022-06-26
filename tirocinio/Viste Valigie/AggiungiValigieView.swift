@@ -7,10 +7,12 @@
 
 
 import SwiftUI
-struct AddBagView: View {
+struct AggiungiValigieView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @FetchRequest<Valigia>(entity: Valigia.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Valigia.nome, ascending: true)]) var allValigie: FetchedResults<Valigia>
+    
     var viaggio: Viaggio
     
     var body: some View {
@@ -18,7 +20,7 @@ struct AddBagView: View {
             VStack{
                 HStack{ //Questo HStack serve solo per far adattare bene lo sfondo ai bordi laterali grazie agli spacer
                     Spacer()
-                    NavigationLink(destination: AddNuovaValigia()){
+                    NavigationLink(destination: CreaValigiaView()){
                         
                         Text("Crea valigia")
                             .font(.headline.bold())

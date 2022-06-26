@@ -10,8 +10,8 @@ import SwiftUI
 struct IntroductionView: View {
     
     @Binding var showingWelcomeView: Bool
-    @Environment(\.presentationMode) private var presentationMode
     
+    @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         ScrollView {
@@ -123,17 +123,4 @@ struct ButtonModifier: ViewModifier {
     }
 }
 
-extension View {
-    func customButton() -> ModifiedContent<Self, ButtonModifier> {
-        return modifier(ButtonModifier())
-    }
-}
-
-extension Text {
-    func customTitleText() -> Text {
-        self
-            .fontWeight(.black)
-            .font(.system(size: 36))
-    }
-}
 

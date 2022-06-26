@@ -1168,7 +1168,7 @@ class PersistenceManager: ObservableObject {
         
         PersistenceManager.shared.addValigia(categoria: "Bagaglio da stiva", lunghezza: 77, larghezza: 50, profondita: 31, nome: "Bagaglio da stiva", tara: 4500, utilizzato: false)
         
-        
+        //non allocati è una valigia di sistema creata per ogni viaggio in grado di contenere gli oggetti non ancora allocati
         PersistenceManager.shared.addValigia(categoria: "0SYSTEM", lunghezza: 0, larghezza: 0, profondita: 0, nome: "Non Allocati", tara: 0, utilizzato: false)
     }
 

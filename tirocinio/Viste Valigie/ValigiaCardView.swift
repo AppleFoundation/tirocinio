@@ -10,17 +10,15 @@ import SceneKit
 
 struct ValigiaCardView: View {
     
-    @State private var editEnable = false
     @Environment(\.colorScheme) var colorScheme
     
+    @State private var editEnable = false
     @State var valigia: Valigia
-    var viaggio: Viaggio
     @State var pesoMassimo: Double = 0
     @State var inserito = false
-    
-    @State var count: Int = 0
     @State var value: Int = 0
     
+    var viaggio: Viaggio
     
     var body: some View {
         VStack{
@@ -41,7 +39,6 @@ struct ValigiaCardView: View {
                             Button(action: {
                                 if(value > 0){
                                     value -= 1
-                                    count -= 1
                                     PersistenceManager.shared.deleteValigiaViaggiante(viaggio: viaggio, valigia: valigia)
                                     if (value == 0){
                                         pesoMassimo = 0
@@ -55,7 +52,6 @@ struct ValigiaCardView: View {
                             })
                             Button(action: {
                                 value += 1
-                                count += 1
                                 PersistenceManager.shared.addValigiaViaggiante(valigia: valigia, viaggio: viaggio, pesoMassimo: {
                                     if(pesoMassimo == 0){
                                         return Int(Int32.max)
@@ -101,13 +97,7 @@ struct ValigiaCardView: View {
             .background(colorScheme == .dark ? Color.init(white: 0.2) : Color.init(white: 0.9))
             
             .contextMenu(.init(menuItems: {
-                
-                //            Text("Lunghezza: \(valigia.lunghezza) cm")
-                //            Text("Larghezza: \(oggetto.larghezza) cm")
-                //            Text("Profondità: \(oggetto.profondita) cm")
-                //            Text("Volume: \(String(format: "%.2f", Double(oggetto.volume)/1000)) l")
-                //            Text("Peso: \(oggetto.peso) g")
-                
+  
                 Button(action: {
                     editEnable = true
                 }, label: {
@@ -154,7 +144,6 @@ struct ValigiaCardView: View {
                     }
                     Spacer()
                     VStack(alignment: .trailing){
-                        //                    Slider(value: $pesoMassimo, in: 0...30, step: 1.0)
                         
                         Slider(value: $pesoMassimo, in: 0...30, step: 1.0, onEditingChanged: {_ in
                             PersistenceManager.shared.aggiornaPesoMassimoValigieViaggianti(valigia: valigia, viaggio: viaggio, pesoMassimo: {
@@ -180,9 +169,6 @@ struct ValigiaCardView: View {
                 .padding(.init(top: 0, leading: 15, bottom: 15, trailing: 15))
             }
             
-            
-            
-            
         }
         .background(NavigationLink("", destination: EditValigiaView(nomeAgg: valigia.nome!, lunghezzaAgg: Double(valigia.lunghezza), larghezzaAgg: Double(valigia.larghezza), profonditaAgg: Double(valigia.profondita), pesoAgg: Double(valigia.tara), valigia: valigia), isActive: $editEnable))
         
@@ -197,8 +183,6 @@ struct ValigiaCardView: View {
             }
             value = PersistenceManager.shared.loadValigieViaggiantiFromViaggioValigia(viaggio: viaggio, valigia: valigia).count
         }
-        
-        //        .padding()
         .background(colorScheme == .dark ? Color.init(white: 0.1) : Color.init(white: 0.8))
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.4), radius: 1, x: 1, y: 1)

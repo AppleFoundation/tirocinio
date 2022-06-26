@@ -7,26 +7,24 @@
 
 import SwiftUI
 
-struct AddNuovoOggetto: View {
+struct CreaOggettoView: View {
+
+    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
     
-    
-    enum CategorieOggetto: String, CaseIterable, Identifiable {
-        case articoliDaBagno, abbigliamento, essenziali, campeggio, spiaggia, sport, informaticaElettronica, altro
-        var id: Self { self }
-    }
     
     @State private var selectedCategoria: CategorieOggetto = .altro
-    
     @State var nomeAgg: String = ""
     @State var lunghezzaAgg: Double = 1.0
     @State var larghezzaAgg: Double = 1.0
     @State var profonditaAgg: Double = 1.0
     @State var pesoAgg: Double = 0.0
-    @Environment(\.presentationMode) private var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
+  
+    enum CategorieOggetto: String, CaseIterable, Identifiable {
+        case articoliDaBagno, abbigliamento, essenziali, campeggio, spiaggia, sport, informaticaElettronica, altro
+        var id: Self { self }
+    }
     
-    
-    //
     var body: some View {
         
         Form{
@@ -35,7 +33,6 @@ struct AddNuovoOggetto: View {
             
             Section(header: Text("Nome")){
                 TextField("Nuovo nome oggetto", text: $nomeAgg)
-                //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
             
             Section(header: Text("Categoria")){
@@ -50,9 +47,7 @@ struct AddNuovoOggetto: View {
                     Text("Sport").tag(CategorieOggetto.sport) 
                 }
                 .pickerStyle(.menu)
-                
-                
-            }
+                }
             
             Section(header: Text("Dimensioni")){
                 Text("Volume (litri): \(String(format: "%.3f", lunghezzaAgg*larghezzaAgg*profonditaAgg/1000))")
@@ -166,7 +161,6 @@ struct AddNuovoOggetto: View {
         .onChange(of: lunghezzaAgg, perform: {value in hideKeyboard()})
         .onChange(of: profonditaAgg, perform: {value in hideKeyboard()})
         .onChange(of: pesoAgg, perform: {value in hideKeyboard()})
-        
     }
 }
 

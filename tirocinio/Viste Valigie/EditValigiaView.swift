@@ -9,16 +9,16 @@ import SwiftUI
 
 struct EditValigiaView: View {
     
+    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @State var nomeAgg: String
     @State var lunghezzaAgg: Double
     @State var larghezzaAgg: Double
     @State var profonditaAgg: Double
     @State var pesoAgg: Double
-    @Environment(\.presentationMode) private var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
     
     var valigia: Valigia
-    
     
     var body: some View {
         
@@ -26,11 +26,8 @@ struct EditValigiaView: View {
         Form{
             Section(header: Text("Nome")){
                 TextField("Nuovo nome viaggio", text: $nomeAgg)
-                //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
-            
-            
-            
+
             Section(header: Text("Dimensioni")){
                 Text("Volume (litri): \(String(format: "%.3f", lunghezzaAgg*larghezzaAgg*profonditaAgg/1000))")
                 Text("Lunghezza (centimetri): \(Int(lunghezzaAgg)) ")
@@ -70,25 +67,6 @@ struct EditValigiaView: View {
                         pesoAgg = 1
                     }
                     
-                    
-                    //                    let caratterePreferiti = Character.init("★")
-                    //
-                    //                    if (nomeAgg.contains(caratterePreferiti)){
-                    //
-                    //                        let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
-                    //                        valigia.nome = nomeAgg
-                    //                        valigia.lunghezza = Int32(lunghezzaAgg)
-                    //                        valigia.larghezza = Int32(larghezzaAgg)
-                    //                        valigia.profondita = Int32(profonditaAgg)
-                    //                        valigia.volume = Int32(volume)
-                    //                        valigia.tara = Int32(pesoAgg)
-                    //                        PersistenceManager.shared.saveContext()
-                    //                    }else{
-                    //                        nomeAgg = nomeAgg + " " + String(caratterePreferiti)
-                    //
-                    //                        PersistenceManager.shared.addValigia(categoria: valigia.categoria!, lunghezza: Int(lunghezzaAgg), larghezza: Int(larghezzaAgg), profondita: Int(profonditaAgg), nome: nomeAgg, tara: Int(pesoAgg), utilizzato: false)
-                    //                    }
-                    
                     let volume = lunghezzaAgg * larghezzaAgg * profonditaAgg
                     valigia.nome = nomeAgg
                     valigia.lunghezza = Int32(lunghezzaAgg)
@@ -97,9 +75,7 @@ struct EditValigiaView: View {
                     valigia.volume = Int32(volume)
                     valigia.tara = Int32(pesoAgg)
                     PersistenceManager.shared.saveContext()
-                    
-                    
-                    
+   
                     presentationMode.wrappedValue.dismiss()
                 }, label: {Text("Save")})
             }

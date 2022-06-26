@@ -7,18 +7,11 @@
 
 import SwiftUI
 
-struct CategoriaScrollView: View{
-    
-    
+struct OggettiCategoriaView: View{
     
     var nome: String
-    
     var viaggio: Viaggio
-    
     var oggettiCategoria: [Oggetto]
-    
-    
-    //Qui bisogna creare un array di oggetti da visualizzare che deve essere passato dalla add bag view
     
     var body: some View{
         VStack{
@@ -26,7 +19,6 @@ struct CategoriaScrollView: View{
                 Text(nome)
                     .font(.title)
                     .fontWeight(.bold)
-                //                    .foregroundColor(Color.gray)
                     .padding()
                 Spacer()
             }
@@ -42,16 +34,14 @@ struct CategoriaScrollView: View{
                             return (lhs.nome! < rhs.nome!)
                         })){
                             oggetto in
-                            
-                            
+
                             let oggettiInValigia = PersistenceManager.shared.loadOggettiInValigiaFromViaggioOggetto(viaggio: viaggio, oggetto: oggetto)
                             if (oggettiInValigia.isEmpty == false){
-                                CardView(oggetto: oggetto, viaggio: viaggio, value: Int(oggettiInValigia[0].oggettoViaggianteRef!.quantitaInViaggio))
+                                OggettoCardView(oggetto: oggetto, value: Int(oggettiInValigia[0].oggettoViaggianteRef!.quantitaInViaggio), viaggio: viaggio)
                             }else{
-                                CardView(oggetto: oggetto, viaggio: viaggio, value: 0)
+                                OggettoCardView(oggetto: oggetto, value: 0, viaggio: viaggio)
                             }
-                            
-                            
+  
                         }
                     }
                     Spacer(minLength: 15) //Utile per avere più simmetria
@@ -63,14 +53,6 @@ struct CategoriaScrollView: View{
         
     }
 }
-
-struct CategoriaScrollView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoriaScrollView(nome: "Test", viaggio: PersistenceManager.shared.loadAllViaggi()[0], oggettiCategoria: PersistenceManager.shared.loadAllOggetti())
-    }
-}
-
-
 
 
 
