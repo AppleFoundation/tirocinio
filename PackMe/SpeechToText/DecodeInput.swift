@@ -345,7 +345,7 @@ public class DecodeInput {
                 if i != 0 {
                     
                     // la prima parola che compone il nome è uguale alla parola della stringa trovata
-                    if (item.lowercased() == nomeArray[0].lowercased() || checkSingolarePlurale(input: input, name: nomeArray[0].lowercased())){
+                    if (item.lowercased() == nomeArray[0].lowercased()){
                         
                         print("ok")
                         // controllo che anche le altre siano uguali
@@ -375,6 +375,12 @@ public class DecodeInput {
                             
                         }
                         
+                    }else if(checkSingolarePlurale(input: input, name: nomeArray[0].lowercased())){
+                        // siamo nella situazione in cui le parole non corrispondono esattamente e quindi protremmo avere delle parole al plurale
+                        // se la funzione restituisce true, allora dobbiamo effettuare i controlli non tenendo conto delle desinenze delle parole
+                        for item in inputArray{
+                            if numbers.
+                        }
                     }
                     
                 }
