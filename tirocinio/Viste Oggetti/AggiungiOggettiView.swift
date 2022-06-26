@@ -7,24 +7,22 @@
 
 import SwiftUI
 
-extension String: Identifiable {
-    public var id: String {
-        self
-    }
-}
-
-struct AddTripView: View {
+struct AggiungiOggettiView: View {
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     @FetchRequest<Oggetto>(entity: Oggetto.entity(), sortDescriptors: []) var allOggetti: FetchedResults<Oggetto>
+    
     var viaggio: Viaggio
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             VStack{
                 
                 HStack{ //Questo HStack serve solo per far adattare bene lo sfondo ai bordi laterali grazie agli spacer
                     Spacer()
-                    NavigationLink(destination: AddNuovoOggetto()){
+                    NavigationLink(destination: CreaOggettoView()){
                         
                         Text("Crea oggetto")
                             .font(.headline.bold())
@@ -37,11 +35,7 @@ struct AddTripView: View {
                     Spacer()
                 }
                 
-                
-                
                 //Qui si devono passare una serie di array alle varie categorie in modo che possano prelevare e visualizzare gli elementi
-               
-                
                 
                 ForEach({ () -> Array<String> in
                     var categorieLista = Set<String>.init()
@@ -62,7 +56,7 @@ struct AddTripView: View {
                     let cat = PersistenceManager.shared.loadOggettiFromCategoria(categoria: currentCat)
                     
                     if (!cat.isEmpty){
-                        CategoriaScrollView(nome: currentCat, viaggio: viaggio, oggettiCategoria: cat)
+                        OggettiCategoriaView(nome: currentCat, viaggio: viaggio, oggettiCategoria: cat)
                     }
                 }
                 
@@ -75,12 +69,10 @@ struct AddTripView: View {
             if(String("\(colorScheme)") == "light"){
                 Image("Sfondo App 4Light")
                     .resizable()
-                //                        .scaledToFill()
                     .ignoresSafeArea()
             }else{
                 Image("Sfondo App 4Dark")
                     .resizable()
-                //                        .scaledToFill()
                     .ignoresSafeArea()
             }
             
@@ -90,6 +82,9 @@ struct AddTripView: View {
     }
 }
 
-
-
+extension String: Identifiable {
+    public var id: String {
+        self
+    }
+}
 

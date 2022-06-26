@@ -48,7 +48,7 @@ struct ContentView: View {
                     
                     HStack{
                         
-                        NavigationLink(destination: AddViaggioView()){
+                        NavigationLink(destination: CreaViaggioView()){
                             
                             Text("Crea viaggio")
                                 .font(.headline.bold())

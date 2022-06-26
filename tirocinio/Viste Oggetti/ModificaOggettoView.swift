@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct EditOggettoView: View {
+struct ModificaOggettoView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State var nomeAgg: String
     @State var lunghezzaAgg: Double
     @State var larghezzaAgg: Double
     @State var profonditaAgg: Double
     @State var pesoAgg: Double
-    @Environment(\.presentationMode) private var presentationMode
-    @Environment(\.managedObjectContext) private var viewContext
-    
+  
     var oggetto: Oggetto
-    
     
     var body: some View {
         
@@ -26,10 +26,7 @@ struct EditOggettoView: View {
         Form{
             Section(header: Text("Nome")){
                 TextField("Nuovo nome viaggio", text: $nomeAgg)
-                //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
-            
-            
             
             Section(header: Text("Dimensioni")){
                 Text("Volume (litri): \(String(format: "%.3f", lunghezzaAgg*larghezzaAgg*profonditaAgg/1000))")
@@ -85,7 +82,6 @@ struct EditOggettoView: View {
                         PersistenceManager.shared.saveContext()
                     }else{
                         nomeAgg = nomeAgg + " " + String(caratterePreferiti)
-                        
                         PersistenceManager.shared.addOggetto(categoria: oggetto.categoria!, larghezza: Int(larghezzaAgg), lunghezza: Int(lunghezzaAgg), profondita: Int(profonditaAgg), peso: Int(pesoAgg), nome: nomeAgg)
                     }
                     

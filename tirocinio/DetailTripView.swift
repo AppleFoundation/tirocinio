@@ -162,7 +162,7 @@ struct tastiDiAggiunta: View{
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
             .overlay(){
-                NavigationLink(destination:  AddTripView(viaggio: viaggio)){
+                NavigationLink(destination:  AggiungiOggettiView(viaggio: viaggio)){
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)
@@ -215,7 +215,7 @@ struct tastiDiAggiunta: View{
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(color: Color.black.opacity(0.2), radius: 10, y: 5)
             .overlay(){
-                NavigationLink(destination:  AddBagView(viaggio: viaggio)){
+                NavigationLink(destination:  AggiungiValigieView(viaggio: viaggio)){
                     Rectangle()
                         .background(Color.white)
                         .opacity(0.1)

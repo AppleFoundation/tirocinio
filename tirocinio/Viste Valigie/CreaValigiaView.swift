@@ -7,33 +7,23 @@
 
 import SwiftUI
 
-struct AddNuovaValigia: View {
-    
-    
-    
-    enum CategorieValigie: String, CaseIterable, Identifiable {
-        case altro, bagaglioAMano, bagaglioDaStiva, borsone, valigiaGrande, valigiaMedia, valigiaPiccola, trolley, zaino
-        var id: Self { self }
-    }
-    @State private var selectedCategoria: CategorieValigie = .altro
+struct CreaValigiaView: View {
     
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
-    @State var nome: String = ""
     
+    @State private var selectedCategoria: CategorieValigie = .altro
+    @State var nome: String = ""
     @State var lunghezza: Double = 1.0
     @State var larghezza: Double = 1.0
     @State var profondita: Double = 1.0
     @State var tara: Double = 0.0
     
+    enum CategorieValigie: String, CaseIterable, Identifiable {
+        case altro, bagaglioAMano, bagaglioDaStiva, borsone, valigiaGrande, valigiaMedia, valigiaPiccola, trolley, zaino
+        var id: Self { self }
+    }
     
-    
-    
-    //    @Binding var allViaggi: [Viaggio]
-    //
-    //    init(allViaggi: Binding<[Viaggio]>){
-    //        self._allViaggi = allViaggi
-    //    }
     var body: some View {
         Form{
             Section(header: Text("Nome")){
