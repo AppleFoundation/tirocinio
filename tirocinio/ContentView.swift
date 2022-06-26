@@ -234,7 +234,7 @@ struct ActionButtonView: View{
                     }
                 }
             }
-            .background(NavigationLink("", destination: EditViaggioView(nomeViaggio: viaggio.nome ?? "OldName", dataViaggio: viaggio.data ?? Date.now, oldIcon: viaggio.tipo ?? "questionmark", viaggio: viaggio), isActive: $editEnable))
+            .background(NavigationLink("", destination: ModificaViaggioView(nomeViaggio: viaggio.nome ?? "OldName", dataViaggio: viaggio.data ?? Date.now, oldIcon: viaggio.tipo ?? "questionmark", viaggio: viaggio), isActive: $editEnable))
             
        
         

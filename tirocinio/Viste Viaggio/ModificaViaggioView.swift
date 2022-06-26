@@ -7,28 +7,29 @@
 
 import SwiftUI
 
-struct EditViaggioView: View {
-    @State var nomeViaggio: String
-    @State var dataViaggio: Date
+struct ModificaViaggioView: View {
+    
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     
-    enum TipiViaggio: String, CaseIterable, Identifiable {
-        case aereo, nave, auto, bus, treno, estate, primavera, autunno, inverno, america, europa, asia
-        var id: Self { self }
-    }
+    @State var nomeViaggio: String
+    @State var dataViaggio: Date
     @State var oldIcon: String
     @State var selectedTipo: TipiViaggio = .aereo
     
     var viaggio: Viaggio
     
+    enum TipiViaggio: String, CaseIterable, Identifiable {
+        case aereo, nave, auto, bus, treno, estate, primavera, autunno, inverno, america, europa, asia
+        var id: Self { self }
+    }
+   
     var body: some View {
         
         Form{
             //nome, data
             Section(header: Text("Nome")){
                 TextField("Nuovo nome viaggio", text: $nomeViaggio)
-                //Inserire un limite di caratteri massimo 30 (calcolato altrimenti è brutto da vedere)
             }
             .onTapGesture {
                 self.hideKeyboard()
@@ -61,7 +62,6 @@ struct EditViaggioView: View {
                 
             }
             
-            //                Section(header: Text("Vecchia data: \(viaggio.data?.formatted() ?? Date.init().formatted())")){
             Section(header: Text("Data partenza")){
                 DatePicker("", selection: $dataViaggio, displayedComponents: .date)
                     .datePickerStyle(.graphical)
@@ -103,7 +103,6 @@ struct EditViaggioView: View {
                         viaggio.tipo =  "globe.asia.australia.fill"
                     }
                     
-                    
                     PersistenceManager.shared.saveContext()
                     
                     presentationMode.wrappedValue.dismiss()
@@ -142,10 +141,6 @@ struct EditViaggioView: View {
                 selectedTipo = .europa
             case "globe.asia.australia.fill":
                 selectedTipo = .asia
-                
-                
-                
-        
             default:
                 selectedTipo = .europa
             }

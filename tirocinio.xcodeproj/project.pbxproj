@@ -27,7 +27,7 @@
 		40C54B6B28590F6E0054B614 /* SpeechToText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B6828590F6E0054B614 /* SpeechToText.swift */; };
 		40C54B6D28590F6E0054B614 /* SpeechToTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B6A28590F6E0054B614 /* SpeechToTextButton.swift */; };
 		40C54B6F28590F7D0054B614 /* DecodeInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C54B6E28590F7D0054B614 /* DecodeInput.swift */; };
-		40FB606F28565B990047E738 /* EditViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606D28565B990047E738 /* EditViaggioView.swift */; };
+		40FB606F28565B990047E738 /* ModificaViaggioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606D28565B990047E738 /* ModificaViaggioView.swift */; };
 		40FB607028565B990047E738 /* ModificaOggettoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FB606E28565B990047E738 /* ModificaOggettoView.swift */; };
 		9D203D7E28469F580091A675 /* OggettoViaggianteClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */; };
 		9D513291282B158900DA3374 /* AggiungiValigieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D513290282B158900DA3374 /* AggiungiValigieView.swift */; };
@@ -86,7 +86,7 @@
 		40C54B6828590F6E0054B614 /* SpeechToText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToText.swift; path = SpeechToText/SpeechToText.swift; sourceTree = SOURCE_ROOT; };
 		40C54B6A28590F6E0054B614 /* SpeechToTextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SpeechToTextButton.swift; path = SpeechToText/SpeechToTextButton.swift; sourceTree = SOURCE_ROOT; };
 		40C54B6E28590F7D0054B614 /* DecodeInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecodeInput.swift; path = SpeechToText/DecodeInput.swift; sourceTree = SOURCE_ROOT; };
-		40FB606D28565B990047E738 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
+		40FB606D28565B990047E738 /* ModificaViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificaViaggioView.swift; sourceTree = "<group>"; };
 		40FB606E28565B990047E738 /* ModificaOggettoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModificaOggettoView.swift; sourceTree = "<group>"; };
 		9D203D7D28469F580091A675 /* OggettoViaggianteClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OggettoViaggianteClass.swift; sourceTree = "<group>"; };
 		9D513290282B158900DA3374 /* AggiungiValigieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AggiungiValigieView.swift; sourceTree = "<group>"; };
@@ -97,7 +97,6 @@
 		9D9EB39528460470008D4341 /* CreaOggettoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaOggettoView.swift; sourceTree = "<group>"; };
 		9D9EB3972846047A008D4341 /* CreaValigiaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreaValigiaView.swift; sourceTree = "<group>"; };
 		9DE99336282A9772009A9330 /* OggettoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OggettoCardView.swift; sourceTree = "<group>"; };
-		F29C74112856294300CD28F1 /* EditViaggioView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViaggioView.swift; sourceTree = "<group>"; };
 		F29EF2D728154A690013D6F5 /* tirocinio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tirocinio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tirocinioApp.swift; sourceTree = "<group>"; };
 		F29EF2DC28154A690013D6F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -198,6 +197,16 @@
 			path = "Viste Oggetti";
 			sourceTree = "<group>";
 		};
+		9DE6BB4128689CE500C6CEC1 /* Viste Viaggio */ = {
+			isa = PBXGroup;
+			children = (
+				4012AC3E283AD703002F4776 /* CreaViaggioView.swift */,
+				40FB606D28565B990047E738 /* ModificaViaggioView.swift */,
+				4065466328631EE300184EC9 /* SettingsView.swift */,
+			);
+			path = "Viste Viaggio";
+			sourceTree = "<group>";
+		};
 		F29EF2CE28154A690013D6F5 = {
 			isa = PBXGroup;
 			children = (
@@ -223,19 +232,16 @@
 		F29EF2D928154A690013D6F5 /* tirocinio */ = {
 			isa = PBXGroup;
 			children = (
-				9D183AA1286898BB00C021DB /* Viste Valigie */,
-				9D183AA2286899A600C021DB /* Viste Oggetti */,
-				4012AC3E283AD703002F4776 /* CreaViaggioView.swift */,
-				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
+				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
+				4088D758286304EB00F95E0A /* IntroductionView.swift */,
 				F29EF2DC28154A690013D6F5 /* ContentView.swift */,
 				9D513294282B162F00DA3374 /* DetailTripView.swift */,
-				40FB606D28565B990047E738 /* EditViaggioView.swift */,
-				4088D758286304EB00F95E0A /* IntroductionView.swift */,
+				9DE6BB4128689CE500C6CEC1 /* Viste Viaggio */,
+				9D183AA1286898BB00C021DB /* Viste Valigie */,
+				9D183AA2286899A600C021DB /* Viste Oggetti */,
 				9D183AA02868987000C021DB /* Core Data */,
 				F29EF2E028154A6C0013D6F5 /* Preview Content */,
-				4065466328631EE300184EC9 /* SettingsView.swift */,
-				F29EF2DA28154A690013D6F5 /* tirocinioApp.swift */,
-				F29C74112856294300CD28F1 /* EditViaggioView.swift */,
+				F29EF2DE28154A6C0013D6F5 /* Assets.xcassets */,
 			);
 			path = tirocinio;
 			sourceTree = "<group>";
@@ -401,7 +407,7 @@
 				9D513298282B1A3400DA3374 /* OggettiCategoriaView.swift in Sources */,
 				4065466428631EE300184EC9 /* SettingsView.swift in Sources */,
 				40C54B6328565C9E0054B614 /* PersistenceManager.swift in Sources */,
-				40FB606F28565B990047E738 /* EditViaggioView.swift in Sources */,
+				40FB606F28565B990047E738 /* ModificaViaggioView.swift in Sources */,
 				40ADE90C285C6C7300574D92 /* Oggetto+CoreDataClass.swift in Sources */,
 				40ADE908285C6C7300574D92 /* OggettoViaggiante+CoreDataClass.swift in Sources */,
 				40ADE906285C6C7300574D92 /* Valigia+CoreDataClass.swift in Sources */,
