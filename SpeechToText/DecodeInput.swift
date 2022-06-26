@@ -52,7 +52,7 @@ public class DecodeInput {
         // interpretazione dell'azione
         azione = checkAction(action: azione)
         
-        print("----\(text)----")
+        print("\n----\(text)----\n")
         
         // verifico l'azione da compiere
         switch azione {
@@ -62,7 +62,7 @@ public class DecodeInput {
                 // verifico se l'oggetto da inserire è effettivamente un oggetto
                 for item in DecodeInput.oggetti {
                     
-                    if(text.lowercased().contains(item.name.lowercased())){
+                    if(checkSingolarePlurale(input: text.lowercased(), name: item.name.lowercased())){
                         
                         // quante volte devo inserire l'oggetto trovato
                         rep = getOccurrences(input: text, name: item.name.lowercased())
@@ -84,7 +84,7 @@ public class DecodeInput {
                     
                     print(c)
                     
-                    if(text.lowercased().contains(c.name.lowercased())){
+                    if(checkSingolarePlurale(input: text.lowercased(), name: c.name.lowercased())){
                         
                         // conto il numero di occorrenze di quella valigia all'interno della stringa di input (più
                         // occorrenze della stessa valigia potrebbero avere pesi massimi diversi)
@@ -117,7 +117,7 @@ public class DecodeInput {
                 
                 // verifico se l'oggetto da eliminare è effettivamente un oggetto
                 for item in DecodeInput.oggetti {
-                    if(text.lowercased().contains(item.name.lowercased())){
+                    if(checkSingolarePlurale(input: text.lowercased(), name: item.name.lowercased())){
                         
                         // quante volte devo eliminare l'oggetto trovato
                         rep = getOccurrences(input: text, name: item.name.lowercased())
@@ -141,7 +141,7 @@ public class DecodeInput {
             
                 // se non sono stati trovati oggetti, verifico se si tratta di una valigia da eliminare
                 for c in DecodeInput.valigie {
-                    if(text.lowercased().contains(c.name.lowercased())){
+                    if(checkSingolarePlurale(input: text.lowercased(), name: c.name.lowercased())){
                         
                         let valigiaViagg = PersistenceManager.shared.loadValigieViaggiantiFromViaggio(viaggio: viaggio)
                         for val in valigiaViagg{
@@ -314,7 +314,7 @@ public class DecodeInput {
 
                 if i != 0 {
                     
-                    if (item.lowercased() == name.lowercased()){
+                    if (item.lowercased() == name.lowercased() || checkSingolarePlurale(input: item.lowercased(), name: name.lowercased())){
                         
                         if(inputArray[i-1].lowercased() ~= "^([^0-9]*)$"){
                             
@@ -345,8 +345,9 @@ public class DecodeInput {
                 if i != 0 {
                     
                     // la prima parola che compone il nome è uguale alla parola della stringa trovata
-                    if (item.lowercased() == nomeArray[0].lowercased()){
+                    if (item.lowercased() == nomeArray[0].lowercased() || checkSingolarePlurale(input: input, name: nomeArray[0].lowercased())){
                         
+                        print("ok")
                         // controllo che anche le altre siano uguali
                         var t = i
                         for j in 0...nomeArray.count-1{
@@ -447,6 +448,75 @@ public class DecodeInput {
         
     }
     
+    func checkSingolarePlurale(input: String, name: String) -> Bool {
+        
+        // input contiene l'intera frase e name contiene il nome dell'oggetto che devo verificare sia contenuto
+        
+        if input.contains(name){
+            return true
+        }
+        
+        // di quante parole si compone il nome dell'oggetto?
+        let nomeArray = name.components(separatedBy: " ")
+        let inputArray = input.components(separatedBy: " ")
+        let num = nomeArray.count
+        var nome = name
+        
+        
+        // se il nome dell'oggetto si compone di una sola parola:
+        if num == 1 {
+
+            // elimino il carattere finale della stringa
+            nome.remove(at: nome.index(before: nome.endIndex))
+            
+            // confronto non considerando la desinenza
+            for item in inputArray{
+                if item ~= "\(nome)[a-z]?$"{
+                    return true
+                }
+            }
+        
+        // se il nome si compone di più parole
+        }else{
+            
+            // elimino il carattere finale di ciascuna parola che compone il nome e metto il risultato in p
+            var p = [String](), i = 0
+            p.append(contentsOf: nomeArray)
+            
+            for _ in p{
+                p[i].remove(at: p[i].index(before: p[i].endIndex))
+                i += 1
+            }
+            
+            // scorro input finchè non trovo una parola simile alla prima che compone il nome
+            i = 0
+            for _ in inputArray{
+                
+                if inputArray[i] ~= "\(p[0])[a-z]?$"{
+                    
+                    // confronto tutti i successivi elementi con quelli contenuti nel nome
+                    for n in p{
+                        
+                        if i >= inputArray.count || !(inputArray[i] ~= "\(n)[a-z]?$") {
+                            return false
+                        }
+                        
+                        i += 1
+                    }
+                    
+                    return true
+                    
+                }
+                
+                i += 1
+                
+            }
+            
+        }
+        
+        return false
+    }
+    
     let numbers:[Int:String] = [1:"uno", 2:"due", 3:"tre", 4:"quattro", 5:"cinque",
                                6:"sei", 7:"sette", 8:"otto", 9:"nove", 10:"dieci",
                                11:"undici", 12:"dodici", 13:"tredici", 14:"quattordici", 15:"quindici",
@@ -486,7 +556,7 @@ extension Dictionary where Value: Equatable {
     }
 }
 
-    
+
 
     
 
